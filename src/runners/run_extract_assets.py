@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from src.assets.extractor import extract_assets, load_events
@@ -11,6 +12,7 @@ from src.utils.config import load_json
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description="Extract role and organization assets from a run.")
     parser.add_argument("--config", default="configs/experiments.json")
     parser.add_argument("--run-dir", default="trajectories/latest")

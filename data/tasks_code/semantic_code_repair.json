@@ -1,0 +1,662 @@
+[
+  {
+    "task_id": "semantic_train_sum_even_1",
+    "split": "train",
+    "repair_family": "sum_even",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the sum of all even integers in the input list.",
+    "buggy_code": "def sum_even_train_1(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 1:\n            total += n\n    return total\n",
+    "entry_point": "sum_even_train_1",
+    "tests": [
+      "assert sum_even_train_1([1, 2, 3, 4]) == 6"
+    ],
+    "reference_solution": "def sum_even_train_1(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 0:\n            total += n\n    return total\n"
+  },
+  {
+    "task_id": "semantic_train_sum_even_2",
+    "split": "train",
+    "repair_family": "sum_even",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the sum of all even integers in the input list.",
+    "buggy_code": "def sum_even_train_2(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 1:\n            total += n\n    return total\n",
+    "entry_point": "sum_even_train_2",
+    "tests": [
+      "assert sum_even_train_2([-2, -1, 0, 3]) == -2"
+    ],
+    "reference_solution": "def sum_even_train_2(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 0:\n            total += n\n    return total\n"
+  },
+  {
+    "task_id": "semantic_train_sum_even_3",
+    "split": "train",
+    "repair_family": "sum_even",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the sum of all even integers in the input list.",
+    "buggy_code": "def sum_even_train_3(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 1:\n            total += n\n    return total\n",
+    "entry_point": "sum_even_train_3",
+    "tests": [
+      "assert sum_even_train_3([]) == 0",
+      "assert sum_even_train_3([2, 2, 2]) == 6"
+    ],
+    "reference_solution": "def sum_even_train_3(nums):\n    total = 0\n    for n in nums:\n        if n % 2 == 0:\n            total += n\n    return total\n"
+  },
+  {
+    "task_id": "semantic_train_safe_max_1",
+    "split": "train",
+    "repair_family": "safe_max",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the maximum value, or None when the input list is empty.",
+    "buggy_code": "def safe_max_train_1(nums):\n    best = 0\n    for n in nums:\n        if n > best:\n            best = n\n    return best\n",
+    "entry_point": "safe_max_train_1",
+    "tests": [
+      "assert safe_max_train_1([3, 1, 9]) == 9",
+      "assert safe_max_train_1([]) is None"
+    ],
+    "reference_solution": "def safe_max_train_1(nums):\n    if not nums:\n        return None\n    best = nums[0]\n    for n in nums[1:]:\n        if n > best:\n            best = n\n    return best\n"
+  },
+  {
+    "task_id": "semantic_train_safe_max_2",
+    "split": "train",
+    "repair_family": "safe_max",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the maximum value, or None when the input list is empty.",
+    "buggy_code": "def safe_max_train_2(nums):\n    best = 0\n    for n in nums:\n        if n > best:\n            best = n\n    return best\n",
+    "entry_point": "safe_max_train_2",
+    "tests": [
+      "assert safe_max_train_2([-5, -2, -8]) == -2"
+    ],
+    "reference_solution": "def safe_max_train_2(nums):\n    if not nums:\n        return None\n    best = nums[0]\n    for n in nums[1:]:\n        if n > best:\n            best = n\n    return best\n"
+  },
+  {
+    "task_id": "semantic_train_safe_max_3",
+    "split": "train",
+    "repair_family": "safe_max",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the maximum value, or None when the input list is empty.",
+    "buggy_code": "def safe_max_train_3(nums):\n    best = 0\n    for n in nums:\n        if n > best:\n            best = n\n    return best\n",
+    "entry_point": "safe_max_train_3",
+    "tests": [
+      "assert safe_max_train_3([]) is None",
+      "assert safe_max_train_3([0]) == 0"
+    ],
+    "reference_solution": "def safe_max_train_3(nums):\n    if not nums:\n        return None\n    best = nums[0]\n    for n in nums[1:]:\n        if n > best:\n            best = n\n    return best\n"
+  },
+  {
+    "task_id": "semantic_train_palindrome_1",
+    "split": "train",
+    "repair_family": "palindrome",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return True only when the string is a palindrome ignoring case.",
+    "buggy_code": "def palindrome_train_1(text):\n    return text == text[::-1]\n",
+    "entry_point": "palindrome_train_1",
+    "tests": [
+      "assert palindrome_train_1('RaceCar') is True"
+    ],
+    "reference_solution": "def palindrome_train_1(text):\n    normalized = text.lower()\n    return normalized == normalized[::-1]\n"
+  },
+  {
+    "task_id": "semantic_train_palindrome_2",
+    "split": "train",
+    "repair_family": "palindrome",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return True only when the string is a palindrome ignoring case.",
+    "buggy_code": "def palindrome_train_2(text):\n    return text == text[::-1]\n",
+    "entry_point": "palindrome_train_2",
+    "tests": [
+      "assert palindrome_train_2('Python') is False",
+      "assert palindrome_train_2('Level') is True"
+    ],
+    "reference_solution": "def palindrome_train_2(text):\n    normalized = text.lower()\n    return normalized == normalized[::-1]\n"
+  },
+  {
+    "task_id": "semantic_train_palindrome_3",
+    "split": "train",
+    "repair_family": "palindrome",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return True only when the string is a palindrome ignoring case.",
+    "buggy_code": "def palindrome_train_3(text):\n    return text == text[::-1]\n",
+    "entry_point": "palindrome_train_3",
+    "tests": [
+      "assert palindrome_train_3('') is True",
+      "assert palindrome_train_3('A') is True",
+      "assert palindrome_train_3('NoOn') is True"
+    ],
+    "reference_solution": "def palindrome_train_3(text):\n    normalized = text.lower()\n    return normalized == normalized[::-1]\n"
+  },
+  {
+    "task_id": "semantic_train_flatten_once_1",
+    "split": "train",
+    "repair_family": "flatten_once",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Flatten exactly one level of nested lists while preserving scalar items.",
+    "buggy_code": "def flatten_once_train_1(items):\n    result = []\n    for item in items:\n        result.append(item)\n    return result\n",
+    "entry_point": "flatten_once_train_1",
+    "tests": [
+      "assert flatten_once_train_1([[1, 2], [3], 4]) == [1, 2, 3, 4]"
+    ],
+    "reference_solution": "def flatten_once_train_1(items):\n    result = []\n    for item in items:\n        if isinstance(item, list):\n            result.extend(item)\n        else:\n            result.append(item)\n    return result\n"
+  },
+  {
+    "task_id": "semantic_train_flatten_once_2",
+    "split": "train",
+    "repair_family": "flatten_once",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Flatten exactly one level of nested lists while preserving scalar items.",
+    "buggy_code": "def flatten_once_train_2(items):\n    result = []\n    for item in items:\n        result.append(item)\n    return result\n",
+    "entry_point": "flatten_once_train_2",
+    "tests": [
+      "assert flatten_once_train_2([1, [2, 3], 4]) == [1, 2, 3, 4]"
+    ],
+    "reference_solution": "def flatten_once_train_2(items):\n    result = []\n    for item in items:\n        if isinstance(item, list):\n            result.extend(item)\n        else:\n            result.append(item)\n    return result\n"
+  },
+  {
+    "task_id": "semantic_train_flatten_once_3",
+    "split": "train",
+    "repair_family": "flatten_once",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Flatten exactly one level of nested lists while preserving scalar items.",
+    "buggy_code": "def flatten_once_train_3(items):\n    result = []\n    for item in items:\n        result.append(item)\n    return result\n",
+    "entry_point": "flatten_once_train_3",
+    "tests": [
+      "assert flatten_once_train_3([]) == []",
+      "assert flatten_once_train_3([[1, [2]]]) == [1, [2]]"
+    ],
+    "reference_solution": "def flatten_once_train_3(items):\n    result = []\n    for item in items:\n        if isinstance(item, list):\n            result.extend(item)\n        else:\n            result.append(item)\n    return result\n"
+  },
+  {
+    "task_id": "semantic_train_word_counts_1",
+    "split": "train",
+    "repair_family": "word_counts",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Count words by splitting the input text on whitespace.",
+    "buggy_code": "def word_counts_train_1(text):\n    counts = {}\n    for word in text.split(','):\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n",
+    "entry_point": "word_counts_train_1",
+    "tests": [
+      "assert word_counts_train_1('a b a') == {'a': 2, 'b': 1}"
+    ],
+    "reference_solution": "def word_counts_train_1(text):\n    counts = {}\n    for word in text.split():\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n"
+  },
+  {
+    "task_id": "semantic_train_word_counts_2",
+    "split": "train",
+    "repair_family": "word_counts",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Count words by splitting the input text on whitespace.",
+    "buggy_code": "def word_counts_train_2(text):\n    counts = {}\n    for word in text.split(','):\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n",
+    "entry_point": "word_counts_train_2",
+    "tests": [
+      "assert word_counts_train_2('one two two') == {'one': 1, 'two': 2}"
+    ],
+    "reference_solution": "def word_counts_train_2(text):\n    counts = {}\n    for word in text.split():\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n"
+  },
+  {
+    "task_id": "semantic_train_word_counts_3",
+    "split": "train",
+    "repair_family": "word_counts",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Count words by splitting the input text on whitespace.",
+    "buggy_code": "def word_counts_train_3(text):\n    counts = {}\n    for word in text.split(','):\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n",
+    "entry_point": "word_counts_train_3",
+    "tests": [
+      "assert word_counts_train_3('') == {}",
+      "assert word_counts_train_3('a\\tb\\na') == {'a': 2, 'b': 1}"
+    ],
+    "reference_solution": "def word_counts_train_3(text):\n    counts = {}\n    for word in text.split():\n        counts[word] = counts.get(word, 0) + 1\n    return counts\n"
+  },
+  {
+    "task_id": "semantic_test_clamp_1",
+    "split": "test",
+    "repair_family": "clamp",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Clamp a number to the inclusive interval from low to high.",
+    "buggy_code": "def clamp_test_1(value, low, high):\n    return min(low, max(value, high))\n",
+    "entry_point": "clamp_test_1",
+    "tests": [
+      "assert clamp_test_1(5, 0, 10) == 5"
+    ],
+    "reference_solution": "def clamp_test_1(value, low, high):\n    return max(low, min(value, high))\n"
+  },
+  {
+    "task_id": "semantic_test_clamp_2",
+    "split": "test",
+    "repair_family": "clamp",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Clamp a number to the inclusive interval from low to high.",
+    "buggy_code": "def clamp_test_2(value, low, high):\n    return min(low, max(value, high))\n",
+    "entry_point": "clamp_test_2",
+    "tests": [
+      "assert clamp_test_2(-3, 0, 10) == 0",
+      "assert clamp_test_2(5, 0, 10) == 5"
+    ],
+    "reference_solution": "def clamp_test_2(value, low, high):\n    return max(low, min(value, high))\n"
+  },
+  {
+    "task_id": "semantic_test_clamp_3",
+    "split": "test",
+    "repair_family": "clamp",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Clamp a number to the inclusive interval from low to high.",
+    "buggy_code": "def clamp_test_3(value, low, high):\n    return min(low, max(value, high))\n",
+    "entry_point": "clamp_test_3",
+    "tests": [
+      "assert clamp_test_3(99, 0, 10) == 10",
+      "assert clamp_test_3(4, 4, 4) == 4"
+    ],
+    "reference_solution": "def clamp_test_3(value, low, high):\n    return max(low, min(value, high))\n"
+  },
+  {
+    "task_id": "semantic_test_factorial_1",
+    "split": "test",
+    "repair_family": "factorial",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the factorial of a non-negative integer.",
+    "buggy_code": "def factorial_test_1(n):\n    total = 1\n    for value in range(1, n):\n        total *= value\n    return total\n",
+    "entry_point": "factorial_test_1",
+    "tests": [
+      "assert factorial_test_1(5) == 120"
+    ],
+    "reference_solution": "def factorial_test_1(n):\n    total = 1\n    for value in range(2, n + 1):\n        total *= value\n    return total\n"
+  },
+  {
+    "task_id": "semantic_test_factorial_2",
+    "split": "test",
+    "repair_family": "factorial",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the factorial of a non-negative integer.",
+    "buggy_code": "def factorial_test_2(n):\n    total = 1\n    for value in range(1, n):\n        total *= value\n    return total\n",
+    "entry_point": "factorial_test_2",
+    "tests": [
+      "assert factorial_test_2(3) == 6"
+    ],
+    "reference_solution": "def factorial_test_2(n):\n    total = 1\n    for value in range(2, n + 1):\n        total *= value\n    return total\n"
+  },
+  {
+    "task_id": "semantic_test_factorial_3",
+    "split": "test",
+    "repair_family": "factorial",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return the factorial of a non-negative integer.",
+    "buggy_code": "def factorial_test_3(n):\n    total = 1\n    for value in range(1, n):\n        total *= value\n    return total\n",
+    "entry_point": "factorial_test_3",
+    "tests": [
+      "assert factorial_test_3(0) == 1",
+      "assert factorial_test_3(1) == 1",
+      "assert factorial_test_3(4) == 24"
+    ],
+    "reference_solution": "def factorial_test_3(n):\n    total = 1\n    for value in range(2, n + 1):\n        total *= value\n    return total\n"
+  },
+  {
+    "task_id": "semantic_test_fizz_buzz_1",
+    "split": "test",
+    "repair_family": "fizz_buzz",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return FizzBuzz labels from 1 through n, using FizzBuzz for multiples of fifteen.",
+    "buggy_code": "def fizz_buzz_test_1(n):\n    result = []\n    for value in range(1, n + 1):\n        if value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(value))\n    return result\n",
+    "entry_point": "fizz_buzz_test_1",
+    "tests": [
+      "assert fizz_buzz_test_1(5) == ['1', '2', 'Fizz', '4', 'Buzz']",
+      "assert fizz_buzz_test_1(15)[-1] == 'FizzBuzz'"
+    ],
+    "reference_solution": "def fizz_buzz_test_1(n):\n    result = []\n    for value in range(1, n + 1):\n        if value % 15 == 0:\n            result.append('FizzBuzz')\n        elif value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(value))\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_fizz_buzz_2",
+    "split": "test",
+    "repair_family": "fizz_buzz",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return FizzBuzz labels from 1 through n, using FizzBuzz for multiples of fifteen.",
+    "buggy_code": "def fizz_buzz_test_2(n):\n    result = []\n    for value in range(1, n + 1):\n        if value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(value))\n    return result\n",
+    "entry_point": "fizz_buzz_test_2",
+    "tests": [
+      "assert fizz_buzz_test_2(15)[-1] == 'FizzBuzz'"
+    ],
+    "reference_solution": "def fizz_buzz_test_2(n):\n    result = []\n    for value in range(1, n + 1):\n        if value % 15 == 0:\n            result.append('FizzBuzz')\n        elif value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(value))\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_fizz_buzz_3",
+    "split": "test",
+    "repair_family": "fizz_buzz",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Return FizzBuzz labels from 1 through n, using FizzBuzz for multiples of fifteen.",
+    "buggy_code": "def fizz_buzz_test_3(n):\n    result = []\n    for value in range(1, n + 1):\n        if value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(value))\n    return result\n",
+    "entry_point": "fizz_buzz_test_3",
+    "tests": [
+      "assert fizz_buzz_test_3(0) == []",
+      "assert fizz_buzz_test_3(3) == ['1', '2', 'Fizz']",
+      "assert fizz_buzz_test_3(15)[-1] == 'FizzBuzz'"
+    ],
+    "reference_solution": "def fizz_buzz_test_3(n):\n    result = []\n    for value in range(1, n + 1):\n        if value % 15 == 0:\n            result.append('FizzBuzz')\n        elif value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(value))\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_dedupe_ordered_1",
+    "split": "test",
+    "repair_family": "dedupe_ordered",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Remove duplicates while preserving the first-occurrence order.",
+    "buggy_code": "def dedupe_ordered_test_1(items):\n    return sorted(set(items))\n",
+    "entry_point": "dedupe_ordered_test_1",
+    "tests": [
+      "assert dedupe_ordered_test_1(['b', 'a', 'b', 'c']) == ['b', 'a', 'c']"
+    ],
+    "reference_solution": "def dedupe_ordered_test_1(items):\n    result = []\n    seen = set()\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_dedupe_ordered_2",
+    "split": "test",
+    "repair_family": "dedupe_ordered",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Remove duplicates while preserving the first-occurrence order.",
+    "buggy_code": "def dedupe_ordered_test_2(items):\n    return sorted(set(items))\n",
+    "entry_point": "dedupe_ordered_test_2",
+    "tests": [
+      "assert dedupe_ordered_test_2(['b', 'a', 'b', 'c']) == ['b', 'a', 'c']"
+    ],
+    "reference_solution": "def dedupe_ordered_test_2(items):\n    result = []\n    seen = set()\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_dedupe_ordered_3",
+    "split": "test",
+    "repair_family": "dedupe_ordered",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Remove duplicates while preserving the first-occurrence order.",
+    "buggy_code": "def dedupe_ordered_test_3(items):\n    return sorted(set(items))\n",
+    "entry_point": "dedupe_ordered_test_3",
+    "tests": [
+      "assert dedupe_ordered_test_3([]) == []",
+      "assert dedupe_ordered_test_3([1, 1, 1]) == [1]",
+      "assert dedupe_ordered_test_3(['b', 'a', 'b']) == ['b', 'a']"
+    ],
+    "reference_solution": "def dedupe_ordered_test_3(items):\n    result = []\n    seen = set()\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_merge_counts_1",
+    "split": "test",
+    "repair_family": "merge_counts",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Merge two count dictionaries by adding values for shared keys.",
+    "buggy_code": "def merge_counts_test_1(first, second):\n    result = dict(first)\n    result.update(second)\n    return result\n",
+    "entry_point": "merge_counts_test_1",
+    "tests": [
+      "assert merge_counts_test_1({'a': 2}, {'b': 1}) == {'a': 2, 'b': 1}",
+      "assert merge_counts_test_1({'a': 2}, {'a': 3}) == {'a': 5}"
+    ],
+    "reference_solution": "def merge_counts_test_1(first, second):\n    result = dict(first)\n    for key, value in second.items():\n        result[key] = result.get(key, 0) + value\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_merge_counts_2",
+    "split": "test",
+    "repair_family": "merge_counts",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Merge two count dictionaries by adding values for shared keys.",
+    "buggy_code": "def merge_counts_test_2(first, second):\n    result = dict(first)\n    result.update(second)\n    return result\n",
+    "entry_point": "merge_counts_test_2",
+    "tests": [
+      "assert merge_counts_test_2({'a': 2}, {'a': 3}) == {'a': 5}"
+    ],
+    "reference_solution": "def merge_counts_test_2(first, second):\n    result = dict(first)\n    for key, value in second.items():\n        result[key] = result.get(key, 0) + value\n    return result\n"
+  },
+  {
+    "task_id": "semantic_test_merge_counts_3",
+    "split": "test",
+    "repair_family": "merge_counts",
+    "task_family": "code_repair",
+    "difficulty": "easy",
+    "description": "Merge two count dictionaries by adding values for shared keys.",
+    "buggy_code": "def merge_counts_test_3(first, second):\n    result = dict(first)\n    result.update(second)\n    return result\n",
+    "entry_point": "merge_counts_test_3",
+    "tests": [
+      "assert merge_counts_test_3({}, {'x': 1}) == {'x': 1}",
+      "assert merge_counts_test_3({'x': 1}, {}) == {'x': 1}",
+      "assert merge_counts_test_3({'x': 2}, {'x': 4}) == {'x': 6}"
+    ],
+    "reference_solution": "def merge_counts_test_3(first, second):\n    result = dict(first)\n    for key, value in second.items():\n        result[key] = result.get(key, 0) + value\n    return result\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_first_index_1",
+    "split": "shifted_test",
+    "repair_family": "first_index",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Return the index of the first matching value, or -1 if it is absent.",
+    "buggy_code": "def first_index_shifted_test_1(items, target):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return 0\n",
+    "entry_point": "first_index_shifted_test_1",
+    "tests": [
+      "assert first_index_shifted_test_1([3, 4, 5], 4) == 1",
+      "assert first_index_shifted_test_1([3, 4, 5], 8) == -1"
+    ],
+    "reference_solution": "def first_index_shifted_test_1(items, target):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return -1\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_first_index_2",
+    "split": "shifted_test",
+    "repair_family": "first_index",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Return the index of the first matching value, or -1 if it is absent.",
+    "buggy_code": "def first_index_shifted_test_2(items, target):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return 0\n",
+    "entry_point": "first_index_shifted_test_2",
+    "tests": [
+      "assert first_index_shifted_test_2([1, 2, 1], 1) == 0",
+      "assert first_index_shifted_test_2([1, 2], 9) == -1"
+    ],
+    "reference_solution": "def first_index_shifted_test_2(items, target):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return -1\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_first_index_3",
+    "split": "shifted_test",
+    "repair_family": "first_index",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Return the index of the first matching value, or -1 if it is absent.",
+    "buggy_code": "def first_index_shifted_test_3(items, target):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return 0\n",
+    "entry_point": "first_index_shifted_test_3",
+    "tests": [
+      "assert first_index_shifted_test_3([], 2) == -1",
+      "assert first_index_shifted_test_3([1, 2], 9) == -1"
+    ],
+    "reference_solution": "def first_index_shifted_test_3(items, target):\n    for index, item in enumerate(items):\n        if item == target:\n            return index\n    return -1\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_average_1",
+    "split": "shifted_test",
+    "repair_family": "average",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Return the arithmetic mean, or None for an empty list.",
+    "buggy_code": "def average_shifted_test_1(numbers):\n    return sum(numbers) // len(numbers)\n",
+    "entry_point": "average_shifted_test_1",
+    "tests": [
+      "assert average_shifted_test_1([2, 4, 6]) == 4",
+      "assert average_shifted_test_1([1, 2]) == 1.5"
+    ],
+    "reference_solution": "def average_shifted_test_1(numbers):\n    if not numbers:\n        return None\n    return sum(numbers) / len(numbers)\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_average_2",
+    "split": "shifted_test",
+    "repair_family": "average",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Return the arithmetic mean, or None for an empty list.",
+    "buggy_code": "def average_shifted_test_2(numbers):\n    return sum(numbers) // len(numbers)\n",
+    "entry_point": "average_shifted_test_2",
+    "tests": [
+      "assert average_shifted_test_2([1, 2]) == 1.5"
+    ],
+    "reference_solution": "def average_shifted_test_2(numbers):\n    if not numbers:\n        return None\n    return sum(numbers) / len(numbers)\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_average_3",
+    "split": "shifted_test",
+    "repair_family": "average",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Return the arithmetic mean, or None for an empty list.",
+    "buggy_code": "def average_shifted_test_3(numbers):\n    return sum(numbers) // len(numbers)\n",
+    "entry_point": "average_shifted_test_3",
+    "tests": [
+      "assert average_shifted_test_3([]) is None",
+      "assert average_shifted_test_3([-2, 2]) == 0"
+    ],
+    "reference_solution": "def average_shifted_test_3(numbers):\n    if not numbers:\n        return None\n    return sum(numbers) / len(numbers)\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_rotate_right_1",
+    "split": "shifted_test",
+    "repair_family": "rotate_right",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Rotate a list to the right by the requested number of steps.",
+    "buggy_code": "def rotate_right_shifted_test_1(items, steps):\n    if not items:\n        return []\n    steps = steps % len(items)\n    return items[steps:] + items[:steps]\n",
+    "entry_point": "rotate_right_shifted_test_1",
+    "tests": [
+      "assert rotate_right_shifted_test_1([1, 2, 3], 1) == [3, 1, 2]"
+    ],
+    "reference_solution": "def rotate_right_shifted_test_1(items, steps):\n    if not items:\n        return []\n    steps = steps % len(items)\n    return items[-steps:] + items[:-steps] if steps else list(items)\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_rotate_right_2",
+    "split": "shifted_test",
+    "repair_family": "rotate_right",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Rotate a list to the right by the requested number of steps.",
+    "buggy_code": "def rotate_right_shifted_test_2(items, steps):\n    if not items:\n        return []\n    steps = steps % len(items)\n    return items[steps:] + items[:steps]\n",
+    "entry_point": "rotate_right_shifted_test_2",
+    "tests": [
+      "assert rotate_right_shifted_test_2(['a', 'b', 'c', 'd'], 1) == ['d', 'a', 'b', 'c']"
+    ],
+    "reference_solution": "def rotate_right_shifted_test_2(items, steps):\n    if not items:\n        return []\n    steps = steps % len(items)\n    return items[-steps:] + items[:-steps] if steps else list(items)\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_rotate_right_3",
+    "split": "shifted_test",
+    "repair_family": "rotate_right",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Rotate a list to the right by the requested number of steps.",
+    "buggy_code": "def rotate_right_shifted_test_3(items, steps):\n    if not items:\n        return []\n    steps = steps % len(items)\n    return items[steps:] + items[:steps]\n",
+    "entry_point": "rotate_right_shifted_test_3",
+    "tests": [
+      "assert rotate_right_shifted_test_3([], 3) == []",
+      "assert rotate_right_shifted_test_3([1, 2], 4) == [1, 2]",
+      "assert rotate_right_shifted_test_3([1, 2, 3], 1) == [3, 1, 2]"
+    ],
+    "reference_solution": "def rotate_right_shifted_test_3(items, steps):\n    if not items:\n        return []\n    steps = steps % len(items)\n    return items[-steps:] + items[:-steps] if steps else list(items)\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_count_vowels_1",
+    "split": "shifted_test",
+    "repair_family": "count_vowels",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Count vowels in a string regardless of letter case.",
+    "buggy_code": "def count_vowels_shifted_test_1(text):\n    return sum(char in 'aeiou' for char in text)\n",
+    "entry_point": "count_vowels_shifted_test_1",
+    "tests": [
+      "assert count_vowels_shifted_test_1('hello') == 2",
+      "assert count_vowels_shifted_test_1('AEIOU') == 5"
+    ],
+    "reference_solution": "def count_vowels_shifted_test_1(text):\n    return sum(char in 'aeiou' for char in text.lower())\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_count_vowels_2",
+    "split": "shifted_test",
+    "repair_family": "count_vowels",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Count vowels in a string regardless of letter case.",
+    "buggy_code": "def count_vowels_shifted_test_2(text):\n    return sum(char in 'aeiou' for char in text)\n",
+    "entry_point": "count_vowels_shifted_test_2",
+    "tests": [
+      "assert count_vowels_shifted_test_2('AEIOU') == 5"
+    ],
+    "reference_solution": "def count_vowels_shifted_test_2(text):\n    return sum(char in 'aeiou' for char in text.lower())\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_count_vowels_3",
+    "split": "shifted_test",
+    "repair_family": "count_vowels",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Count vowels in a string regardless of letter case.",
+    "buggy_code": "def count_vowels_shifted_test_3(text):\n    return sum(char in 'aeiou' for char in text)\n",
+    "entry_point": "count_vowels_shifted_test_3",
+    "tests": [
+      "assert count_vowels_shifted_test_3('') == 0",
+      "assert count_vowels_shifted_test_3('PyThOn') == 1"
+    ],
+    "reference_solution": "def count_vowels_shifted_test_3(text):\n    return sum(char in 'aeiou' for char in text.lower())\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_normalize_spaces_1",
+    "split": "shifted_test",
+    "repair_family": "normalize_spaces",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Normalize whitespace by trimming and joining words with single spaces.",
+    "buggy_code": "def normalize_spaces_shifted_test_1(text):\n    return text.replace(' ', '')\n",
+    "entry_point": "normalize_spaces_shifted_test_1",
+    "tests": [
+      "assert normalize_spaces_shifted_test_1('a  b') == 'a b'"
+    ],
+    "reference_solution": "def normalize_spaces_shifted_test_1(text):\n    return ' '.join(text.split())\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_normalize_spaces_2",
+    "split": "shifted_test",
+    "repair_family": "normalize_spaces",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Normalize whitespace by trimming and joining words with single spaces.",
+    "buggy_code": "def normalize_spaces_shifted_test_2(text):\n    return text.replace(' ', '')\n",
+    "entry_point": "normalize_spaces_shifted_test_2",
+    "tests": [
+      "assert normalize_spaces_shifted_test_2('  hello world  ') == 'hello world'"
+    ],
+    "reference_solution": "def normalize_spaces_shifted_test_2(text):\n    return ' '.join(text.split())\n"
+  },
+  {
+    "task_id": "semantic_shifted_test_normalize_spaces_3",
+    "split": "shifted_test",
+    "repair_family": "normalize_spaces",
+    "task_family": "code_repair",
+    "difficulty": "medium",
+    "description": "Normalize whitespace by trimming and joining words with single spaces.",
+    "buggy_code": "def normalize_spaces_shifted_test_3(text):\n    return text.replace(' ', '')\n",
+    "entry_point": "normalize_spaces_shifted_test_3",
+    "tests": [
+      "assert normalize_spaces_shifted_test_3('a\\tb\\nc') == 'a b c'",
+      "assert normalize_spaces_shifted_test_3('   ') == ''"
+    ],
+    "reference_solution": "def normalize_spaces_shifted_test_3(text):\n    return ' '.join(text.split())\n"
+  }
+]

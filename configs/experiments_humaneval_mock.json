@@ -1,0 +1,15 @@
+{
+  "project_name": "POA-MAS-humaneval",
+  "domain": "code",
+  "task_file": "data/tasks_code/humaneval_repair.json",
+  "output_root": "trajectories",
+  "asset_root": "assets",
+  "num_agents": 4,
+  "max_rounds": 3,
+  "random_seed": 712,
+  "evaluation_timeout_sec": 3,
+  "llm": {
+    "provider": "mock",
+    "model": "mock-code-agent"
+  }
+}

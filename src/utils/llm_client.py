@@ -4,6 +4,7 @@ import json
 import os
 import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 from urllib import error, request
 
@@ -96,6 +97,7 @@ class DeepSeekClient:
         self.model = llm_config.get("model", "deepseek-v4-flash")
         self.base_url = llm_config.get("base_url", "https://api.deepseek.com").rstrip("/")
         self.api_key_env = llm_config.get("api_key_env", "DEEPSEEK_API_KEY")
+        self.api_key_file = llm_config.get("api_key_file")
         self.temperature = float(llm_config.get("temperature", 0.2))
         self.max_tokens = int(llm_config.get("max_tokens", 1200))
         self.timeout_sec = int(llm_config.get("timeout_sec", 60))
@@ -103,10 +105,11 @@ class DeepSeekClient:
         self.extra_body = llm_config.get("extra_body", {})
 
     def complete(self, *, agent_id: str, subtask_type: str, task: dict[str, Any], context: dict[str, Any]) -> LLMResponse:
-        api_key = os.environ.get(self.api_key_env)
+        api_key = self._resolve_api_key()
         if not api_key:
             raise RuntimeError(
-                f"Missing API key. Set environment variable {self.api_key_env} before using DeepSeek."
+                f"Missing API key. Set environment variable {self.api_key_env} "
+                "or configure a non-empty api_key_file before using DeepSeek."
             )
 
         payload: dict[str, Any] = {
@@ -145,6 +148,19 @@ class DeepSeekClient:
                     time.sleep(1.5 * (attempt + 1))
 
         raise RuntimeError(f"DeepSeek request failed after retries: {last_error}")
+
+    def _resolve_api_key(self) -> str | None:
+        api_key = os.environ.get(self.api_key_env)
+        if api_key:
+            return api_key
+        if not self.api_key_file:
+            return None
+
+        key_path = Path(self.api_key_file).expanduser()
+        try:
+            return key_path.read_text(encoding="utf-8-sig").strip() or None
+        except OSError as exc:
+            raise RuntimeError(f"Unable to read API key file {key_path}: {exc}") from exc
 
     def _post_chat_completion(self, payload: dict[str, Any], api_key: str) -> dict[str, Any]:
         body = json.dumps(payload).encode("utf-8")

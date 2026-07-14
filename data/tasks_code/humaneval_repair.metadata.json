@@ -1,0 +1,12 @@
+{
+  "source": "openai/human-eval",
+  "url": "https://raw.githubusercontent.com/openai/human-eval/master/data/HumanEval.jsonl.gz",
+  "sha256": "b796127e635a67f93fb35c04f4cb03cf06f38c8072ee7cee8833d7bee06979ef",
+  "records": 164,
+  "valid_mutations": 148,
+  "split_counts": {
+    "train": 15,
+    "test": 15,
+    "shifted_test": 15
+  }
+}

@@ -1,7 +1,19 @@
 from __future__ import annotations
 
-import traceback
+import json
+import subprocess
+import sys
 from typing import Any
+
+
+EVALUATOR = (
+    "import json, sys\n"
+    "payload = json.load(sys.stdin)\n"
+    "namespace = {}\n"
+    "exec(payload['candidate_code'], namespace)\n"
+    "for test in payload['tests']:\n"
+    "    exec(test, namespace)\n"
+)
 
 
 def extract_python_code(candidate_code: str) -> str:
@@ -21,17 +33,25 @@ def extract_python_code(candidate_code: str) -> str:
     return text
 
 
-def evaluate_code(task: dict[str, Any], candidate_code: str) -> dict[str, Any]:
-    namespace: dict[str, Any] = {}
+def evaluate_code(task: dict[str, Any], candidate_code: str, timeout_sec: float = 5.0) -> dict[str, Any]:
     candidate_code = extract_python_code(candidate_code)
     try:
-        exec(candidate_code, namespace)
-        for test in task["tests"]:
-            exec(test, namespace)
-        return {"success": True, "error": None}
-    except Exception as exc:  # noqa: BLE001 - experiment logger needs raw failures.
+        result = subprocess.run(
+            [sys.executable, "-c", EVALUATOR],
+            input=json.dumps({"candidate_code": candidate_code, "tests": task["tests"]}),
+            text=True,
+            capture_output=True,
+            timeout=timeout_sec,
+            check=False,
+        )
+    except subprocess.TimeoutExpired:
         return {
             "success": False,
-            "error": repr(exc),
-            "traceback": traceback.format_exc(limit=5),
+            "error": f"Evaluation timed out after {timeout_sec} seconds.",
         }
+    if result.returncode == 0:
+        return {"success": True, "error": None}
+    return {
+        "success": False,
+        "error": result.stderr.strip() or f"Evaluator exited with code {result.returncode}.",
+    }

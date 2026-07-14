@@ -61,6 +61,52 @@ python -m src.runners.run_baselines --config configs/experiments_mock.json --lim
 python -m src.runners.run_reuse --config configs/experiments_mock.json --asset-mode full --limit 3
 ```
 
+所有 runner 都支持 `--offset`，用于从任务文件中跳过前面的样本；baseline 还支持
+`--run-prefix`，emergence 与 reuse 支持 `--run-name`，以避免不同实验覆盖同名轨迹。
+使用包含显式划分的数据集时，可通过 `--split train`、`--split test` 或
+`--split shifted_test` 选择任务子集；任务划分会记录在每次运行的 summary 中。
+
+### 资产消融
+
+`run_reuse` 支持三种可比较策略：`prompt`（仅注入资产）、`routing`（仅按角色资产路由）和
+`full`（两者同时启用）。summary 会记录 `reuse_strategy`、`asset_routing_rate`、LLM 调用和 token
+统计，以及墙钟时间。
+
+```powershell
+python -m src.runners.run_reuse --config configs/experiments_semantic.json --split test --asset-mode full --reuse-strategy prompt
+python -m src.runners.run_reuse --config configs/experiments_semantic.json --split test --asset-mode full --reuse-strategy routing
+python -m src.runners.run_reuse --config configs/experiments_semantic.json --split test --asset-mode full --reuse-strategy full
+```
+
+`expanded_code_repair.json` 用于端到端稳定性检查，split 间共享修复家族；
+`semantic_code_repair.json` 保证修复家族在 split 间不重叠，应优先用于复用比较。
+所有 runner 支持 `--seed`，并将实际种子写入 summary；比较随机路由时应至少运行三个种子。
+
+语义数据集的最小协议是：先在 `train` 运行 free 并抽取资产，再在 `test` 与
+`shifted_test` 分别运行 free/manual/random 和三种 reuse 策略。只有在任务、模型配置和种子一致时，
+这些 summary 才可横向比较。
+
+### 公开基准
+
+`scripts/build_humaneval_repair.py` 从公开的 OpenAI HumanEval 下载记录，保留原始
+`check(candidate)` 测试主体，并只保留参考解通过、注入 bug 失败的样本。输出的 metadata 记录下载 URL
+与 SHA-256。默认构建 15/15/15 个任务：
+
+```powershell
+python scripts/build_humaneval_repair.py
+python -m src.runners.run_emergence --config configs/experiments_humaneval_mock.json --split train --limit 3
+```
+
+公开测试不等同于隐藏测试，且 HumanEval 可能已存在于模型训练数据中；论文实验应把它作为可复现的
+受控基准，并另行报告 QuixBugs、BugsInPy 或 SWE-bench 子集的外部验证。
+代码评估在独立子进程中执行，默认超时 5 秒；公开基准可通过 `evaluation_timeout_sec` 收紧该限制。
+
+## 测试
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
 也可以只跑最小 smoke test：
 
 ```powershell
@@ -88,6 +134,10 @@ deepseek-v4-flash
 ```powershell
 $env:DEEPSEEK_API_KEY="你的 DeepSeek API Key"
 ```
+
+也可以在 `experiments.json` 中设置 `llm.api_key_file`，让它指向本地密钥文件。默认使用
+`configs/.deepseek_api_key`；该文件已被 Git 忽略，内容应仅为 API Key。环境变量优先于该文件。
+不要将真实密钥直接写入 `api_key_env` 或提交到仓库。
 
 然后运行：
 

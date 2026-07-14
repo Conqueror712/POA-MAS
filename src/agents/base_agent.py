@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from src.utils.llm_client import DeepSeekClient, MockLLMClient
+from src.utils.llm_client import DeepSeekClient, LLMResponse, MockLLMClient
 
 
 @dataclass
@@ -18,14 +18,13 @@ class Agent:
             return 0.5
         return sum(outcomes) / len(outcomes)
 
-    def run_subtask(self, subtask_type: str, task: dict[str, Any], context: dict[str, Any]) -> str:
-        response = self.llm_client.complete(
+    def run_subtask(self, subtask_type: str, task: dict[str, Any], context: dict[str, Any]) -> LLMResponse:
+        return self.llm_client.complete(
             agent_id=self.agent_id,
             subtask_type=subtask_type,
             task=task,
             context=context,
         )
-        return response.text
 
     def update_history(self, subtask_type: str, success: bool) -> None:
         self.history.setdefault(subtask_type, []).append(success)

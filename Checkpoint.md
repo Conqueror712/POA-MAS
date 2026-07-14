@@ -1,6 +1,6 @@
 # POA-MAS Checkpoint
 
-更新时间：2026-07-14
+更新时间：2026-07-15
 
 ---
 
@@ -38,8 +38,24 @@
 - ✅ 用 mock client 跑通 emergence / extraction / baselines / reuse
 - ✅ 接入 DeepSeek-V4-Flash API 配置
 - ✅ 保留 mock config 作为离线自检
-- ⬜ 用真实 DeepSeek API 跑通 3-5 个 smoke-test 任务
+- ✅ 用真实 DeepSeek API 跑通 smoke-test 任务
 - ⬜ 接入本地 7B/8B 模型
-- ⬜ 扩充 code-repair 任务到 30-50 个（写入正式 train/test/shifted split）
-- ⬜ 设计同分布测试集与偏移测试集
-- ⬜ Human-Review：检查当前 toy task 是否足以验证流程
+- ✅ 扩充合成 code-repair 任务并写入 train/test/shifted split
+- ✅ 支持按 split、seed 和唯一运行名执行实验
+- ✅ 增加 prompt-only / routing-only / full reuse 消融
+- ✅ 记录 token、调用数、墙钟时间和资产路由率
+- ✅ 将代码评估改为带超时的隔离子进程
+
+---
+
+## C. 公开基准与当前结果
+
+- ✅ 接入公开 HumanEval 测试主体，保留原始 `check(candidate)` 测试
+- ✅ 构建 45 个可验证 HumanEval repair 任务（train/test/shifted_test 各 15）
+- ✅ 记录公开来源 URL、SHA-256、原始 task ID 和 mutation 类型
+- ✅ 完成 HumanEval 单 seed 的 train -> asset extraction -> held-out 对照
+- ✅ 确认资产证据仅来自 train，不与 held-out 来源任务重叠
+- ✅ 在 shifted_test 上观察到 prompt-only reuse 13/15，高于 free 8/15
+- ⬜ 用至少 3 个 seed 重复 HumanEval 完整协议并报告置信区间
+- ⬜ 引入 QuixBugs、BugsInPy 或 SWE-bench 子集作为外部真实性验证
+- ⬜ 增加隐藏/扩展测试，降低公开测试与训练数据污染风险

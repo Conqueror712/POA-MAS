@@ -11,10 +11,16 @@ def choose_agent(
     *,
     mode: str,
     fixed_roles: dict[str, str] | None = None,
+    preferred_agent_id: str | None = None,
     rng: random.Random | None = None,
 ) -> Agent:
     if not agents:
         raise ValueError("Cannot choose agent from an empty team.")
+
+    if preferred_agent_id:
+        for agent in agents:
+            if agent.agent_id == preferred_agent_id:
+                return agent
 
     if mode == "manual" and fixed_roles:
         target_id = fixed_roles.get(subtask_type)
