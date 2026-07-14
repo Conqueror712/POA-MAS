@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+trajectories/
+results/
+assets/role_assets/*.json
+assets/organization_assets/*.json
