@@ -59,3 +59,22 @@
 - ⬜ 用至少 3 个 seed 重复 HumanEval 完整协议并报告置信区间
 - ⬜ 引入 QuixBugs、BugsInPy 或 SWE-bench 子集作为外部真实性验证
 - ⬜ 增加隐藏/扩展测试，降低公开测试与训练数据污染风险
+
+---
+
+## D. 第二阶段：主实验扩展
+
+目标：把 toy pipeline 扩成能写进摘要的初步实验。
+
+- ⬜ 跑 Free MAS baseline
+- ⬜ 跑 Manual Roles baseline
+- ⬜ 跑 Random Roles baseline
+- ⬜ 跑 Role Assets Only 消融
+- ⬜ 跑 Organization Assets Only 消融
+- ⬜ 跑 Full POA-MAS
+- ⬜ 跑 No Validation 消融
+- ⬜ 至少 3 个随机种子
+- ⬜ 记录 token cost / latency
+- ⬜ 输出第一版结果表格
+- ⬜ 输出第一版分工指标图
+- ⬜ Human-Review：判断实验结果是否支撑摘要 claim
