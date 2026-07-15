@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import json
-import tempfile
 import unittest
+import uuid
 from pathlib import Path
 
 from src.agents.team import build_team
@@ -57,16 +57,18 @@ class ExperimentFeatureTests(unittest.TestCase):
                 {"specialty": "review", "agent_id": "A4"},
             ]
         }
-        with tempfile.TemporaryDirectory() as output_root:
-            logger = TrajectoryLogger(output_root, "reuse")
-            controller = SelfOrgController(
-                build_team(4, MockLLMClient()),
-                logger,
-                loaded_assets=assets,
-                reuse_strategy="full",
-            )
-            result = controller.run_code_task(task)
-            events = [json.loads(line) for line in logger.events_path.read_text(encoding="utf-8").splitlines()]
+        tmp_root = ROOT / ".tmp_tests"
+        tmp_root.mkdir(exist_ok=True)
+        output_root = tmp_root / f"reuse_{uuid.uuid4().hex}"
+        logger = TrajectoryLogger(output_root, "reuse")
+        controller = SelfOrgController(
+            build_team(4, MockLLMClient()),
+            logger,
+            loaded_assets=assets,
+            reuse_strategy="full",
+        )
+        result = controller.run_code_task(task)
+        events = [json.loads(line) for line in logger.events_path.read_text(encoding="utf-8").splitlines()]
 
         self.assertTrue(result["success"])
         assignments = [event for event in events if event["event_type"] == "subtask_completed"]

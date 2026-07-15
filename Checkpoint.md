@@ -56,25 +56,64 @@
 - ✅ 完成 HumanEval 单 seed 的 train -> asset extraction -> held-out 对照
 - ✅ 确认资产证据仅来自 train，不与 held-out 来源任务重叠
 - ✅ 在 shifted_test 上观察到 prompt-only reuse 13/15，高于 free 8/15
+- ✅ 确认 HumanEval 对当前模型偏简单，不能作为唯一主实验数据集
 - ⬜ 用至少 3 个 seed 重复 HumanEval 完整协议并报告置信区间
-- ⬜ 引入 QuixBugs、BugsInPy 或 SWE-bench 子集作为外部真实性验证
+- ⬜ 保留 HumanEval repair 作为可复现受控基准，不再把它作为主难度来源
 - ⬜ 增加隐藏/扩展测试，降低公开测试与训练数据污染风险
 
 ---
 
-## D. 第二阶段：主实验扩展
+## D. 第二阶段：代码主实验 Benchmark 升级
 
-目标：把 toy pipeline 扩成能写进摘要的初步实验。
+目标：解决 HumanEval 饱和问题，把代码任务主实验切到“跑得快但有难度”的数据集。
 
+当前优先级：
+
+1. **DebugBench Python subset**：首选主 benchmark。它本身是 debugging/code repair 任务，最贴近 `localize -> patch -> review` 流程。
+2. **APPS introductory/interview subset**：第二选择。它比 HumanEval 难，自动测试清楚；需要转换成 code-repair 形式或作为 code-generation realism check。
+3. **HumanEval repair**：保留为 sanity / controlled benchmark，不承担主要说服力。
+
+- ⬜ 调研 DebugBench 官方数据获取方式、许可和字段格式
+- ⬜ 编写 `scripts/build_debugbench_repair.py`
+- ⬜ 生成 DebugBench Python train/test/shifted_test split
+- ⬜ 调研 APPS 数据获取方式、许可和字段格式
+- ⬜ 编写 `scripts/build_apps_subset.py`
+- ⬜ 生成 APPS introductory/interview 小子集
+- ⬜ 为 DebugBench/APPS 增加对应 config
+- ⬜ 跑 DebugBench/APPS smoke test，确认不会 100% 饱和
 - ⬜ 跑 Free MAS baseline
 - ⬜ 跑 Manual Roles baseline
 - ⬜ 跑 Random Roles baseline
-- ⬜ 跑 Role Assets Only 消融
-- ⬜ 跑 Organization Assets Only 消融
-- ⬜ 跑 Full POA-MAS
-- ⬜ 跑 No Validation 消融
-- ⬜ 至少 3 个随机种子
-- ⬜ 记录 token cost / latency
+- ⬜ 跑 prompt-only / routing-only / full reuse 消融
+- ⬜ 至少 3 个 seed
 - ⬜ 输出第一版结果表格
 - ⬜ 输出第一版分工指标图
-- ⬜ Human-Review：判断实验结果是否支撑摘要 claim
+- ⬜ Human-Review：判断代码主实验是否足以支撑摘要 claim
+
+---
+
+## E. Domain 2：博弈论 / Persona 任务
+
+目标：补一个更有 Multi-Agent 味道的非代码域，验证 persona、策略稳定性和组织资产复用。
+
+定位建议：
+
+- 不替代代码主实验；
+- 作为第二实验域或 appendix；
+- 重点看策略涌现和 persona 对协作/竞争行为的影响。
+
+候选任务：
+
+- ⬜ Iterated Prisoner's Dilemma
+- ⬜ Public Goods Game
+- ⬜ Ultimatum / Bargaining
+- ⬜ Stag Hunt / Chicken Game
+
+需要实现：
+
+- ⬜ 设计 game task JSON schema
+- ⬜ 实现 payoff evaluator
+- ⬜ 支持 persona prompt 配置
+- ⬜ 记录 cooperation rate / average payoff / social welfare / equilibrium deviation
+- ⬜ 跑 no-persona vs persona vs reused strategy assets 对照
+- ⬜ Human-Review：决定博弈论域放主文、补充实验，还是 appendix

@@ -168,32 +168,63 @@ data/tasks_code/toy_code_repair.json
 
 它只用于验证流程。任务太简单，baseline 之间不会有足够差异，不能作为论文结果。
 
-### 下一步：正式 Code Repair 数据
+### 当前公开基准：HumanEval Repair
 
-需要扩展到至少：
+仓库已经包含 HumanEval repair 版本：
 
-- train：30-50 个任务；
-- test：30-50 个同分布任务；
-- shifted test：20-30 个轻度分布偏移任务。
+```text
+data/tasks_code/humaneval_repair.json
+```
+
+它保留 HumanEval 原始 `check(candidate)` 测试主体，并记录来源 URL、SHA-256、原始 task ID 和 mutation 类型。当前结论是：HumanEval 对 DeepSeek-V4-Flash 偏简单，容易出现 100% 或接近 100% 的饱和结果。因此它适合作为可复现受控基准，不适合作为唯一主实验数据集。
+
+### 下一步：正式 Code Repair 主实验数据
+
+需要切到跑得快但更有难度的数据集。当前优先级：
 
 候选来源：
 
-- HumanEval / MBPP 风格的小函数任务；
-- 自制 bug-injection code repair 数据；
-- 少量 SWE-bench Lite 任务作为 realism check。
+1. **DebugBench Python subset**  
+   首选主 benchmark。它本身是 debugging/code repair benchmark，任务形态最贴近当前 `localize -> patch -> review` 流程。目标是先取 Python 子集，生成 train/test/shifted_test。
 
-HumanEval / MBPP 需要真实数据集。后续应增加一键下载/转换脚本，把原始 benchmark 转成当前系统使用的 JSON schema。
+2. **APPS introductory/interview subset**  
+   第二选择。APPS 比 HumanEval 更难，测试明确，适合快速制造区分度。它原本是 code generation benchmark，因此需要转换成 code-repair 形式，或者作为代码 realism check。
 
-### 候选扩展域：博弈论 / Persona
+3. **HumanEval repair**  
+   保留为 sanity / controlled benchmark，不承担主要说服力。
 
-博弈论任务适合研究 Persona 和策略涌现，例如：
+4. **SWE-bench Lite / BugsInPy / QuixBugs**  
+   作为后续外部真实性验证。它们更接近真实工程，但环境成本更高，不建议先压进第一批主实验。
+
+下一步应增加：
+
+```text
+scripts/build_debugbench_repair.py
+scripts/build_apps_subset.py
+```
+
+把公开数据一键下载/转换成当前系统使用的 JSON schema。
+
+### Domain 2：博弈论 / Persona
+
+博弈论任务适合研究 Persona、策略稳定性和多 Agent 涌现行为。它不替代代码主实验，建议作为第二实验域或 appendix。
+
+候选任务：
 
 - Iterated Prisoner's Dilemma；
 - Public Goods Game；
 - Ultimatum / Bargaining；
 - Stag Hunt / Chicken Game。
 
-建议它作为第二或第三实验域，不要抢占 code repair 的第一主线。
+核心指标：
+
+- cooperation rate；
+- average payoff；
+- social welfare；
+- equilibrium deviation；
+- persona consistency；
+- strategy stability；
+- reused strategy assets 是否加速收敛或提升合作。
 
 ---
 

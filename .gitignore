@@ -7,3 +7,4 @@ assets/role_assets/*.json
 assets/organization_assets/*.json
 configs/.deepseek_api_key
 data/public/
+.tmp_tests/
