@@ -73,14 +73,13 @@
 2. **APPS introductory/interview subset**：第二选择。它比 HumanEval 难，自动测试清楚；需要转换成 code-repair 形式或作为 code-generation realism check。
 3. **HumanEval repair**：保留为 sanity / controlled benchmark，不承担主要说服力。
 
-- ⬜ 调研 DebugBench 官方数据获取方式、许可和字段格式
-- ⬜ 编写 `scripts/build_debugbench_repair.py`
-- ⬜ 生成 DebugBench Python train/test/shifted_test split
-- ⬜ 调研 APPS 数据获取方式、许可和字段格式
-- ⬜ 编写 `scripts/build_apps_subset.py`
-- ⬜ 生成 APPS introductory/interview 小子集
-- ⬜ 为 DebugBench/APPS 增加对应 config
-- ⬜ 跑 DebugBench/APPS smoke test，确认不会 100% 饱和
+- ✅ 调研 DebugBench 官方数据获取方式、许可和字段格式（Apache-2.0）
+- ⬜ DebugBench 官方 LeetCode OJ 接口兼容性：当前 REST 提交端点返回 404，暂不作为主实验
+- ✅ 检查 APPS 本地数据格式：题目、Python 解、难度和 stdin/stdout 测试齐全
+- ✅ 编写 `scripts/build_apps_repair.py`
+- ✅ 生成 APPS repair 小子集：20 train / 20 test / 15 shifted_test
+- ✅ 增加 APPS config 和 stdin/stdout 隔离评估
+- ✅ 跑 APPS 真实 smoke test：test 2 题成功率 50%，未出现 100% 饱和
 - ⬜ 跑 Free MAS baseline
 - ⬜ 跑 Manual Roles baseline
 - ⬜ 跑 Random Roles baseline

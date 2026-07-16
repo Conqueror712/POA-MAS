@@ -4,7 +4,7 @@ import json
 import time
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from src.agents.team import build_team
 from src.controller.self_org_controller import SelfOrgController
@@ -37,6 +37,7 @@ def run_experiment(
     reuse_strategy: str = "none",
     run_name: str | None = None,
     seed: int | None = None,
+    on_task_completed: Callable[[int, int, dict[str, Any], float], None] | None = None,
 ) -> tuple[dict[str, Any], Path]:
     config = load_json(config_path)
     tasks = load_tasks(
@@ -63,7 +64,12 @@ def run_experiment(
     )
 
     started_at = time.perf_counter()
-    results = [controller.run_code_task(task) for task in tasks]
+    results = []
+    for index, task in enumerate(tasks, start=1):
+        result = controller.run_code_task(task)
+        results.append(result)
+        if on_task_completed:
+            on_task_completed(index, len(tasks), result, time.perf_counter() - started_at)
     wall_time_sec = round(time.perf_counter() - started_at, 4)
     events = load_events_from_logger(logger)
     summary = {

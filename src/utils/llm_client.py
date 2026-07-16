@@ -22,6 +22,9 @@ def build_code_repair_messages(*, agent_id: str, subtask_type: str, task: dict[s
         "You are an agent in a multi-agent code repair experiment. "
         "Follow the assigned subtask exactly. Keep outputs concise and machine-readable."
     )
+    tests = task.get("tests", [])
+    if task.get("evaluation_mode") == "stdin_stdout":
+        tests = [f"stdin: {stdin!r}\nexpected stdout: {stdout!r}" for stdin, stdout in zip(task["inputs"], task["outputs"])]
 
     if subtask_type == "localize":
         user = (
@@ -33,6 +36,12 @@ def build_code_repair_messages(*, agent_id: str, subtask_type: str, task: dict[s
             "Return 1-3 bullet points describing the likely bug and relevant lines. Do not patch yet."
         )
     elif subtask_type == "patch":
+        output_instruction = (
+            "Return only the complete corrected Python program. It must read from standard input and write the expected output. "
+            "No Markdown fence. No explanation."
+            if task.get("evaluation_mode") == "stdin_stdout"
+            else "Return only the complete corrected Python function. No Markdown fence. No explanation."
+        )
         user = (
             f"Agent: {agent_id}\n"
             "Subtask: patch the buggy code.\n"
@@ -40,7 +49,7 @@ def build_code_repair_messages(*, agent_id: str, subtask_type: str, task: dict[s
             f"Buggy code:\n```python\n{task['buggy_code']}\n```\n"
             f"Localization notes:\n{context.get('localize', 'No localization notes.')}\n"
             f"Reusable assets:\n{asset_hint}\n\n"
-            "Return only the complete corrected Python function. No Markdown fence. No explanation."
+            + output_instruction
         )
     elif subtask_type == "review":
         user = (
@@ -48,7 +57,7 @@ def build_code_repair_messages(*, agent_id: str, subtask_type: str, task: dict[s
             "Subtask: review the candidate patch.\n"
             f"Task: {task['description']}\n"
             f"Candidate code:\n```python\n{context.get('candidate_code', '')}\n```\n"
-            f"Tests:\n" + "\n".join(task["tests"]) + "\n\n"
+            f"Tests:\n" + "\n".join(tests) + "\n\n"
             "Return PASS if the patch appears correct, otherwise return FAIL followed by one short reason."
         )
     else:

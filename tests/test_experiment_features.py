@@ -97,6 +97,15 @@ class ExperimentFeatureTests(unittest.TestCase):
         self.assertFalse(result["success"])
         self.assertIn("timed out", result["error"])
 
+    def test_stdio_evaluation_normalizes_whitespace(self) -> None:
+        task = {
+            "evaluation_mode": "stdin_stdout",
+            "inputs": ["2 3\n"],
+            "outputs": ["5\n"],
+        }
+        result = evaluate_code(task, "a, b = map(int, input().split())\nprint(a + b)\n", timeout_sec=1)
+        self.assertTrue(result["success"])
+
 
 if __name__ == "__main__":
     unittest.main()

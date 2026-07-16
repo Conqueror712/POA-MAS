@@ -101,6 +101,37 @@ python -m src.runners.run_emergence --config configs/experiments_humaneval_mock.
 受控基准，并另行报告 QuixBugs、BugsInPy 或 SWE-bench 子集的外部验证。
 代码评估在独立子进程中执行，默认超时 5 秒；公开基准可通过 `evaluation_timeout_sec` 收紧该限制。
 
+### APPS Repair
+
+将官方 APPS 数据解压到 `data/public/APPS/` 后，可用其原始 stdin/stdout 用例构建本地 repair 集：
+
+```powershell
+python scripts/build_apps_repair.py
+python -m src.runners.run_emergence --config configs/experiments_apps_mock.json --split train --limit 3
+```
+
+转换器保留仅能被原始用例验证的 Python mutation；默认从 introductory 题目生成 20 train、20 test，
+从 interview 题目生成 15 shifted_test。评估在独立进程中运行程序并按规范化 stdout 比较输出。
+程序级补丁需要更高的输出预算；`experiments_apps.json` 使用 4096 tokens，避免 reasoning 消耗完预算后返回空程序。
+
+### 终端训练进度
+
+使用训练入口可在终端中逐题看到进度；它不设置总训练超时：
+
+```powershell
+python -m src.runners.run_training --config configs/experiments_apps.json --split train --seed 712 --run-name apps_train_live
+```
+
+每个完成的任务会输出一行 JSON，包含累计成功数、当前任务和耗时；最终 summary 仍写入 run 目录。
+
+APPS 的完整 held-out 对照可由一个命令串行运行：
+
+```bash
+python -m src.runners.run_apps_protocol --config configs/experiments_apps.json --seed 712
+```
+
+它按 `free/manual/random/prompt/routing/full` 的顺序依次运行 test 与 shifted_test，并在每题完成时输出进度。
+
 ## 测试
 
 ```powershell

@@ -35,6 +35,8 @@ def extract_python_code(candidate_code: str) -> str:
 
 def evaluate_code(task: dict[str, Any], candidate_code: str, timeout_sec: float = 5.0) -> dict[str, Any]:
     candidate_code = extract_python_code(candidate_code)
+    if task.get("evaluation_mode") == "stdin_stdout":
+        return evaluate_stdio(task, candidate_code, timeout_sec)
     try:
         result = subprocess.run(
             [sys.executable, "-c", EVALUATOR],
@@ -55,3 +57,27 @@ def evaluate_code(task: dict[str, Any], candidate_code: str, timeout_sec: float 
         "success": False,
         "error": result.stderr.strip() or f"Evaluator exited with code {result.returncode}.",
     }
+
+
+def evaluate_stdio(task: dict[str, Any], candidate_code: str, timeout_sec: float) -> dict[str, Any]:
+    inputs = task.get("inputs", [])
+    outputs = task.get("outputs", [])
+    if not inputs or len(inputs) != len(outputs):
+        return {"success": False, "error": "Missing or invalid stdin/stdout test cases."}
+    for index, (stdin, expected) in enumerate(zip(inputs, outputs), start=1):
+        try:
+            result = subprocess.run(
+                [sys.executable, "-c", candidate_code],
+                input=stdin,
+                text=True,
+                capture_output=True,
+                timeout=timeout_sec,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            return {"success": False, "error": f"Case {index} timed out after {timeout_sec} seconds."}
+        if result.returncode != 0:
+            return {"success": False, "error": result.stderr.strip() or f"Case {index} exited with code {result.returncode}."}
+        if " ".join(result.stdout.split()) != " ".join(str(expected).split()):
+            return {"success": False, "error": f"Case {index} produced different output."}
+    return {"success": True, "error": None}
