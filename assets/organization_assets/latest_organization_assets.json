@@ -1,0 +1,44 @@
+[
+  {
+    "asset_type": "organization",
+    "task_family": "code_repair",
+    "decomposition": [
+      "localize",
+      "patch",
+      "review"
+    ],
+    "routing_rule": [
+      "Route each subtask to the agent with the highest historical success rate.",
+      "Keep review separate from patching when enough agents are available."
+    ],
+    "communication_protocol": [
+      "Share localization before patching.",
+      "Share candidate patch before review."
+    ],
+    "conflict_resolution": [
+      "Prefer the candidate that passes executable tests.",
+      "If no candidate passes, reopen localization."
+    ],
+    "evidence": [
+      "apps_train_train_2361",
+      "apps_train_train_2362",
+      "apps_train_train_2363",
+      "apps_train_train_2364",
+      "apps_train_train_2365",
+      "apps_train_train_2366",
+      "apps_train_train_2367",
+      "apps_train_train_2368",
+      "apps_train_train_2369",
+      "apps_train_train_2370",
+      "apps_train_train_2372",
+      "apps_train_train_2373",
+      "apps_train_train_2377",
+      "apps_train_train_2378",
+      "apps_train_train_2379"
+    ],
+    "confidence": 1.0,
+    "metadata": {
+      "source": "phase-1 deterministic extractor"
+    }
+  }
+]

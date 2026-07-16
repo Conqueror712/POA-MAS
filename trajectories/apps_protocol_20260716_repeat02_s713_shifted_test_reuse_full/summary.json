@@ -1,0 +1,236 @@
+{
+  "run_name": "apps_protocol_20260716_repeat02_s713_shifted_test_reuse_full",
+  "mode": "free",
+  "num_tasks": 15,
+  "task_offset": 0,
+  "task_split": "shifted_test",
+  "task_ids": [
+    "apps_shifted_test_test_0000",
+    "apps_shifted_test_test_0001",
+    "apps_shifted_test_test_0002",
+    "apps_shifted_test_test_0003",
+    "apps_shifted_test_test_0004",
+    "apps_shifted_test_test_0005",
+    "apps_shifted_test_test_0006",
+    "apps_shifted_test_test_0007",
+    "apps_shifted_test_test_0008",
+    "apps_shifted_test_test_0009",
+    "apps_shifted_test_test_0010",
+    "apps_shifted_test_test_0011",
+    "apps_shifted_test_test_0012",
+    "apps_shifted_test_test_0014",
+    "apps_shifted_test_test_0015"
+  ],
+  "num_agents": 4,
+  "seed": 713,
+  "success_rate": 0.6,
+  "specialization_index": 1.0,
+  "task_overlap_rate": 0.0,
+  "results": [
+    {
+      "task_id": "apps_shifted_test_test_0000",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "",
+        "patch": "",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0001",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug 1 (primary):** The condition `if num[i] != 0: continue` on line 4 only considers digits that are zero for decrement, but the correct algorithm should consider any non-zero digit (i.e., `if num[i] == 0: continue`). This prevents the code from generating numbers like 499 from 521 because no digit of 521 is zero, so the loop never applies the transformation.\n\n- **Bug 2 (secondary):** The inner loop `for j in range(i + 1, 0):` on line 6 uses a stop value of `0`, which is not a valid index for the right-side digits when `i` is negative. The intended range should be `range(i + 1, 0)` but the stop value should be `0` inclusive? Actually, it should be `range(i + 1, 0)` would be correct for negative indices? Wait: For negative indices, the \"right\" side (more negative) is from `i+1` up to `-1`. Using `range(i+1, 0)` with a positive stop `0` (since `0` is not negative) works because `range(-1, 0)` yields `[-1]`, `range(-2, 0)` yields `[-2, -1]`, etc. But careful: `j` is used as index to set to 9, and negative indices work fine. However, the intent is to set all digits after position `i` to 9, but the loop as written correctly covers those positions. However, the primary bug overshadows this.\n\n- **Bug 3 (logic direction):** The algorithm iterates from right to left but only modifies when a digit is zero. The correct approach typically iterates from left to right, decrementing the first non-zero digit found (or every digit that is not the first), then setting all following digits to 9. The current order is not inherently wrong, but combined with the wrong condition it fails to produce the expected output.",
+        "patch": "",
+        "review": "FAIL: No code provided."
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0002",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The bug is in the calculation of the next lucky year: `t = int(str(int(s[0]) - 1) + '0' * (n - 1))`. This incorrectly subtracts 1 from the first digit and pads zeros, often producing a number smaller than the current year (e.g., input 4 yields t=3, input 201 yields t=100). The correct next lucky year should be the smallest number greater than the current year with at most one non-zero digit, which requires either incrementing the first digit and padding zeros, or handling special cases like single-digit numbers and numbers already lucky.\n- The code also fails for inputs that are already lucky (e.g., 100, 4000) because it computes a value equal to or less than the current year, leading to a negative or zero difference instead of the correct positive offset to the next lucky year.",
+        "patch": "def main():\n    s = input()\n    n = len(s)\n    first = int(s[0])\n    if first == 9:\n        t = 10 ** n\n    else:\n        t = (first + 1) * (10 ** (n - 1))\n    print(t - int(s))\nmain()",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0003",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug in `total` computation**: The variable `total` is intended to count the number of sections painted by at least one painter, but the current code sets `total = -1` and then increments for each `val` where `not val != 0` (i.e., `val == 0`). This counts sections with zero coverage minus one, which is wrong. It should count sections with coverage > 0. This directly leads to incorrect `curtotal` calculations and wrong final answer (e.g., for the first example, `total` becomes -1 instead of 7, causing `maxtotal` to remain 0).\n\n- **Off-by-one in prefix sums indexing**: The code uses `singles[st1 - 1]` and `singles[st2 - 1]` etc. but the prefix arrays `singles` and `doubles` are built by iterating `i` over `len(coverage)` (which includes index 0). Since `coverage[0]` is set to 10, the prefix sums from index 0 may introduce an off-by-one error for sections starting at index 1. This can subtly affect the subtraction logic when removing two painters.\n\n- **Unnecessary initialization of `coverage[0]`**: Setting `coverage = [10] + [0] * n` is odd and potentially confusing, but not the primary cause of the incorrect output. However, it adds an unused element that could cause indexing mistakes in the prefix sum loops.",
+        "patch": "```python\ndef solve() -> None:\n    import sys\n    input = sys.stdin.readline\n\n    n, q = map(int, input().split())\n    intervals = []\n    for _ in range(q):\n        l, r = map(int, input().split())\n        intervals.append((l, r))\n\n    single_contrib = [0] * q          # sections covered only by this painter\n    both_contrib = {}                  # (i, j) -> count of sections covered exactly by i and j\n\n    total = 0\n\n    # iterate over each section\n    for x in range(1, n + 1):\n        painters = []\n        for idx, (l, r) in enumerate(intervals):\n            if l <= x <= r:\n                painters.append(idx)\n        if painters:\n            total += 1\n        if len(painters) == 1:\n            single_contrib[painters[0]] += 1\n        elif len(painters) == 2:\n            a, b = painters[0], painters[1]\n            if a > b:\n                a, b = b, a\n            key = (a, b)\n            both_contrib[key] = both_contrib.get(key, 0) + 1\n\n    best = 10**9\n    for i in range(q):\n        for j in range(i + 1, q):\n            loss = single_contrib[i] + single_contrib[j] + both_contrib.get((i, j), 0)\n            if loss < best:\n                best = loss\n\n    ans = total - best\n    print(ans)\n\nif __name__ == \"__main__\":\n    solve()\n```",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0004",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "",
+        "patch": "def is_lucky(t):\n    h = t // 60 % 24\n    m = t % 60\n    return '7' in f\"{h:02d}\" or '7' in f\"{m:02d}\"\n\nx = int(input())\nhh, mm = map(int, input().split())\ntarget = hh * 60 + mm\ny = 0\ncur = target\nwhile not is_lucky(cur):\n    cur = (cur - x) % 1440\n    y += 1\nprint(y)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0005",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- First conditional block (line 2) uses `if l <= 1 and r < n`; the intended condition should be `if l > 1 and r < n` (both sides need closing). This causes the branch for closing only the right side (when l == 1, r < n) to be misdirected into the complex formula that adds unnecessary steps.\n- The `elif l == 1 and r < n` branch (line 10) is dead code because the preceding `if` with `l <= 1` always matches when l == 1 and r < n, so the simple correct formula `abs(pos - r) + 1` is never reached.\n- The formulas inside the first block, while suitable when both sides need closing, are applied incorrectly to the l == 1 / r < n case, leading to values that are too large (e.g., adding the length of the kept segment).",
+        "patch": "n, pos, l, r = map(int, input().split())\n\nif l > 1 and r < n:\n    # both sides need closing\n    if l <= pos <= r:\n        if pos - l < r - pos:\n            print(pos - l + r - l + 2)\n        else:\n            print(r - pos + r - l + 2)\n    elif pos > r:\n        print(pos - r + r - l + 2)\n    else:  # pos < l\n        print(l - pos + r - l + 2)\nelif l == 1 and r < n:\n    # only right side needs closing\n    print(abs(pos - r) + 1)\nelif l > 1 and r == n:\n    # only left side needs closing\n    print(abs(pos - l) + 1)\nelse:\n    print(0)",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0006",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug 1 (wrong condition for one-hit kill):** Line `if A[0][0] < x:` should be `if A[0][0] >= x`. The current condition prints 1 when the maximum damage `d` is _less than_ the initial heads, which is incorrect (a one-hit kill requires `d >= x`). This causes the code to output 1 for cases where more blows are needed (e.g., first query outputs 1 instead of 2).\n\n- **Bug 2 (impossibility check uses nonzero instead of positive):** Line `if mz:` treats any nonzero value (including negative) as viable. For impossibility, we need `mz > 0` (i.e., a blow with net reduction). If all `d - h` are zero or negative, the dragon cannot be defeated (answer -1), but code would attempt division with a negative `mz` and produce nonsense.\n\n- **Bug 3 (unintended subtraction when `max_d >= x`):** In the `else` branch (when `max_d < x` is false), the line `x -= A[0][0]` subtracts the max damage even though no blow was actually used. This makes `x` negative or zero, leading to incorrect ceil division in the formula. The subtraction is only valid after confirming `max_d < x`.",
+        "patch": "for _ in range(int(input())):\n    n, x = map(int, input().split())\n    max_d = 0\n    max_net = -10**18\n    for i in range(n):\n        d, h = map(int, input().split())\n        if d > max_d:\n            max_d = d\n        net = d - h\n        if net > max_net:\n            max_net = net\n    if max_d >= x:\n        print(1)\n    elif max_net <= 0:\n        print(-1)\n    else:\n        remaining = x - max_d\n        additional = (remaining + max_net - 1) // max_net\n        print(1 + additional)",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0007",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- Line 2: `if m < n:` is reversed; it should be `if m >= n:` to return `n` when the daily addition is at least the barn capacity, as then barn stays full until day n.\n- For `m < n`, the `else` branch correctly computes the answer, but the `if` condition causes an early incorrect output of `n` instead of using the binary search formula.\n- The bug is a logic error in the base case condition, leading to wrong answers for all inputs where `m < n`.",
+        "patch": "n, m = map(int, input().split())\nif m >= n:\n    print(n)\nelse:\n    c = n - m\n    l = 0\n    r = 10 ** 18\n    while r - l > 1:\n        md = (r + l) // 2\n        if (1 + md) * md // 2 < c:\n            l = md\n        else:\n            r = md\n    print(r + m)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0008",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "File \"<string>\", line 1\n    ```\n    ^\nSyntaxError: invalid syntax"
+      },
+      "subtask_outputs": {
+        "localize": "- **Suit assignment logic is reversed and broken**: The `if-elif-else` block incorrectly maps tiles. `item[1] != 'm'` adds all non-m tiles to `lm`, while 'm' tiles end up in `ls` via the final `else`. This causes the counts for all suits to be stored in the wrong lists, leading to incorrect triplet and sequence checks. (Lines ~6-10)\n\n- **`seq_checker` ignores its parameter**: Inside `seq_checker`, the loop uses `lm[i]` instead of `li[i]`, so it always checks the `lm` list (which actually holds non-m tiles due to the previous bug) regardless of which list is passed. This prevents proper sequence detection for p and s suits. (Line ~18)\n\n- **Sequence detection logic is flawed**: The `seq_checker` only counts consecutive indices where the count is exactly 1, and it resets on any zero. This fails to handle cases where a valid sequence exists but some tiles have count >1 (e.g., duplicate tiles among the three, which shouldn't happen with only three tiles but could with draws; also the logic doesn't correctly recognize sequences when counts are not exactly 1). Additionally, the final fallback computation `3 - m` using a sliding window of sums is an oversimplification that does not correctly compute the minimum draws for all cases.",
+        "patch": "```\ncards = input().split()\ncounts = {'m': [0]*10, 'p': [0]*10, 's': [0]*10}  # 1-indexed, ignore index 0\nfor card in cards:\n    num = int(card[0])\n    suit = card[1]\n    counts[suit][num] += 1\n\n# check for existing koutsu (triplet)\nfor suit in 'mps':\n    for num in range(1, 10):\n        if counts[suit][num] >= 3:\n            print(0)\n            exit()\n\n# check for existing shuntsu (sequence)\nfor suit in 'mps':\n    arr = counts[suit]\n    for i in range(1, 8):  # i, i+1, i+2\n        if arr[i] >= 1 and arr[i+1] >= 1 and arr[i+2] >= 1:\n            print(0)\n            exit()\n\n# check if one draw suffices\nfor suit in 'mps':\n    arr = counts[suit]\n    # can finish a triplet if any number appears at least twice\n    for num in range(1, 10):\n        if arr[num] >= 2:\n            print(1)\n            exit()\n    # can finish a sequence if two numbers differ by 1 or 2\n    for i in range(1, 10):\n        for j in range(i+1, min(i+3, 10)):  # j = i+1 or i+2\n            if arr[i] >= 1 and arr[j] >= 1:\n                print(1)\n                exit()\n\n# otherwise need two draws\nprint(2)\n```",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0009",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- **Fundamental algorithmic flaw**: The code attempts to compute left/right/top/bottom counts by sorting sofas on a single key (e.g., `(x1, x2)`) and then using the index position as the count. This is incorrect because the condition for being to the left (or right, top, bottom) depends on *existence* of any cell with smaller/larger coordinate, not on the global ordering of a single coordinate pair. For example, a sofa with a very small `min_x` but also a large `max_x` can be both left and right of others, making positional indexing meaningless.  \n  - **Relevant lines**: Sorting and candidate loops for left (lines ~30–45), right (lines ~47–62), down (lines ~64–79), up (lines ~81–96). The sorting keys `(x[0], x[2])` and `(x[1], x[3])` are insufficient; they treat each sofa as a point rather than an interval.\n\n- **Inconsistent coordinate normalization**: When `x1 != x2` (sofa spanning rows), the code swaps based on `y1 < y2` (columns) instead of ensuring the smaller x comes first. This misaligns the representation with the intended comparisons (left/right should depend on x, top/bottom on y).  \n  - **Relevant lines**: Lines 7–13 inside the input loop, where `y1 < y2` controls swapping for non‑equal x values. This leads to incorrect tuples for sorting and counting.\n\n- **Mismatched variable mapping**: The input counts are `cnt_l, cnt_r, cnt_t, cnt_b` (left, right, top, bottom), but the code reads them into `cntl, cntr, cntd, cntu` and then maps `cntd` (down) to the top‑oriented `down` list and `cntu` (up) to the bottom‑oriented `up` list. This swaps the meaning of top and bottom conditions.  \n  - **Relevant lines**: Line 20: `cntl, cntr, cntd, cntu = map(...)`. Later, the challengers for `cntd` are computed from `down` (sorted by y), and for `cntu` from a second pass over the same `down` list. The intended direction labels are inconsistent with the problem statement.",
+        "patch": "```python\nimport sys\nimport bisect\n\ndef solve() -> None:\n    data = sys.stdin.read().strip().split()\n    if not data:\n        return\n    it = iter(data)\n    d = int(next(it))\n    n = int(next(it))\n    m = int(next(it))\n\n    min_x = [0] * d\n    max_x = [0] * d\n    min_y = [0] * d\n    max_y = [0] * d\n\n    for i in range(d):\n        x1 = int(next(it))\n        y1 = int(next(it))\n        x2 = int(next(it))\n        y2 = int(next(it))\n        min_x[i] = x1 if x1 < x2 else x2\n        max_x[i] = x1 if x1 > x2 else x2\n        min_y[i] = y1 if y1 < y2 else y2\n        max_y[i] = y1 if y1 > y2 else y2\n\n    cnt_l = int(next(it))\n    cnt_r = int(next(it))\n    cnt_t = int(next(it))\n    cnt_b = int(next(it))\n\n    sorted_min_x = sorted(min_x)\n    sorted_max_x = sorted(max_x)\n    sorted_min_y = sorted(min_y)\n    sorted_max_y = sorted(max_y)\n\n    total = d\n\n    for i in range(d):\n        # left: number of T with max_x[T] > min_x[i]\n        le = bisect.bisect_right(sorted_max_x, min_x[i])   # count <= min_x[i]\n        left_raw = total - le\n        left_cnt = left_raw - (1 if max_x[i] > min_x[i] else 0)\n\n        # right: number of T with min_x[T] < max_x[i]\n        lt = bisect.bisect_left(sorted_min_x, max_x[i])    # count < max_x[i]\n        right_raw = lt\n        right_cnt = right_raw - (1 if min_x[i] < max_x[i] else 0)\n\n        # top: number of T with max_y[T] > min_y[i]\n        le_y = bisect.bisect_right(sorted_max_y, min_y[i]) # count <= min_y[i]\n        top_raw = total - le_y\n        top_cnt = top_raw - (1 if max_y[i] > min_y[i] else 0)\n\n        # bottom: number of T with min_y[T] < max_y[i]\n        lt_y = bisect.bisect_left(sorted_min_y, max_y[i])  # count < max_y[i]\n        bottom_raw = lt_y\n        bottom_cnt = bottom_raw - (1 if min_y[i] < max_y[i] else 0)\n\n        if (left_cnt == cnt_l and right_cnt == cnt_r and\n            top_cnt == cnt_t and bottom_cnt == cnt_b):\n            sys.stdout.write(str(i + 1))\n            return\n\n    sys.stdout.write('-1')\n\nif __name__ == '__main__':\n    solve()\n```",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0010",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The expression `2 // d` in the min calculation should be `2 * d` (multiplication), causing incorrect minimum days off (e.g., n=14 gives 1 instead of 4).  \n- When `d == 0` (n < 7), `2 // d` triggers a `ZeroDivisionError`, crashing the program.  \n- The correct formula for minimum is `2*d + max(0, r-5)`, but the code uses floor division instead of multiplication.",
+        "patch": "n = int(input())\nr = n % 7\nd = n // 7\nmin_days = 2 * d + max(0, r - 5)\nmax_days = 2 * d + min(r, 2)\nprint(min_days, max_days)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0011",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug in gcd function loop condition (line 2-4):** `while b == 0:` should be `while b != 0:`. This causes `gcd(a, b)` to always return `a` (e.g., for a=2, b=3 returns 2 instead of 1), making the LCM calculation wrong.\n- **Consequence in line 8:** `n // (a * b // gcd(a, b))` computes the wrong overlap count (LCM incorrect), leading to incorrect subtraction of `min(p, q)` and thus wrong maximum chocolates.",
+        "patch": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return a\n\nn, a, b, p, q = list(map(int, input().split()))\ns = n // a * p + n // b * q\ns -= n // (a * b // gcd(a, b)) * min(p, q)\nprint(s)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0012",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "",
+        "patch": "",
+        "review": "FAIL No code provided."
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0014",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- The algorithm incorrectly iterates over numbers 1 to n (line `for p in range(1, n + 1):`) instead of simulating the stack operations for stack-sortability. The condition `if p in aset` does not model the required push/pop sequence; it prematurely fails when the first element of `a` is not 1 (e.g., input `3 2 1` gets false -1).\n- The while loop `while ai >= k and (len(st) == 0 or st[-1] != p):` never executes when `ai < k`, so for the first given element (p=1 or any small number) the stack is empty, causing `failed = True` incorrectly on line `if len(st) == 0 or st[-1] != p:`.\n- The logic for filling missing numbers (`app.append(p)` and later `a += app[::-1]`) and the inconsistent use of `ai` (initialized 0, compared to `k`) produce an invalid final permutation that is neither guaranteed stack-sortable nor lexicographically maximal.",
+        "patch": "",
+        "review": "FAIL: Empty code, no implementation."
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0015",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug 1: Division by zero when c == 0**  \n  Line 3–4: `if c * (b - a) >= 0 and (b - a) % c == 0:` attempts modulo by zero, causing a `ZeroDivisionError`. The condition should simply check `b == a`.\n\n- **Bug 2: Incomplete check for general arithmetic sequence**  \n  Line 7: `elif b == a:` only handles the case where `b` equals the first term. For arbitrary `c != 0`, it fails to test whether `(b - a)` is divisible by `c` and has the correct sign (i.e., `(b - a) * c >= 0`). Example: `a=1, b=7, c=3` incorrectly prints `NO`.",
+        "patch": "a, b, c = map(int, input().split())\nif c == 0:\n    if b == a:\n        print('YES')\n    else:\n        print('NO')\nelif (b - a) * c >= 0 and (b - a) % c == 0:\n    print('YES')\nelse:\n    print('NO')",
+        "review": "PASS"
+      }
+    }
+  ],
+  "used_assets": true,
+  "reuse_strategy": "full",
+  "asset_routing_rate": 1.0,
+  "usage": {
+    "llm_calls": 45,
+    "prompt_tokens": 155727,
+    "completion_tokens": 111349,
+    "total_tokens": 267076
+  },
+  "wall_time_sec": 1402.6431
+}

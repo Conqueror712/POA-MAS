@@ -1,0 +1,98 @@
+[
+  {
+    "asset_type": "role",
+    "agent_id": "A4",
+    "task_family": "code_repair",
+    "specialty": "localize",
+    "trigger_condition": "When a code repair task needs localize.",
+    "recommended_actions": [
+      "Prioritize localize subtasks for A4.",
+      "Use successful prior traces as style examples."
+    ],
+    "failure_patterns": [
+      "Avoid broad rewrites unless tests require them."
+    ],
+    "evidence": [
+      "apps_train_train_2361",
+      "apps_train_train_2362",
+      "apps_train_train_2363",
+      "apps_train_train_2364",
+      "apps_train_train_2365",
+      "apps_train_train_2366",
+      "apps_train_train_2367",
+      "apps_train_train_2368",
+      "apps_train_train_2369",
+      "apps_train_train_2370",
+      "apps_train_train_2372",
+      "apps_train_train_2373",
+      "apps_train_train_2377",
+      "apps_train_train_2378",
+      "apps_train_train_2379"
+    ],
+    "confidence": 1.0
+  },
+  {
+    "asset_type": "role",
+    "agent_id": "A1",
+    "task_family": "code_repair",
+    "specialty": "patch",
+    "trigger_condition": "When a code repair task needs patch.",
+    "recommended_actions": [
+      "Prioritize patch subtasks for A1.",
+      "Use successful prior traces as style examples."
+    ],
+    "failure_patterns": [
+      "Avoid broad rewrites unless tests require them."
+    ],
+    "evidence": [
+      "apps_train_train_2361",
+      "apps_train_train_2362",
+      "apps_train_train_2363",
+      "apps_train_train_2364",
+      "apps_train_train_2365",
+      "apps_train_train_2366",
+      "apps_train_train_2367",
+      "apps_train_train_2368",
+      "apps_train_train_2369",
+      "apps_train_train_2370",
+      "apps_train_train_2372",
+      "apps_train_train_2373",
+      "apps_train_train_2377",
+      "apps_train_train_2378",
+      "apps_train_train_2379"
+    ],
+    "confidence": 1.0
+  },
+  {
+    "asset_type": "role",
+    "agent_id": "A3",
+    "task_family": "code_repair",
+    "specialty": "review",
+    "trigger_condition": "When a code repair task needs review.",
+    "recommended_actions": [
+      "Prioritize review subtasks for A3.",
+      "Use successful prior traces as style examples."
+    ],
+    "failure_patterns": [
+      "Avoid broad rewrites unless tests require them."
+    ],
+    "evidence": [
+      "apps_train_train_2361",
+      "apps_train_train_2362",
+      "apps_train_train_2363",
+      "apps_train_train_2364",
+      "apps_train_train_2365",
+      "apps_train_train_2366",
+      "apps_train_train_2367",
+      "apps_train_train_2368",
+      "apps_train_train_2369",
+      "apps_train_train_2370",
+      "apps_train_train_2372",
+      "apps_train_train_2373",
+      "apps_train_train_2377",
+      "apps_train_train_2378",
+      "apps_train_train_2379"
+    ],
+    "confidence": 1.0
+  }
+]

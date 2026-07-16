@@ -1,0 +1,306 @@
+{
+  "run_name": "apps_protocol_20260716_repeat02_s713_test_reuse_routing",
+  "mode": "free",
+  "num_tasks": 20,
+  "task_offset": 0,
+  "task_split": "test",
+  "task_ids": [
+    "apps_test_test_4001",
+    "apps_test_test_4002",
+    "apps_test_test_4003",
+    "apps_test_test_4004",
+    "apps_test_test_4005",
+    "apps_test_test_4006",
+    "apps_test_test_4008",
+    "apps_test_test_4009",
+    "apps_test_test_4010",
+    "apps_test_test_4011",
+    "apps_test_test_4012",
+    "apps_test_test_4013",
+    "apps_test_test_4014",
+    "apps_test_test_4015",
+    "apps_test_test_4016",
+    "apps_test_test_4017",
+    "apps_test_test_4018",
+    "apps_test_test_4020",
+    "apps_test_test_4021",
+    "apps_test_test_4022"
+  ],
+  "num_agents": 4,
+  "seed": 713,
+  "success_rate": 0.85,
+  "specialization_index": 1.0,
+  "task_overlap_rate": 0.0,
+  "results": [
+    {
+      "task_id": "apps_test_test_4001",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The algorithm incorrectly selects the second number `b` as the first divisor of `a` encountered in the sorted descending list (line 8: `b = seq[i]; break`). This fails when the correct `y` is not a divisor of `x` (e.g., input: [10, 2, 8, 1, 2, 4, 1, 20, 4, 5], sorted descending [20,10,8,5,4,4,2,2,1,1]; `a=20`, first divisor encountered is `10`, leading to wrong answer `20 10` instead of `20 8`).\n\n- The logic for handling non‑divisor numbers with variable `last` (lines 5–7) is flawed: it only assigns `b` when a non‑divisor appears twice, but a non‑divisor of `a` that is the true `y` appears only once (since it is not a divisor of `a`). Thus that branch is never reached, forcing the code into the wrong divisor branch.\n\n- The bug is in the loop structure (lines 4–9): it does not remove all divisors of `a` from consideration before picking `b`. The correct approach is to first identify the largest number as `x`, then find the largest remaining number that is not a divisor of `x` as `y` (after accounting for duplicates of common divisors).",
+        "patch": "from collections import Counter\n\nn = int(input())\nseq = list(map(int, input().split()))\ncnt = Counter(seq)\n# largest number is one of the numbers\na = max(seq)\n# remove one occurrence of each divisor of a\nfor d in range(1, a + 1):\n    if a % d == 0 and cnt[d] > 0:\n        cnt[d] -= 1\n# the largest remaining number is the other number\nb = max(d for d, c in cnt.items() if c > 0)\nprint(a, b)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4002",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The DP for each row only considers selecting exactly `half = m // 2` items (via `dp[-1]`), but the problem allows **up to** `half` items, so valid sums with fewer items are missed.\n- The DP base states are initialized to zero for all residues (`[[0]*k]`), causing unreachable residues to be treated as valid; this leads to incorrect transitions (e.g., “summing” a number with an unused residue yields a false state).\n- The cross‑row combination logic incorrectly updates `ans` only when the combined sum is **not** divisible by `k` (`if (num+num2)%k != 0`) and does not maintain a proper residue‑based DP, so the",
+        "patch": "n, m, k = map(int, input().split())\nhalf = m // 2\nINF_NEG = -10**18\n\nrows_best = []  # list of list of length k, best sum for each residue per row\n\nfor _ in range(n):\n    lst = list(map(int, input().split()))\n    # DP for this row: dp[i][r] = max sum using exactly i items and residue r\n    dp = [[INF_NEG] * k for _ in range(half + 1)]\n    dp[0][0] = 0\n    for num in lst:\n        # process each number, update in reverse order of i\n        for i in range(min(half, len(lst)), 0, -1):\n            for r in range(k):\n                if dp[i-1][r] != INF_NEG:\n                    nr = (r + num) % k\n                    val = dp[i-1][r] + num\n                    if val > dp[i][nr]:\n                        dp[i][nr] = val\n    # combine all i from 0 to half into best per residue\n    row_best = [INF_NEG] * k\n    for i in range(half + 1):\n        for r in range(k):\n            if dp[i][r] > row_best[r]:\n                row_best[r] = dp[i][r]\n    rows_best.append(row_best)\n\n# combine rows\ntotal = [INF_NEG] * k\ntotal[0] = 0\nfor row in rows_best:\n    new_total = [INF_NEG] * k\n    for r1 in range(k):\n        if total[r1] == INF_NEG:\n            continue\n        for r2 in range(k):\n            if row[r2] == INF_NEG:\n                continue\n            nr = (r1 + r2) % k\n            val = total[r1] + row[r2]\n            if val > new_total[nr]:\n                new_total[nr] = val\n    total = new_total\n\nans = total[0] if total[0] != INF_NEG else 0\nprint(ans)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4003",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "",
+        "patch": "",
+        "review": "FAIL No candidate code provided."
+      }
+    },
+    {
+      "task_id": "apps_test_test_4004",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug 1: Early return of -1 for arrays with 2 or 3 distinct values.**  \n  Line `if len(a) <= 3: print(-1)` incorrectly rejects many valid cases (e.g., input `2 8` returns -1 instead of 3, input `1 4 7` returns -1 instead of 3). The `elif len(a) == 2` branch is never reached because the condition `len(a) <= 3` always triggers first.\n\n- **Bug 2: Removing duplicates via `set` alters the intended input.**  \n  The line `a = list(sorted(set(map(int, input().split()))))` reduces the array to distinct values. While not always wrong, combined with the flawed `<=3` rule it misclassifies cases where duplicates provide constraints (e.g., `[2,2,5,2,5]` becomes `[2,5]`, incorrectly rejected as impossible).\n\n- **Bug 3: Oversimplified logic for more than 3 distinct values.**  \n  For `len(a) > 3`, the code only checks if the first three sorted distinct values have equal gaps; it prints `d` if so, else -1. This fails to correctly compute the minimum D for general arrays (e.g., `[1,2,3,4]` would output 1, but the correct minimal D may differ or be impossible).",
+        "patch": "def main():\n    import sys\n    n = int(sys.stdin.readline().strip())\n    a = list(map(int, sys.stdin.readline().split()))\n    if n == 1:\n        print(0)\n        return\n    max_val = max(a)\n    # D can be at most max_val - min_val + something, but 200 is safe\n    for D in range(0, 201):\n        # compute possible targets from first element\n        possible = {a[0], a[0] + D, a[0] - D}\n        for x in a[1:]:\n            possible = possible & {x, x + D, x - D}\n            if not possible:\n                break\n        if possible:\n            print(D)\n            return\n    print(-1)\n\nif __name__ == \"__main__\":\n    main()",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4005",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "File \"<string>\", line 2\n    x3, y3, x4, y4 = map(int, input().\n                        ^\nSyntaxError: '(' was never closed"
+      },
+      "subtask_outputs": {
+        "localize": "- The first two conditional branches (lines 6-9) incorrectly assume that a single black sheet fully covers the white sheet. For instance, `x3 > x1` leaves a left‑side gap uncovered, yet `covered` is set to `True` without checking the second black sheet. This can cause false negatives (output `NO` when the white sheet is actually partially visible).  \n- The third and fourth branches (lines 10-15) only handle cases where **each** black sheet individually spans the entire white sheet in one dimension (e.g., both blacks cover the full horizontal range). They miss common scenarios where the two blacks complement each other (e.g., one covers the left half, the other covers the right half). No branch covers such a split, so `covered` remains `False` even when the white sheet is fully covered, leading to false positives (output `YES` when the white sheet is completely hidden).  \n- The entire logic is an incomplete set of specific configurations, not a general check for whether the union of two black rectangles covers the white rectangle. A correct solution would need to examine all possible overlaps, such as checking the four corners of the white sheet or computing the uncovered area.",
+        "patch": "```python\nx1, y1, x2, y2 = map(int, input().split())\nx3, y3, x4, y4 = map(int, input().",
+        "review": "FAIL: The code snippet is incomplete; it does not read all inputs and lacks logic to determine visibility."
+      }
+    },
+    {
+      "task_id": "apps_test_test_4006",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The inner while loop condition is inverted: it should be `while x % 10 == 0:` to remove trailing zeros, but the code uses `!= 0`, causing it to strip non-zero digits instead.\n- Division operator `/` returns a float; integer division `//` is required to keep `x` as an integer, else the code introduces floating-point inaccuracies and type mismatch.\n- These bugs cause incorrect computation of `f(x)`, leading to a wrong chain of reachable numbers and an incorrect count.",
+        "patch": "darling = {}\nx = int(input())\nans = 0\nwhile x not in darling:\n    darling[x] = 1\n    ans += 1\n    x += 1\n    while x % 10 == 0:\n        x //= 10\nprint(ans)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4008",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The impossibility condition is inverted: the code sets `fol=1` when any element's frequency is ≤ k, but it should set it when any frequency exceeds k.  \n- This causes the code to output \"NO\" for valid cases (where all frequencies ≤ k) and \"YES\" for invalid cases (where a frequency > k).  \n- The relevant lines are the `for t in set(mass):` loop and the subsequent `if len(mass) < k or fol:` check.",
+        "patch": "```python\nn, k = map(int, input().split())\na = list(map(int, input().split()))\n\n# Count frequencies\nfrom collections import Counter\nfreq = Counter(a)\nif any(cnt > k for cnt in freq.values()):\n    print('NO')\nelse:\n    print('YES')\n    # Create list of (value, original_index)\n    pairs = [(a[i], i) for i in range(n)]\n    pairs.sort()\n    ans = [0] * n\n    for idx, (_, orig_idx) in enumerate(pairs):\n        ans[orig_idx] = (idx % k) + 1\n    print(' '.join(map(str, ans)))\n```",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4009",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The bug is in the adjustment logic for the required digit at position `y` from the right. The code incorrectly adds 1 when the digit is already 1 (should subtract 1) and subtracts 1 when the digit is 0 (should add 1), reversing the necessary flips.\n- Relevant line: `if s[-y - 1] != '1': res -= 1 else: res += 1`. The condition should be `if s[-y - 1] == '1': res -= 1 else: res += 1`.\n- The initial count `res = s.count('1')` is correct; the error is only in the final adjustment of `res` relative to the target digit at position `y`.",
+        "patch": "n, x, y = map(int, input().split())\ns = input()[-x:]\nres = s.count('1')\nif s[-y - 1] == '1':\n    res -= 1\nelse:\n    res += 1\nprint(res)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4010",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The condition `if arr[c] != arr[j]` incorrectly checks for inequality, but a palindrome subsequence of length ≥3 requires the first and last elements to be equal. This causes the algorithm to output \"YES\" for many arrays that do not contain a palindromic subsequence (e.g., `[1,1,2]` outputs \"YES\" but should be \"NO\").\n- The looping logic only flags `True` when a pair of elements at distance ≥2 are different, which is almost always satisfied, instead of checking for a matching pair (same value) with at least one element between them.\n- The overall approach does not correctly detect the required palindromic subsequence; it fails to check for any element that appears at least twice with a gap of at least 1 position, or any element appearing three times. (Lines 5–8 in the inner loops are the core of the bug.)",
+        "patch": "t = int(input())\nfor _ in range(t):\n    n = int(input())\n    arr = list(map(int, input().split()))\n    first_occ = {}\n    flag = False\n    for i, v in enumerate(arr):\n        if v in first_occ and i - first_occ[v] >= 2:\n            flag = True\n            break\n        if v not in first_occ:\n            first_occ[v] = i\n    print(\"YES\" if flag else \"NO\")",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4011",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Primary bug**: The initial `while` loop condition (`while f[a[i]] > a[i]:`) is reversed. It should skip digits where `f[a[i]] <= a[i]` to find the first position where `f[a[i]] > a[i]` (the start of the beneficial segment). Instead, it skips past all beneficial digits, often resulting in an empty segment or starting too late.\n- **Affected lines**: The `while` loop starting at `i = 0` and continuing with `while f[a[i]] > a[i]: i += 1` incorrectly advances `i` past the positions that actually should be replaced first.",
+        "patch": "n = int(input())\na = list(map(int, input().strip()))\nf = [0] + list(map(int, input().split()))\n\ni = 0\nwhile i < n and f[a[i]] <= a[i]:\n    i += 1\n\nfor j in range(i, n):\n    if f[a[j]] < a[j]:\n        break\n    a[j] = f[a[j]]\n\nprint(''.join(str(x) for x in a))",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_test_test_4012",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- The divisor generation loop for filling `f[i]` is incorrect: it breaks at `j*j <= i` instead of iterating while `j*j <= i`. This causes only the divisor `1` (and possibly `i` itself) to be added, missing all other divisors (e.g., for i=4, only [1,4] is stored instead of [1,2,4]).\n- As a result, the triple search over `B` in `f[C]` and `A` in `f[B]` does not consider many valid (A, B, C) combinations, leading to suboptimal or wrong answers for test cases where optimal solutions require intermediate divisors (e.g., input `5 10 15` expects (4,8,16), but B=8 is missing from f[16]).",
+        "patch": "import sys\n\ndef minp():\n    return sys.stdin.readline().strip()\n\ndef mint():\n    return int(minp())\n\ndef mints():\n    return list(map(int, minp().split()))\n\n# Precompute divisors up to 20020 (since 2*c+10 max is 20010)\nN = 20021\nf = [[] for _ in range(N)]\nfor i in range(1, N):\n    for j in range(1, int(i**0.5) + 1):\n        if i % j == 0:\n            f[i].append(j)\n            if j * j != i:\n                f[i].append(i // j)\n\ndef solve():\n    a, b, c = mints()\n    ans = (10**18, 0, 0, 0)  # large enough, not using float\n    for C in range(1, 2 * c + 10):\n        dc = abs(C - c)\n        for B in f[C]:\n            db = abs(B - b)\n            for A in f[B]:\n                total = dc + db + abs(A - a)\n                if total < ans[0]:\n                    ans = (total, A, B, C)\n    print(ans[0])\n    print(ans[1], ans[2], ans[3])\n\nt = mint()\nfor _ in range(t):\n    solve()",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_test_test_4013",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The bug is a sign error in the first term of the `min` expression: `a[-1] + a[1]` should be `a[-1] - a[1]`. This incorrectly adds the largest and second smallest elements instead of subtracting them.\n- This mistake leads to an incorrect answer when removing the smallest element yields a lower instability than removing the largest (e.g., input `[1, 100, 100]` gives 99 instead of 0).\n- The relevant line is the final `print` statement.",
+        "patch": "n = int(input())\na = list(map(int, input().split()))\na.sort()\nprint(min(a[-1] - a[1], a[-2] - a[0]))",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4014",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The code only iterates over days that are exam days (when `M[i] != -1`) to assign preparation activities, completely ignoring non-exam days. This means preparation is never scheduled on days that should be used for rest or preparation, and non-exam days remain as `-1` in the output, which is invalid (should be `0` for rest or an exam number).\n- On exam days, the code overwrites the exam marker (`m+1`) with a preparation activity number or `0`, violating the constraint that exam days must be used solely for taking the exam (no preparation allowed).\n- The greedy selection of which exam to prepare for is applied only on exam days, and the condition `i < L[j][0]` (i must be less than the exam day) will never be true when `i` equals the exam day of the candidate exam, leading to no preparation being assigned on that day even if needed; the algorithm fails to schedule preparation in the correct interval.",
+        "patch": "```python\nimport sys\n\ndef solve() -> None:\n    input_data = sys.stdin.read().strip().split()\n    if not input_data:\n        return\n    it = iter(input_data)\n    n = int(next(it))\n    m = int(next(it))\n\n    exams = []                     # (s, d, c, original_index) 1-indexed index\n    exam_day = [0] * (n + 1)      # exam_day[day] = exam index (1..m)\n    for idx in range(1, m + 1):\n        s = int(next(it))\n        d = int(next(it))\n        c = int(next(it))\n        exams.append((s, d, c, idx))\n        exam_day[d] = idx\n\n    remaining = [0] * (m + 1)      # remaining preparation days for each exam\n    for _, _, c, idx in exams:\n        remaining[idx] = c\n\n    output = [0] * (n + 1)         # 1-indexed result\n\n    for day in range(1, n + 1):\n        if exam_day[day] != 0:               # exam day\n            ex = exam_day[day]\n            if remaining[ex] != 0:           # not enough preparation\n                print(-1)\n                return\n            output[day] = m + 1\n        else:                                # free day\n            best_exam = -1\n            best_dead = n + 1\n            for s, d, _, idx in exams:\n                if remaining[idx] > 0 and s <= day < d:\n                    if d < best_dead:\n                        best_dead = d\n                        best_exam = idx\n            if best_exam != -1:\n                output[day] = best_exam\n                remaining[best_exam] -= 1\n            else:\n                output[day] = 0\n\n    # final check\n    for i in range(1, m + 1):\n        if remaining[i] != 0:\n            print(-1)\n            return\n\n    print(' '.join(map(str, output[1:])))\n\nif __name__ == \"__main__\":\n    solve()\n```",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4015",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The condition on line 3 is inverted: the code attempts to compute moves only when `m % n != 0`, but the correct logic should do so only when `m % n == 0`. This causes correct examples to fail (e.g., n=120,m=51840 goes to else and prints -1 instead of 7).\n- When n equals m, the condition `m % n == 0` triggers the else branch and prints -1, but the correct answer is 0 moves.\n- Additionally, when `m % n != 0` (e.g., n=48,m=72), the code incorrectly computes `k = m // n = 1`, removes no factors, and prints 0 instead of -1.",
+        "patch": "n, m = map(int, input().split())\nif m % n != 0:\n    print(-1)\nelse:\n    k = m // n\n    res = 0\n    while k % 2 == 0:\n        k //= 2\n        res += 1\n    while k % 3 == 0:\n        k //= 3\n        res += 1\n    if k > 1:\n        print(-1)\n    else:\n        print(res)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4016",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The loop incorrectly breaks when it finds the first `i` where `t[i:] != t[:n-i]` (suffix does not match prefix), but the correct approach is to find the longest `i` where they **do** match (i.e., longest border) to maximize overlap.  \n- The construction `t[:i] * k + t[i:]` does not produce the minimal string with exactly `k` occurrences; it repeats a prefix `k` times and then appends the remainder, which is wrong for overlapping occurrences.  \n- The flawed logic is in lines `for i in range(1, n): if t[i:] != t[:n - i]: print(t[:i] * k + t[i:]); break; else: print(t * k)`.",
+        "patch": "n, k = map(int, input().split())\nt = input().strip()\nL = 0  # longest border length\nfor i in range(1, n):\n    if t[i:] == t[:n-i]:\n        L = n - i\n        break\nif L == 0:\n    print(t * k)\nelse:\n    print(t + t[L:] * (k - 1))",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_test_test_4017",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The condition `if s % 2 != 0` should be `if s % 2 == 0`, because for a good array, the required element must be exactly half of the remaining sum, which requires the sum to be even.\n\n- The bug is on line 10 (inside the loop), where the parity check is reversed, causing the code to skip valid removals where the remaining sum is even.\n\n- Additionally, the check for `s // 2 <= 1000000` is unnecessary since the array values are up to 1e6 but the sum could be larger; however, the frequency array size is 1e6+1, so if `s//2` exceeds this range, the condition fails correctly, but it might miss cases where a large value is needed but not present anyway — this is a minor inefficiency but not the main bug.",
+        "patch": "n = int(input())\na = list(map(int, input().split()))\nc = [0 for i in range(1000001)]\ns = sum(a)\nans = []\nfor i in a:\n    c[i] += 1\nfor i in range(n):\n    s -= a[i]\n    c[a[i]] -= 1\n    if s % 2 == 0 and s // 2 <= 1000000 and (c[s // 2] > 0):\n        ans.append(i)\n    s += a[i]\n    c[a[i]] += 1\nprint(len(ans))\nfor i in ans:\n    print(i + 1, end=' ')",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_test_test_4018",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "",
+        "patch": "n,k = map(int, input().split())\ns = input().strip()\n\ndp = [[0]*(n+1) for _ in range(n+1)]\ndp[0][0] = 1\nlast = [-1]*26\n\nfor i in range(1, n+1):\n    c = ord(s[i-1]) - 97\n    for j in range(0, i+1):\n        dp[i][j] = dp[i-1][j]\n        if j > 0:\n            dp[i][j] += dp[i-1][j-1]\n        if last[c] != -1 and j > 0:\n            dp[i][j] -= dp[last[c]-1][j-1]\n        if dp[i][j] > k:\n            dp[i][j] = k\n    last[c] = i\n\ncnt = [dp[n][l] for l in range(n+1)]\n\nans = 0\nrem = k\nfor l in range(n, -1, -1):\n    take = min(cnt[l], rem)\n    ans += (n - l) * take\n    rem -= take\n    if rem == 0:\n        break\n\nif rem > 0:\n    print(-1)\nelse:\n    print(ans)",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_test_test_4020",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Likely bug:** Line 3 incorrectly converts `h1` to minutes using integer division (`h1 // 60`) instead of multiplication (`h1 * 60`). This causes the total minutes `z` to be miscalculated (e.g., for `h1=10`, `10//60=0` instead of 600).\n- **Relevant lines:** `z = h1 // 60 + m1 + h2 * 60 + m2` — the term `h1 // 60` should be `h1 * 60`.\n- **Impact:** The computed midpoint will be wrong because the total minutes from the start time are far too small, leading to an incorrect average.",
+        "patch": "```python\nh1, m1 = map(int, input().split(':'))\nh2, m2 = map(int, input().split(':'))\ntotal_minutes = h1 * 60 + m1 + h2 * 60 + m2\nmid_minutes = total_minutes // 2\nh3 = mid_minutes // 60\nm3 = mid_minutes % 60\nprint(f\"{h3:02d}:{m3:02d}\")\n```",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4021",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- Likely Bug: Off-by-one error in indexing the list `a`. The code uses `a[x + 1]` where `x` is the input (1–64), but the list `a` is 0-indexed with 64 elements. This causes incorrect output for most inputs and an index out-of-range error for `x = 64`.\n- Relevant Line: `print(a[x + 1])` (should be `a[x - 1]` to map input to correct list index).",
+        "patch": "class InputHandlerObject(object):\n    inputs = []\n\n    def getInput(self, n=0):\n        res = ''\n        inputs = self.inputs\n        if not inputs:\n            inputs.extend(input().split(' '))\n        if n == 0:\n            res = inputs[:]\n            inputs[:] = []\n        while n > len(inputs):\n            inputs.extend(input().split(' '))\n        if n > 0:\n            res = inputs[:n]\n            inputs[:n] = []\n        return res\nInputHandler = InputHandlerObject()\ng = InputHandler.getInput\nx = int(input())\na = [1, 1, 1, 2, 1, 2, 1, 5, 2, 2, 1, 5, 1, 2, 1, 14, 1, 5, 1, 5, 2, 2, 1, 15, 2, 2, 5, 4, 1, 4, 1, 51, 1, 2, 1, 14, 1, 2, 2, 14, 1, 6, 1, 4, 2, 2, 1, 52, 2, 5, 1, 5, 1, 15, 2, 13, 2, 2, 1, 13, 1, 2, 4, 267]\nprint(a[x - 1])",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_test_test_4022",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The condition for updating the left bound (lines 11–13) is inverted: when `l != a[i][0]`, it sets `l = first[1]`, which incorrectly uses the second-largest left for segments that are *not* the one with the global maximum left. The correct logic should use the second-largest left only when the current segment *is* the one with the global maximum left.\n\n- The right bound update (lines 14–16) checks `r == a[i][1]` correctly, but neither side handles duplicate extreme values (e.g., multiple segments with the same maximum left or minimum right). If the extreme value appears more than once, removing one such segment should not change the bound, but the current code may switch to the second extreme unnecessarily (or fail to switch when needed).\n\n- Additionally, the code does not account for cases where after removal `l > r` (empty intersection), though it initially sets `bestAnswer = 0` and takes the max, which is acceptable. However, the inverted left condition and missing duplicate handling are the primary logical errors.",
+        "patch": "import sys\n\ndef solve() -> None:\n    data = sys.stdin.read().strip().split()\n    if not data:\n        return\n    it = iter(data)\n    n = int(next(it))\n    l = [0] * n\n    r = [0] * n\n    for i in range(n):\n        l[i] = int(next(it))\n        r[i] = int(next(it))\n\n    # prefix max of left, prefix min of right\n    pref_max_l = [-10**18] * n\n    pref_min_r = [10**18] * n\n    for i in range(1, n):\n        pref_max_l[i] = max(pref_max_l[i-1], l[i-1])\n        pref_min_r[i] = min(pref_min_r[i-1], r[i-1])\n\n    # suffix max of left, suffix min of right\n    suff_max_l = [-10**18] * n\n    suff_min_r = [10**18] * n\n    for i in range(n-2, -1, -1):\n        suff_max_l[i] = max(suff_max_l[i+1], l[i+1])\n        suff_min_r[i] = min(suff_min_r[i+1], r[i+1])\n\n    best = 0\n    for i in range(n):\n        L = max(pref_max_l[i], suff_max_l[i])\n        R = min(pref_min_r[i], suff_min_r[i])\n        length = max(0, R - L)\n        if length > best:\n            best = length\n\n    print(best)\n\nif __name__ == \"__main__\":\n    solve()",
+        "review": "PASS"
+      }
+    }
+  ],
+  "used_assets": true,
+  "reuse_strategy": "routing",
+  "asset_routing_rate": 1.0,
+  "usage": {
+    "llm_calls": 60,
+    "prompt_tokens": 138318,
+    "completion_tokens": 118257,
+    "total_tokens": 256575
+  },
+  "wall_time_sec": 1332.978
+}
