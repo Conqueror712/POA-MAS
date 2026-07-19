@@ -1,5 +1,5 @@
 {
-  "project_name": "POA-MAS-humaneval",
+  "project_name": "ORCA-humaneval",
   "domain": "code",
   "task_file": "data/tasks_code/humaneval_repair.json",
   "output_root": "trajectories",

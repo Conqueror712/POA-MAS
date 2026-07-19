@@ -1,5 +1,5 @@
 {
-  "project_name": "POA-MAS-expanded",
+  "project_name": "ORCA-expanded",
   "domain": "code",
   "task_file": "data/tasks_code/expanded_code_repair.json",
   "output_root": "trajectories",

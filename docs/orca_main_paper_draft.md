@@ -1,0 +1,203 @@
+# ORCA: Organizational Reuse of Coordination Assets for Multi-Agent LLM Systems
+
+## Abstract
+
+Multi-agent LLM systems often develop useful coordination patterns during execution, including role specialization, repair procedures, and handoff conventions. Yet these patterns are typically discarded after a run or reused as unstructured context. We ask whether emergent coordination can instead be converted into persistent, typed assets and reused selectively on later tasks. We present ORCA, a lightweight framework that logs multi-agent trajectories, extracts role-level and organization-level coordination assets, and reuses them through prompt guidance, asset-based routing, or both. On APPS-derived code-repair tasks, prompt-level assets improve shifted-split success from 68.9% to 82.2% and reduce empty or missing patch failures from 13/45 to 4/45 attempts. In contrast, full reuse underperforms free self-organization, indicating that organizational memory is not monotonically beneficial. A second study in repeated social dilemmas shows that reusable strategy assets produce more stable cooperation and social welfare than persona prompts alone, especially in Public Goods games. Overall, ORCA supports a structured view of multi-agent memory: coordination patterns can transfer across tasks, but they should be decomposed into typed assets and reused selectively rather than replayed wholesale.
+
+## 1 Introduction
+
+Large language models are increasingly used as components in multi-agent systems. A typical system assigns multiple LLM agents to complementary roles, lets them communicate through intermediate artifacts, and asks the group to solve tasks that are difficult for a single agent to complete reliably. This design has been explored for software engineering, planning, tool use, debate, scientific discovery, and collaborative decision making. Yet a persistent limitation remains: once a multi-agent run ends, much of the useful coordination that occurred during the run disappears.
+
+This loss is not only a loss of task content. During successful multi-agent execution, agents often produce implicit organizational structure. Some agents become reliable localizers, some are better at producing executable patches, some are useful reviewers, and some sequences of handoffs are more stable than others. These patterns are different from ordinary factual memory. They are not primarily about what answer was produced, but about how a group organized itself to produce it.
+
+Current systems usually handle such information in one of two ways. The first is to discard it and start each new task from a clean slate. This keeps the system simple, but it prevents successful coordination from accumulating across runs. The second is to reuse prior context wholesale, for example by retrieving past trajectories or summaries and inserting them into future prompts. This can preserve useful information, but it treats coordination as undifferentiated memory. If past traces include irrelevant procedures, brittle routing decisions, or over-specific conventions, blindly replaying them may hurt rather than help.
+
+We study a middle path. We ask whether emergent coordination can be distilled into typed coordination assets and selectively reused on later tasks. We call the resulting framework ORCA, for Organizational Reuse of Coordination Assets. ORCA records multi-agent trajectories, extracts reusable assets that describe role tendencies and organization-level procedures, and reuses these assets through controlled mechanisms. The central claim is deliberately modest: persistent coordination can be useful, but only if the system preserves structure about what is being reused and how it is applied.
+
+This framing leads to a different empirical question from standard multi-agent benchmarking. We do not ask whether ORCA is a new state-of-the-art code repair system or a general-purpose game-theoretic agent. Instead, we ask whether specific forms of reusable coordination improve the reliability of later multi-agent runs. This question is especially relevant when teams face shifted tasks, where a prior successful organization may transfer partially but not completely.
+
+We evaluate ORCA in two domains. The first is code repair, using APPS-derived tasks with executable tests. A four-agent team decomposes each repair into localization, patching, and review. Assets are extracted from successful training trajectories and reused on held-out APPS repair tasks. On the shifted split, prompt-level reuse improves average success from 68.9% to 82.2%, and reduces empty or missing patch failures from 13/45 to 4/45 attempts. However, full reuse of both prompt assets and routing assets performs worse than free self-organization, showing that more memory is not necessarily better.
+
+The second domain is a controlled set of repeated social dilemmas. In Iterated Prisoner's Dilemma and Public Goods games, agents repeatedly choose between self-interested and pro-social actions. This domain lets us examine whether reusable strategy assets shape explicitly multi-agent behavior. The strongest signal appears in Public Goods games, where reusable strategy assets yield the highest cooperation, payoff, and social welfare across both test and shifted settings.
+
+Our contributions are:
+
+1. We formulate emergent coordination in multi-agent LLM systems as reusable typed assets, rather than as transient behavior or undifferentiated memory.
+2. We implement ORCA, a lightweight framework that extracts role-level and organization-level assets from trajectories and supports prompt-only, routing-only, and full reuse.
+3. We show on APPS-derived code repair that prompt-level coordination assets improve shifted-task robustness, while full reuse can over-constrain the workflow.
+4. We provide a second controlled study in repeated social dilemmas, showing that reusable strategy assets can induce more stable cooperative behavior than persona prompts alone.
+
+## 2 ORCA: Coordination Assets for Multi-Agent Systems
+
+### 2.1 Problem Setting
+
+Consider a distribution of tasks \(T\), a set of LLM agents \(A = \{a_1, \ldots, a_n\}\), and a controller that assigns subtasks to agents. A multi-agent run produces a trajectory consisting of task context, subtask assignments, agent messages, intermediate artifacts, final outputs, evaluation results, and usage metadata. We assume access to an automatic evaluator, such as executable tests for code repair or payoff functions for games.
+
+The usual multi-agent setting optimizes performance within a single run. ORCA instead considers a sequence of runs. The system first observes trajectories on a source split, extracts reusable coordination assets, and then evaluates how those assets affect behavior on held-out tasks. The assets are not trained model parameters. They are structured summaries of coordination patterns that can be inspected, ablated, and reused.
+
+### 2.2 Coordination Assets
+
+We use the term coordination asset for a persistent artifact that describes how a multi-agent system organized work during prior successful runs. ORCA currently uses two asset types.
+
+**Role assets** summarize which agents were effective for which subtasks. In code repair, for example, a role asset may indicate that a particular agent was frequently successful on localization or patching. These assets can be used by a controller to bias future task routing.
+
+**Organization assets** summarize reusable procedures and handoff conventions. In code repair, these may describe a pattern such as first identifying the failing invariant, then producing a complete executable patch, then checking whether the patch handles stdin/stdout edge cases. In games, the analogous assets describe compact strategy rules such as maintaining cooperation, reciprocating deviations, and returning only legal action tokens.
+
+The distinction matters because these asset types can fail differently. A routing asset can assign a subtask to a historically strong agent but still fail if the prompt does not elicit an executable artifact. A prompt asset can stabilize the handoff protocol without forcing the controller to use a specific assignment. Full reuse can combine both, but it may also over-specify the collaboration pattern.
+
+![ORCA mechanism](../results/figures/poa_mechanism_selective_reuse.svg)
+
+### 2.3 Asset Extraction
+
+ORCA extracts assets from source trajectories after evaluation. Successful trajectories are treated as evidence of potentially reusable coordination; failed trajectories are not used as positive asset sources. The extractor records role-level statistics, such as which agent handled which subtask and whether the final task succeeded, and organization-level summaries, such as recurring procedural guidance.
+
+The extraction stage is intentionally lightweight. This is not a learned memory module or a supervised optimizer. The goal is to obtain interpretable assets quickly enough for a controlled study, while preserving enough structure to test whether different asset types have different transfer behavior.
+
+### 2.4 Reuse Modes
+
+We evaluate three reuse modes.
+
+**Prompt-only reuse** injects organization assets into the agents' prompts while leaving routing free. This tests whether procedural coordination guidance alone improves execution.
+
+**Routing-only reuse** uses role assets to bias subtask assignment while omitting asset content from prompts. This tests whether historical specialization alone is useful.
+
+**Full reuse** combines prompt assets and asset-based routing. This tests whether using all available organizational memory is beneficial, or whether multiple constraints can interfere.
+
+These modes are compared against free self-organization, a manually fixed routing baseline, and random routing. The ablation design is central to ORCA: without separating asset types, a positive or negative result would be difficult to interpret.
+
+## 3 Experiment 1: APPS-Derived Code Repair
+
+### 3.1 Setup
+
+We construct a code-repair benchmark from APPS. Each task contains a natural-language programming problem, a buggy Python solution, and the original stdin/stdout tests. A repair succeeds only when the generated program passes all available tests.
+
+The benchmark has three splits: 20 training tasks for trajectory collection and asset extraction, 20 held-out test tasks from the same broad distribution, and 15 shifted tasks drawn from a harder interview-level subset. The shifted split is the primary transfer setting; the regular test split is used as a sanity condition and is close to saturation.
+
+Each run uses four LLM agents and three subtasks: localize, patch, and review. We compare six settings: free, manual, random, prompt-only reuse, routing-only reuse, and full reuse. For each seed, ORCA first runs the free system on the training split, extracts assets from successful trajectories, and then evaluates all settings on the held-out splits. We report results over three seeds: 712, 713, and 714. All API runs use DeepSeek-V4-Flash.
+
+### 3.2 Main Results
+
+![APPS success rates](../results/figures/apps_success_rates.svg)
+
+| split | setting | avg success | std | min | max |
+|---|---:|---:|---:|---:|---:|
+| shifted_test | free | 0.689 | 0.083 | 0.600 | 0.800 |
+| shifted_test | manual | 0.622 | 0.031 | 0.600 | 0.667 |
+| shifted_test | random | 0.756 | 0.083 | 0.667 | 0.867 |
+| shifted_test | reuse_prompt | **0.822** | 0.031 | 0.800 | 0.867 |
+| shifted_test | reuse_routing | 0.778 | 0.031 | 0.733 | 0.800 |
+| shifted_test | reuse_full | 0.644 | 0.063 | 0.600 | 0.733 |
+| test | free | 0.900 | 0.071 | 0.850 | 1.000 |
+| test | manual | **0.933** | 0.024 | 0.900 | 0.950 |
+| test | random | 0.850 | 0.041 | 0.800 | 0.900 |
+| test | reuse_prompt | 0.917 | 0.024 | 0.900 | 0.950 |
+| test | reuse_routing | 0.833 | 0.024 | 0.800 | 0.850 |
+| test | reuse_full | 0.850 | 0.041 | 0.800 | 0.900 |
+
+Prompt-only reuse gives the strongest shifted-split result, improving over free self-organization by 13.3 percentage points. Routing-only reuse is also positive on the shifted split, improving over free by 8.9 percentage points. Full reuse, however, underperforms free self-organization. This is the key empirical pattern: coordination assets can transfer, but combining all assets is not uniformly beneficial.
+
+The regular test split is less informative because free self-organization already reaches 90.0% success and manual routing reaches 93.3%. We therefore treat the shifted split as the main evidence for transfer under distribution shift.
+
+### 3.3 Matched Reuse/Free Contrast
+
+Mean success rates can obscure whether reuse helps the same task attempts that free self-organization fails. We therefore compare each reuse mode against free on matched task-seed pairs.
+
+![Reuse/free contrast](../results/figures/apps_reuse_vs_free.svg)
+
+| split | setting | rescued | hurt | both passed | both failed | net rescued-hurt |
+|---|---:|---:|---:|---:|---:|---:|
+| shifted_test | reuse_prompt | 8 | 2 | 29 | 6 | **+6** |
+| shifted_test | reuse_routing | 8 | 4 | 27 | 6 | +4 |
+| shifted_test | reuse_full | 5 | 7 | 24 | 9 | -2 |
+| test | reuse_prompt | 5 | 4 | 50 | 1 | +1 |
+| test | reuse_routing | 2 | 6 | 48 | 4 | -4 |
+| test | reuse_full | 2 | 5 | 49 | 4 | -3 |
+
+On the shifted split, prompt-only reuse rescues eight task attempts and hurts two, while routing-only reuse rescues eight and hurts four. Full reuse hurts more attempts than it rescues. This contrast supports the selective-reuse interpretation: useful coordination patterns should be decomposed and applied conditionally, rather than replayed as a single monolithic memory.
+
+### 3.4 Failure Modes
+
+The most common shifted-split failure is not an incorrect algorithmic answer. It is an empty or missing patch: the system may localize or discuss the bug but fail to deliver an executable program to the evaluator.
+
+![Failure modes on shifted APPS](../results/figures/apps_failure_modes_shifted.svg)
+
+| setting | empty/missing patch | syntax error | wrong output | all failures |
+|---|---:|---:|---:|---:|
+| Free | 13 | 1 | 0 | 14 |
+| Manual | 15 | 1 | 1 | 17 |
+| Random | 10 | 1 | 0 | 11 |
+| Prompt | **4** | 2 | 2 | 8 |
+| Routing | 8 | 0 | 2 | 10 |
+| Full | 14 | 1 | 1 | 16 |
+
+Prompt-level reuse reduces empty or missing patches from 13/45 attempts to 4/45 attempts. This suggests that the benefit is not simply better programming ability. The main mechanism is improved workflow reliability, especially the handoff from bug localization to executable patch generation.
+
+Qualitative cases support this interpretation. In an accordion parser task and a fence-painting task, free self-organization fails with an empty patch, while prompt or routing reuse produces executable passing repairs. Negative cases are also informative: in a golden trophy task, free and prompt reuse pass, but full reuse localizes the issue and then fails to produce a patch. Such cases show why full reuse can be harmful even when some extracted assets are useful.
+
+## 4 Experiment 2: Repeated Social Dilemmas
+
+### 4.1 Setup
+
+The second experiment tests whether reusable coordination assets also matter outside code repair. We use two programmatic repeated games: Iterated Prisoner's Dilemma and Public Goods. These games expose explicitly multi-agent behavior, because cooperation, payoff, and social welfare depend on how agents respond to each other over repeated interaction.
+
+We compare three conditions. In no-persona, agents receive the game rules and payoff information but no behavioral identity or reusable strategy. In persona, agents receive heterogeneous descriptions such as cooperative norm follower, reciprocal player, conditional cooperator, or self-interested maximizer. In reuse-assets, agents receive compact reusable strategy assets that encourage legal action formatting, reciprocity, and pro-social coordination.
+
+We report cooperation rate, average payoff, social welfare, Nash-deviation rate, and invalid-action rate. All formal mini-runs have invalid-action rate zero.
+
+### 4.2 Results
+
+![Domain 2 cooperation rates](../results/figures/game_domain_cooperation.svg)
+
+![Domain 2 average payoff](../results/figures/game_domain_payoff.svg)
+
+| split | game | setting | cooperation | avg. payoff | welfare | invalid |
+|---|---|---|---:|---:|---:|---:|
+| test | IPD | no_persona | 0.000 | 1.000 | 16.000 | 0.000 |
+| test | IPD | persona | 0.312 | 1.938 | 31.000 | 0.000 |
+| test | IPD | reuse_assets | **1.000** | **3.000** | **48.000** | 0.000 |
+| test | Public Goods | no_persona | 0.167 | 11.000 | 264.000 | 0.000 |
+| test | Public Goods | persona | 0.625 | 13.750 | 330.000 | 0.000 |
+| test | Public Goods | reuse_assets | **0.958** | **15.750** | **378.000** | 0.000 |
+| shifted_test | IPD | no_persona | 1.000 | 3.000 | 60.000 | 0.000 |
+| shifted_test | IPD | persona | 0.800 | 2.700 | 54.000 | 0.000 |
+| shifted_test | IPD | reuse_assets | **1.000** | **3.000** | **60.000** | 0.000 |
+| shifted_test | Public Goods | no_persona | 0.067 | 10.267 | 308.000 | 0.000 |
+| shifted_test | Public Goods | persona | 0.767 | 13.067 | 392.000 | 0.000 |
+| shifted_test | Public Goods | reuse_assets | **1.000** | **14.000** | **420.000** | 0.000 |
+
+The cleanest result appears in Public Goods. On both test and shifted tasks, cooperation, average payoff, and social welfare follow the same ordering: no-persona, then persona, then reuse-assets. This indicates that descriptive persona can influence behavior, but reusable strategy assets provide a stronger and more stable pro-social bias.
+
+IPD is more mixed. On the test task, reuse-assets improves cooperation from 0.000 under no-persona and 0.312 under persona to 1.000. On the shifted IPD task, no-persona already reaches full cooperation, so the setting is saturated and cannot show an additional improvement. We therefore use Domain 2 as secondary evidence, with Public Goods providing the strongest support.
+
+## 5 Discussion
+
+The main lesson from ORCA is that persistent organization is useful only when it is structured. The APPS experiment shows a positive result for prompt-level procedural assets and a weaker positive result for routing-only assets under shift. At the same time, full reuse can harm performance. This negative result is not incidental. It is evidence against a simple memory-scaling view in which adding more prior coordination context should monotonically improve later runs.
+
+This matters for multi-agent LLM systems because coordination failures are often not captured by final-task accuracy alone. In APPS, a large portion of shifted-split failures are missing-patch handoff failures. The model may discuss the bug but fail to produce the artifact expected by the evaluator. Prompt-level assets reduce this failure mode, suggesting that reusable coordination can stabilize the protocol of collaboration even when it does not change the model's underlying programming competence.
+
+The repeated-games experiment extends the same idea to explicitly social behavior. Persona prompts change behavior, but reusable strategy assets more directly encode how the group should coordinate across rounds. The result is not a broad claim about game-theoretic optimality. It is evidence that the same asset-based perspective can shape behavior in a domain where the outcome is inherently collective.
+
+The broader implication is that multi-agent systems should not treat past runs as either disposable traces or generic memory. They should ask what kind of coordination occurred, whether it should be preserved, and how it should be reused. ORCA takes a first step in this direction by making coordination assets explicit and by evaluating reuse modes separately.
+
+## 6 Related Work
+
+This section is still a placeholder for the next writing pass. The final version should connect ORCA to four bodies of work:
+
+1. Multi-agent LLM frameworks for collaboration, debate, software engineering, and tool use.
+2. Agent memory and experience reuse, especially approaches that retrieve or summarize prior trajectories.
+3. Self-organization, role specialization, and coordination in multi-agent systems.
+4. LLMs in code repair and game-theoretic/social-dilemma evaluation.
+
+The key distinction to emphasize is that ORCA studies typed coordination assets and selective reuse, rather than only storing task content, replaying full trajectories, or manually assigning fixed personas.
+
+## 7 Limitations
+
+ORCA is a small controlled study, not a fully general multi-agent memory system. The APPS repair benchmark uses available stdin/stdout tests rather than hidden online-judge tests. The shifted split is deliberately useful for studying transfer, but the total number of tasks remains limited. The experiments also use a single model family, which leaves cross-model robustness open.
+
+Domain 2 is even more controlled. The games are programmatic and intentionally small, which makes them cheap and interpretable but limits external validity. Future work should add more game variants, more seeds, and external game-theoretic benchmarks once the central mechanism is stable.
+
+Finally, ORCA currently extracts assets with lightweight heuristics and summaries. This is appropriate for the present phenomenon study, but it leaves open how to learn asset quality, detect when an asset is stale, and decide which assets should be retrieved under larger task distributions.
+
+## 8 Conclusion
+
+We introduced ORCA, a framework for extracting and selectively reusing coordination assets from multi-agent LLM trajectories. Across APPS-derived code repair and repeated social dilemmas, the results support a calibrated conclusion: emergent coordination can transfer across tasks, but its benefits depend on asset type and reuse mode. Prompt-level procedural assets improve shifted code-repair robustness and reduce missing-patch handoff failures, while full reuse can over-constrain the team. Reusable strategy assets also encourage stable cooperation in controlled social dilemmas. These findings suggest that future multi-agent LLM systems should preserve not only what prior agents produced, but how successful groups organized their work.

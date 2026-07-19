@@ -1,0 +1,7 @@
+| Case | Task/seed | Free behavior | Reuse behavior | Interpretation |
+| --- | ---: | ---: | ---: | ---: |
+| Accordion parser | 0000 / 712 | Free: empty patch | Prompt + routing pass | Clean rescue: assets stabilize patch handoff |
+| Fence painting | 0003 / 712 | Free: empty patch | Prompt + routing pass | Structured repair plan from reusable guidance |
+| Sofa storehouse | 0009 / 712 | Free: empty patch | Routing passes; prompt truncates | Routing can help, but prompt-only is not sufficient |
+| Golden trophy | 0012 / 712 | Free + prompt pass | Full + routing fail | Full reuse can interfere with patch handoff |
+| Max digit sum | 0001 / 714 | Free + prompt pass | Full fails with empty patch | Second hurt case for over-constrained full reuse |

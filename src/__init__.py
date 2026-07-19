@@ -1,2 +1,1 @@
-"""POA-MAS phase-1 prototype."""
-
+"""ORCA phase-1 prototype."""

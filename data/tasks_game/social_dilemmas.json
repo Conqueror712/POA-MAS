@@ -1,0 +1,62 @@
+[
+  {
+    "task_id": "ipd_train_001",
+    "split": "train",
+    "task_family": "game_theory",
+    "game_type": "iterated_prisoners_dilemma",
+    "num_players": 2,
+    "rounds": 6,
+    "description": "Two agents repeatedly play Prisoner's Dilemma. Each round, each agent chooses cooperate (C) or defect (D). Payoffs are CC=(3,3), CD=(0,5), DC=(5,0), DD=(1,1)."
+  },
+  {
+    "task_id": "ipd_test_001",
+    "split": "test",
+    "task_family": "game_theory",
+    "game_type": "iterated_prisoners_dilemma",
+    "num_players": 2,
+    "rounds": 8,
+    "description": "Two agents repeatedly play Prisoner's Dilemma with the standard payoff matrix CC=(3,3), CD=(0,5), DC=(5,0), DD=(1,1)."
+  },
+  {
+    "task_id": "ipd_shifted_001",
+    "split": "shifted_test",
+    "task_family": "game_theory",
+    "game_type": "iterated_prisoners_dilemma",
+    "num_players": 2,
+    "rounds": 10,
+    "description": "A longer repeated Prisoner's Dilemma game. The longer horizon tests whether agents maintain stable cooperative or retaliatory strategies."
+  },
+  {
+    "task_id": "pg_train_001",
+    "split": "train",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "num_players": 4,
+    "rounds": 5,
+    "endowment": 10,
+    "multiplier": 1.6,
+    "description": "Four agents repeatedly play a binary public-goods game. Each round, each agent either contributes the full endowment or keeps it. Contributions are multiplied by 1.6 and evenly redistributed."
+  },
+  {
+    "task_id": "pg_test_001",
+    "split": "test",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "num_players": 4,
+    "rounds": 6,
+    "endowment": 10,
+    "multiplier": 1.6,
+    "description": "Four agents repeatedly play a public-goods game with binary contribution actions."
+  },
+  {
+    "task_id": "pg_shifted_001",
+    "split": "shifted_test",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "num_players": 5,
+    "rounds": 6,
+    "endowment": 10,
+    "multiplier": 1.4,
+    "description": "Five agents play a lower-multiplier public-goods game. The lower multiplier increases the tension between individual incentives and social welfare."
+  }
+]

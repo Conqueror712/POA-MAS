@@ -1,0 +1,14 @@
+| Split | Setting | Mean | Std. | Min | Max |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| shifted_test | Free | 0.689 | 0.083 | 0.600 | 0.800 |
+| shifted_test | Manual | 0.622 | 0.031 | 0.600 | 0.667 |
+| shifted_test | Random | 0.756 | 0.083 | 0.667 | 0.867 |
+| shifted_test | **Prompt** | 0.822 | 0.031 | 0.800 | 0.867 |
+| shifted_test | Routing | 0.778 | 0.031 | 0.733 | 0.800 |
+| shifted_test | Full | 0.644 | 0.063 | 0.600 | 0.733 |
+| test | Free | 0.900 | 0.071 | 0.850 | 1.000 |
+| test | **Manual** | 0.933 | 0.024 | 0.900 | 0.950 |
+| test | Random | 0.850 | 0.041 | 0.800 | 0.900 |
+| test | Prompt | 0.917 | 0.024 | 0.900 | 0.950 |
+| test | Routing | 0.833 | 0.024 | 0.800 | 0.850 |
+| test | Full | 0.850 | 0.041 | 0.800 | 0.900 |

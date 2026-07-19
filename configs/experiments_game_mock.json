@@ -1,0 +1,13 @@
+{
+  "project_name": "ORCA-Games",
+  "domain": "game_theory",
+  "task_file": "data/tasks_game/social_dilemmas.json",
+  "output_root": "trajectories",
+  "asset_root": "assets",
+  "num_agents": 5,
+  "random_seed": 712,
+  "llm": {
+    "provider": "mock",
+    "model": "mock-game-agent"
+  }
+}

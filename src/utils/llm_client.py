@@ -66,6 +66,39 @@ def build_code_repair_messages(*, agent_id: str, subtask_type: str, task: dict[s
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
+def build_game_messages(*, agent_id: str, task: dict[str, Any], context: dict[str, Any]) -> list[dict[str, str]]:
+    assets = context.get("game_assets") or {}
+    asset_hint = json.dumps(assets, ensure_ascii=False)[:1200] if assets else "No reusable strategy assets are loaded."
+    persona = context.get("persona", "unspecified")
+    history = context.get("history_text", "No previous rounds.")
+    game_type = task["game_type"]
+    if game_type == "iterated_prisoners_dilemma":
+        legal = "Legal actions: C or D."
+    elif game_type == "public_goods":
+        legal = "Legal actions: CONTRIBUTE or KEEP."
+    else:
+        legal = "Return one legal action token."
+    if context.get("force_action_retry"):
+        system = "Output one legal action token only. No explanation."
+        user = f"{legal}\nPrevious response was invalid or empty. Reply with exactly one legal action token."
+        return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+    system = (
+        "You are choosing a single action in a game-theory experiment. "
+        "Return only the action token. No explanation."
+    )
+    user = (
+        f"Agent: {agent_id}\n"
+        f"Persona: {persona}\n"
+        f"Game: {game_type}\n"
+        f"Payoff/task summary: {task['description'][:500]}\n"
+        f"Recent actions: {history}\n"
+        f"Reusable strategy assets:\n{asset_hint}\n\n"
+        f"{legal}\n"
+        "Answer:"
+    )
+    return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+
+
 class MockLLMClient:
     """Deterministic stand-in for API/local LLM calls.
 
@@ -73,7 +106,9 @@ class MockLLMClient:
     """
 
     def complete(self, *, agent_id: str, subtask_type: str, task: dict[str, Any], context: dict[str, Any]) -> LLMResponse:
-        if subtask_type == "localize":
+        if task.get("task_family") == "game_theory" and subtask_type == "decide":
+            text = self._decide_game(agent_id, task, context)
+        elif subtask_type == "localize":
             text = self._localize(task)
         elif subtask_type == "patch":
             text = task["reference_solution"]
@@ -99,6 +134,49 @@ class MockLLMClient:
             f"Entry point: {task.get('entry_point', 'unknown')}."
         )
 
+    @staticmethod
+    def _decide_game(agent_id: str, task: dict[str, Any], context: dict[str, Any]) -> str:
+        game_type = task["game_type"]
+        persona = str(context.get("persona", "")).lower()
+        has_assets = bool(context.get("game_assets"))
+        history = context.get("history") or []
+
+        if game_type == "iterated_prisoners_dilemma":
+            if has_assets:
+                if not history:
+                    return "C"
+                other_actions = [
+                    action
+                    for player, action in history[-1]["actions"].items()
+                    if player != agent_id
+                ]
+                return "C" if other_actions and other_actions[0] == "C" else "D"
+            if "cooperative" in persona or "fairness" in persona:
+                return "C"
+            if "reciprocal" in persona or "conditional" in persona:
+                if not history:
+                    return "C"
+                other_actions = [
+                    action
+                    for player, action in history[-1]["actions"].items()
+                    if player != agent_id
+                ]
+                return "C" if other_actions and other_actions[0] == "C" else "D"
+            return "D"
+
+        if game_type == "public_goods":
+            if has_assets:
+                if len(history) < 2:
+                    return "CONTRIBUTE"
+                last_actions = list(history[-1]["actions"].values())
+                contribution_rate = sum(1 for action in last_actions if action == "CONTRIBUTE") / len(last_actions)
+                return "CONTRIBUTE" if contribution_rate >= 0.5 else "KEEP"
+            if "cooperative" in persona or "fairness" in persona or "conditional" in persona:
+                return "CONTRIBUTE"
+            return "KEEP"
+
+        return "D"
+
 
 class DeepSeekClient:
     def __init__(self, config: dict[str, Any]):
@@ -123,11 +201,15 @@ class DeepSeekClient:
 
         payload: dict[str, Any] = {
             "model": self.model,
-            "messages": build_code_repair_messages(
-                agent_id=agent_id,
-                subtask_type=subtask_type,
-                task=task,
-                context=context,
+            "messages": (
+                build_game_messages(agent_id=agent_id, task=task, context=context)
+                if task.get("task_family") == "game_theory" and subtask_type == "decide"
+                else build_code_repair_messages(
+                    agent_id=agent_id,
+                    subtask_type=subtask_type,
+                    task=task,
+                    context=context,
+                )
             ),
             "temperature": self.temperature,
             "max_tokens": self.max_tokens,

@@ -1,8 +1,8 @@
-# POA-MAS
+# ORCA
 
-POA-MAS 是一个用于论文实验的多智能体研究原型，全称暂定为：
+ORCA 是一个用于论文实验的多智能体研究原型，论文标题已定为：
 
-**Persistent Organizational Assets for Self-Organizing Multi-Agent LLM Systems**
+**ORCA: Organizational Reuse of Coordination Assets for Multi-Agent LLM Systems**
 
 项目核心问题：
 
@@ -23,7 +23,7 @@ POA-MAS 是一个用于论文实验的多智能体研究原型，全称暂定为
 ## 目录结构
 
 ```text
-POA-MAS_DEV/
+<repo-root>/
   configs/
     experiments.json          # DeepSeek API 配置
     experiments_mock.json     # Mock 离线调试配置
@@ -144,6 +144,33 @@ python -m unittest discover -s tests -v
 python -m src.runners.run_emergence --config configs/experiments_mock.json --mode free --limit 2
 ```
 
+### APPS 一键实验与结果聚合
+
+第一次建议先用 `-Limit 2` 做 smoke test：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_apps_protocol.ps1 -Limit 2
+```
+
+确认 API key、输出格式和费用都正常后，再跑完整 3 seeds：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_apps_protocol.ps1
+```
+
+脚本会对每个 seed 执行：
+
+1. `train` split 上运行 free，生成训练轨迹；
+2. 从训练轨迹抽取 assets；
+3. 在 `test` 与 `shifted_test` 上依次运行 free/manual/random/prompt/routing/full；
+4. 聚合结果到 `results/tables/apps_protocol_summary.md`。
+
+如果只想聚合已有结果：
+
+```powershell
+python scripts/aggregate_apps_results.py
+```
+
 ---
 
 ## 运行方式二：DeepSeek API 闭环
@@ -183,6 +210,81 @@ python -m src.runners.run_reuse --config configs/experiments.json --asset-mode f
 
 ```powershell
 python -m src.runners.run_emergence --config configs/experiments.json --mode free --limit 2
+```
+
+---
+
+## 结果分析
+
+已有 APPS protocol 结果可以离线聚合与分析，不需要 API key：
+
+```powershell
+python scripts/aggregate_apps_results.py
+python scripts/analyze_apps_failures.py
+```
+
+主要输出：
+
+- `results/tables/apps_protocol_summary.md`：按 split 和 setting 聚合成功率、token 和耗时。
+- `results/analysis/apps_failure_analysis.md`：失败类型、reuse-vs-free rescue/hurt 对照和典型 case notes。
+- `results/analysis/apps_failure_items.csv`：逐 task-attempt 明细，适合继续人工审阅。
+
+当前 APPS 结果总体支持论文 story，但需要采用更稳妥的表述：组织资产复用不是越多越好，当前最清晰有效的是
+prompt-level procedural assets；`reuse_full` 的不稳定结果说明 full reuse 可能过约束或干扰 patch handoff，
+因此论文应强调“资产分解、选择性复用和消融评估”，而不是宣称所有组织资产都会带来稳定收益。
+
+机制图和论文图表可复现生成：
+
+```powershell
+python scripts/generate_apps_paper_assets.py
+python scripts/generate_game_paper_assets.py
+```
+
+---
+
+## Domain 2：博弈论 / Persona 最小实验
+
+Domain 2 当前采用程序化经典博弈作为最小可控环境：Iterated Prisoner's Dilemma 和 Public Goods Game。
+它用于验证 persona 与 reusable strategy assets 是否会改变 cooperation rate、average payoff、social welfare
+和 Nash-deviation rate。
+
+Mock 自检命令：
+
+```powershell
+python -m src.runners.run_game_domain --config configs/experiments_game_mock.json
+```
+
+真实 API 小规模 smoke 命令：
+
+```powershell
+python -m src.runners.run_game_domain --config configs/experiments_game.json --splits test --settings no_persona persona reuse_assets --run-prefix game_domain_api_smoke_retry
+```
+
+如果 summary 中 `invalid_action_rate` 较高，说明模型没有稳定返回合法动作 token，应先调整 prompt / `max_tokens`，不要把该轮作为论文结果。
+
+正式小实验命令：
+
+```powershell
+python -m src.runners.run_game_domain --config configs/experiments_game.json --splits test shifted_test --settings no_persona persona reuse_assets --run-prefix game_domain_api_formal
+python scripts/aggregate_game_results.py --prefix game_domain_api_formal
+```
+
+当前 Domain 2 说明见：
+
+```text
+docs/domain2_game_theory_plan.md
+```
+
+当前 Domain 2 实验草稿见：
+
+```text
+docs/domain2_game_experiment_draft.md
+```
+
+Domain 2 的论文图表与表格可由以下命令复现：
+
+```powershell
+python scripts/generate_game_paper_assets.py
 ```
 
 ---

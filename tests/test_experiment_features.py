@@ -10,6 +10,7 @@ from src.controller.self_org_controller import SelfOrgController
 from src.controller.task_pool import load_tasks
 from src.eval.code_eval import evaluate_code
 from src.eval.metrics import asset_routing_rate, usage_metrics
+from src.games.evaluator import score_public_goods, score_round, summarize_game_results
 from src.utils.llm_client import MockLLMClient
 from src.utils.logging import TrajectoryLogger
 
@@ -105,6 +106,27 @@ class ExperimentFeatureTests(unittest.TestCase):
         }
         result = evaluate_code(task, "a, b = map(int, input().split())\nprint(a + b)\n", timeout_sec=1)
         self.assertTrue(result["success"])
+
+    def test_prisoners_dilemma_payoffs(self) -> None:
+        task = {"game_type": "iterated_prisoners_dilemma"}
+        result = score_round(task, {"A1": "C", "A2": "D"})
+        self.assertEqual(result["payoffs"], {"A1": 0.0, "A2": 5.0})
+        self.assertEqual(result["cooperative_actions"], 1)
+        self.assertEqual(result["social_welfare"], 5.0)
+
+    def test_public_goods_summary_metrics(self) -> None:
+        task = {"game_type": "public_goods", "endowment": 10, "multiplier": 1.6}
+        scores = score_public_goods(task, {
+            "A1": "CONTRIBUTE",
+            "A2": "CONTRIBUTE",
+            "A3": "KEEP",
+            "A4": "KEEP",
+        })
+        summary = summarize_game_results([{
+            "rounds": [{"actions": {"A1": "CONTRIBUTE", "A2": "CONTRIBUTE", "A3": "KEEP", "A4": "KEEP"}, "scores": scores}]
+        }])
+        self.assertAlmostEqual(summary["cooperation_rate"], 0.5)
+        self.assertAlmostEqual(summary["average_payoff"], 13.0)
 
 
 if __name__ == "__main__":
