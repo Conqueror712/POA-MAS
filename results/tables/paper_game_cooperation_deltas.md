@@ -1,6 +1,6 @@
 | Split | Game | Persona - no persona | Reuse - no persona | Reuse - persona |
 | --- | --- | ---: | ---: | ---: |
-| test | IPD | +0.312 | +1.000 | +0.688 |
-| test | Public Goods | +0.458 | +0.792 | +0.333 |
-| shifted | IPD | -0.200 | +0.000 | +0.200 |
-| shifted | Public Goods | +0.700 | +0.933 | +0.233 |
+| test | IPD | +0.146 | +0.125 | -0.021 |
+| test | Public Goods | +0.139 | +0.375 | +0.236 |
+| shifted | IPD | +0.000 | +0.000 | +0.000 |
+| shifted | Public Goods | +0.711 | +0.778 | +0.067 |

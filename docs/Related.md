@@ -35,9 +35,11 @@ multi-agent framework, memory system, or software-engineering agent.
 | *AFlow: Automating Agentic Workflow Generation* | 2025 candidate; verify the official proceedings record and CCF classification before citing. | Useful to contrast automated workflow search with ORCA's reuse of previously observed coordination assets. |
 | *Generative Agents: Interactive Simulacra of Human Behavior* | UIST 2023; relevant to memory and social behavior rather than the APPS result. | Cite only if the repeated-games domain is redesigned as a genuine trajectory-derived asset experiment. |
 
-The current repeated-games implementation uses static strategy prompts rather
-than assets extracted from source trajectories. It should not be used to claim
-that ORCA's asset-extraction mechanism transfers to social dilemmas.
+The early repeated-games implementation used static strategy prompts rather
+than assets extracted from source trajectories. The current protocol replaces
+that version with train-trajectory-derived strategy assets, but the domain
+should still be framed as controlled secondary evidence rather than benchmark
+coverage.
 
 ## Recommended Paper Structure
 
@@ -81,7 +83,7 @@ uses verbal feedback to improve subsequent attempts, and ExpeL stores and
 retrieves cross-task experience for language agents. In contrast, ORCA treats
 the unit of reuse as team coordination: role tendencies and organization-level
 handoff procedures extracted from successful multi-agent trajectories. The
-prompt-only, routing-only, and full-reuse conditions test these mechanisms
+prompt-channel, routing-only, and full-reuse conditions test these mechanisms
 separately.
 
 Finally, recent software-engineering agents such as SWE-agent and
@@ -95,14 +97,15 @@ split used as the primary transfer condition.
 
 - Say "trajectory-derived" or "heuristically distilled from successful
   trajectories" rather than claiming that all assets are fully emergent.
-- Say that prompt-level reuse is an all-asset prompt injection in the current
+- Say that prompt-channel reuse is an all-asset prompt injection in the current
   implementation; it is not an organization-asset-only ablation.
 - Report the shifted APPS result as an observed three-seed comparison. Do not
   claim statistical significance without an appropriate paired analysis.
 - Describe full reuse as not improving over free self-organization in this
   setting, rather than claiming a general harm from organizational memory.
-- Omit the repeated-games result from the main Related Work positioning until
-  that domain uses source-trajectory asset extraction and repeated evaluation.
+- If using the repeated-games result, describe it as a controlled secondary
+  domain with source-trajectory-derived strategy assets. Do not present it as
+  an external game-theory benchmark result.
 
 ## Before Paper Submission
 

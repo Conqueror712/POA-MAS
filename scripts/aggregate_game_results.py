@@ -24,7 +24,12 @@ def is_excluded(run_name: str, markers: set[str]) -> bool:
     return any(marker in lowered for marker in markers)
 
 
-def collect_rows(root: Path, prefix: str, exclude_markers: set[str]) -> tuple[list[dict[str, Any]], list[str]]:
+def collect_rows(
+    root: Path,
+    prefix: str,
+    exclude_markers: set[str],
+    splits: set[str] | None = None,
+) -> tuple[list[dict[str, Any]], list[str]]:
     rows: list[dict[str, Any]] = []
     bad_json: list[str] = []
     for path in root.rglob("summary.json"):
@@ -38,6 +43,8 @@ def collect_rows(root: Path, prefix: str, exclude_markers: set[str]) -> tuple[li
             bad_json.append(str(path))
             continue
         if summary.get("domain") != "game_theory":
+            continue
+        if splits is not None and summary.get("task_split") not in splits:
             continue
         metrics = summary.get("metrics", {})
         rows.append({
@@ -117,10 +124,12 @@ def main() -> None:
     parser.add_argument("--trajectories-root", default="trajectories")
     parser.add_argument("--prefix", default="game_domain_")
     parser.add_argument("--exclude-markers", nargs="*", default=sorted(DEFAULT_EXCLUDE_MARKERS))
+    parser.add_argument("--splits", nargs="*", default=None)
     parser.add_argument("--out-dir", default="results/tables")
     args = parser.parse_args()
 
-    rows, bad_json = collect_rows(Path(args.trajectories_root), args.prefix, set(args.exclude_markers))
+    splits = set(args.splits) if args.splits else None
+    rows, bad_json = collect_rows(Path(args.trajectories_root), args.prefix, set(args.exclude_markers), splits)
     summary = summarize(rows)
     out_dir = Path(args.out_dir)
     write_csv(out_dir / "game_domain_runs.csv", rows)

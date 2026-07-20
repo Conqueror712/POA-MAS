@@ -6,6 +6,7 @@ import uuid
 from pathlib import Path
 
 from src.agents.team import build_team
+from src.assets.game_extractor import extract_game_strategy_assets
 from src.controller.self_org_controller import SelfOrgController
 from src.controller.task_pool import load_tasks
 from src.eval.code_eval import evaluate_code
@@ -127,6 +128,32 @@ class ExperimentFeatureTests(unittest.TestCase):
         }])
         self.assertAlmostEqual(summary["cooperation_rate"], 0.5)
         self.assertAlmostEqual(summary["average_payoff"], 13.0)
+
+    def test_game_assets_are_distilled_from_train_summary(self) -> None:
+        summaries = [{
+            "run_name": "source_train",
+            "domain": "game_theory",
+            "task_split": "train",
+            "task_id": "pg_train_001",
+            "game_type": "public_goods",
+            "metrics": {
+                "cooperation_rate": 0.75,
+                "invalid_action_rate": 0.0,
+            },
+            "result": {
+                "rounds": [
+                    {"actions": {"A1": "CONTRIBUTE", "A2": "CONTRIBUTE", "A3": "KEEP", "A4": "CONTRIBUTE"}},
+                    {"actions": {"A1": "CONTRIBUTE", "A2": "CONTRIBUTE", "A3": "KEEP", "A4": "CONTRIBUTE"}},
+                ]
+            },
+        }]
+        assets = extract_game_strategy_assets(summaries)
+        names = {asset["name"] for asset in assets}
+
+        self.assertIn("legal_action_protocol", names)
+        self.assertIn("cooperative_opening", names)
+        self.assertIn("public_goods_welfare_preservation", names)
+        self.assertTrue(all(asset["evidence"] == ["source_train:pg_train_001"] for asset in assets))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # ORCA Checkpoint
 
-更新时间：2026-07-19
+更新时间：2026-07-20
 
 ---
 
@@ -15,6 +15,7 @@
 - ✅ 人类共同确认摘要主推版本：`docs/title_abstract_candidates.md`
 - ✅ 完成主论文 draft v0：`docs/orca_main_paper_draft.md`
 - ✅ 将临时测试缓存、`__pycache__`、smoke/mock/早期过程轨迹归档到 `archive/process_20260719/`
+- ✅ 将 Domain 2 mock、误跑 `s713714`、早期固定策略结果归档到 `archive/process_20260720/domain2_superseded/`
 - ✅ 摘要投稿前最终语言润色与字数检查：`docs/title_abstract_candidates.md`
 
 ---
@@ -26,7 +27,7 @@
 - ✅ 实现 DeepSeek API client
 - ✅ 实现 multi-agent code-repair pipeline
 - ✅ 实现 free / manual / random baselines
-- ✅ 实现 prompt-only / routing-only / full reuse ablations
+- ✅ 实现 prompt-channel / routing-only / full reuse ablations
 - ✅ 实现 trajectory logging、asset extraction、asset reuse
 - ✅ 实现 stdin/stdout 代码评测和超时隔离
 - ✅ 实现 token、耗时、asset routing 等统计
@@ -81,7 +82,7 @@ APPS formal runs：3 seeds × 2 splits × 6 settings。
 当前 story 校准：
 
 - ✅ 结果总体支持论文主线，但不支持“所有组织资产复用都有效”的强 claim
-- ✅ 更稳妥的 claim：组织资产需要被分解和选择性复用；当前最清晰有效的是 prompt-level procedural assets
+- ✅ 更稳妥的 claim：组织资产需要被分解和选择性复用；当前最清晰有效的是 prompt-channel asset reuse
 - ✅ `reuse_full` 的负结果不是失败点，而是说明 full reuse 可能过约束，反而强化“资产类型消融”和“选择性复用”的必要性
 - ✅ 论文叙事应从“POA 全面提升性能”调整为“POA 能提升 shifted task 下的协作稳健性，但收益依赖资产类型和复用方式”
 
@@ -111,6 +112,15 @@ APPS formal runs：3 seeds × 2 splits × 6 settings。
 - ✅ 生成 Domain 2 论文表格：`results/tables/paper_game_main_results.md`、`results/tables/paper_game_cooperation_deltas.md`
 - ✅ 写 Domain 2 实验小节草稿：`docs/domain2_game_experiment_draft.md`
 - ✅ Human-Review：初步决定 Domain 2 可放正文，最终篇幅后续按全文空间调整
+- ✅ Human-Review 发现风险：早期 `reuse_assets` 使用代码中固定的 strategy prompts，不足以支撑“从轨迹抽取资产后复用”的核心主张
+- ✅ 新增 trajectory-derived game asset extractor：`src/assets/game_extractor.py`
+- ✅ 新增 game asset 抽取入口：`src/runners/run_extract_game_assets.py`
+- ✅ 修改 `run_game_domain.py`：`reuse_assets` 必须读取资产文件，不再使用硬编码 `GAME_ASSETS`
+- ✅ 新增 Domain 2 一键闭环脚本：`scripts/run_game_asset_protocol.ps1`
+- ✅ 跑通 Domain 2 mock asset protocol：train trajectories -> extract strategy assets -> held-out reuse -> aggregate -> regenerate tables/figures
+- ✅ 运行真实 API 版 Domain 2 asset protocol：`game_asset_protocol_api_20260720`，3 seeds（712 / 713 / 714）
+- ✅ 排除误跑 `s713714` 并重新聚合正式 3-seed 结果
+- ✅ 根据真实 API 版结果，决定摘要中保留 Domain 2，但写成 controlled secondary evidence
 - ✅ 优化论文图表风格第一轮：APPS 主结果改为 point-line + error bars，Domain 2 改为小面板 point-line 图
 - ✅ 优化论文图表风格第二轮：APPS 主结果改为双 split 雷达图，Domain 2 改为暖色小面板柱状图 / grouped bars
 - ✅ 全文整合阶段：将 Domain 1 / Domain 2 小节合并进主论文 draft v0
@@ -118,7 +128,15 @@ APPS formal runs：3 seeds × 2 splits × 6 settings。
 
 当前建议：
 
-- Domain 2 可以先按正文实验二保留；如果后续篇幅紧张，再压缩表格或把部分说明移到 appendix
-- 暂时不需要继续花 API 费用；当前 Domain 2 可作为 secondary evidence 使用
-- 如果要增强 Domain 2，说服力最高的方向是扩充 Public Goods / 社会困境变体，而不是立刻换模型
+- Domain 2 可以按正文实验二保留，但必须使用新的一键脚本得到的 trajectory-derived asset 结果作为核心证据
+- 摘要中 Domain 2 的安全说法：trajectory-derived strategy assets transfer beyond code repair, improving Public Goods cooperation while matching persona prompting in saturated IPD settings
+- 当前不建议继续花 API 费用；优先改论文、Related Work、LaTeX 和提交材料
 - 当前 mock 结果只用于流程自检，不作为论文证据
+
+正式 Domain 2 结果：
+
+- ✅ held-out runs：3 seeds × 2 splits × 2 games × 3 settings = 36
+- ✅ source runs：3 seeds × 2 train games = 6，用于抽取 strategy assets
+- ✅ 所有正式 runs 的 `invalid_action_rate=0`
+- ✅ Public Goods：`test` 上 reuse_assets 0.986 > persona 0.750；`shifted_test` 上 reuse_assets 0.833 > persona 0.767
+- ✅ IPD：大多饱和；`test` 上 reuse_assets 0.979，略低于 persona 1.000；`shifted_test` 三种设置均为 1.000

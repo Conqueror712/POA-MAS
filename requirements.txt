@@ -1,3 +1,2 @@
-# POA-MAS currently uses only the Python standard library.
+# ORCA currently uses only the Python standard library.
 # This file is kept so collaborators can use the same environment workflow.
-

@@ -2,11 +2,11 @@
 
 ## Why This Domain
 
-Domain 1 shows that organizational assets are useful when reused selectively, especially as prompt-level procedural guidance. Domain 2 should test the same principle in a setting that is more explicitly multi-agent: agents face repeated strategic interactions where persona, reciprocity, social welfare, and equilibrium behavior are directly measurable.
+Domain 1 shows that organizational assets are useful when reused selectively, especially through prompt-channel asset reuse. Domain 2 tests the same principle in a setting that is more explicitly multi-agent: agents face repeated strategic interactions where persona, reciprocity, social welfare, and equilibrium behavior are directly measurable.
 
 The goal is not to build a leaderboard benchmark. The goal is a low-cost, interpretable phenomenon study:
 
-> Do persona and reusable strategy assets change cooperative behavior, payoff, and social welfare in repeated social dilemmas?
+> Do persona and trajectory-derived strategy assets change cooperative behavior, payoff, and social welfare in repeated social dilemmas?
 
 ## Recommended Starting Point
 
@@ -51,7 +51,7 @@ Outputs:
 
 - `no_persona`: agents receive no explicit persona and the mock policy defaults to individually rational defection/free-riding.
 - `persona`: agents receive heterogeneous personas such as cooperative norm follower, self-interested maximizer, reciprocal player, and conditional cooperator.
-- `reuse_assets`: agents receive reusable strategy assets, such as starting cooperatively, using reciprocity, and returning legal action tokens.
+- `reuse_assets`: agents receive trajectory-derived strategy assets, such as starting cooperatively, using reciprocity, and returning legal action tokens.
 
 The current mock result is only a pipeline sanity check. It should not be reported as empirical evidence.
 
@@ -83,22 +83,22 @@ The first real-API smoke tests with prefixes `game_domain_api_smoke_20260718` an
 
 The configuration has therefore been updated to `temperature=0.0` and `max_tokens=512`, game history is compressed into action-only summaries, invalid actions are retried once with a minimal prompt, and the evaluator records `invalid_action_rate` instead of silently treating invalid outputs as meaningful behavior.
 
-The retry smoke test with prefix `game_domain_api_smoke_retry_20260718` passed the protocol check: all actions were legal and `invalid_action_rate=0` in all six runs. Initial behavior is interpretable: `reuse_assets` achieves full cooperation in both games; Public Goods shows a clean gradient (`no_persona < persona < reuse_assets`); IPD is less monotonic because `no_persona` already cooperates often, but `reuse_assets` is still highest.
+The retry smoke test with prefix `game_domain_api_smoke_retry_20260718` passed the protocol check: all actions were legal and `invalid_action_rate=0` in all six runs. That early protocol used fixed strategy prompts and has been superseded by the trajectory-derived asset protocol below.
 
-This is sufficient to proceed to a small formal Domain 2 run. Use both `test` and `shifted_test` splits:
+Use both `test` and `shifted_test` splits:
 
 ```powershell
-python -m src.runners.run_game_domain --config configs/experiments_game.json --splits test shifted_test --settings no_persona persona reuse_assets --run-prefix game_domain_api_formal_20260718
-python scripts/aggregate_game_results.py --prefix game_domain_api_formal_20260718
+powershell -ExecutionPolicy Bypass -File scripts/run_game_asset_protocol.ps1 -Config configs/experiments_game.json -Seeds 712,713,714 -Prefix game_asset_protocol_api_20260720
 ```
 
 The output budget is modest because each decision returns one action token, but DeepSeek may consume reasoning tokens internally, so `max_tokens=512` is retained.
 
 ## Formal Mini-Run Status
 
-The formal mini-run with prefix `game_domain_api_formal_20260718` completed successfully:
+The formal trajectory-derived asset run with prefix `game_asset_protocol_api_20260720` completed successfully:
 
-- 12 runs: 2 splits x 2 games x 3 settings.
+- 36 held-out runs: 3 seeds x 2 splits x 2 games x 3 settings.
+- 6 source runs: 3 seeds x 2 train games, used for trajectory-derived strategy asset extraction.
 - `invalid_action_rate=0` for every run.
 - All game-action API calls ended with `finish_reason=stop`.
 - Aggregated output: `results/tables/game_domain_aggregate.md`.
@@ -115,8 +115,8 @@ The formal mini-run with prefix `game_domain_api_formal_20260718` completed succ
 Current interpretation:
 
 - Public Goods is the cleanest Domain 2 signal: both `test` and `shifted_test` show `no_persona < persona < reuse_assets` for cooperation, average payoff, and social welfare.
-- IPD supports the benefit of `reuse_assets` on the `test` split, but shifted IPD is saturated because `no_persona` already reaches full cooperation.
-- The safest paper claim is therefore: reusable strategy assets can induce stable pro-social behavior in repeated social dilemmas, with the strongest evidence in Public Goods; persona alone helps but is less reliable across games.
+- IPD is saturated or near-saturated: persona reaches 1.000 cooperation on test IPD, and all settings reach 1.000 on shifted IPD.
+- The safest paper claim is therefore: trajectory-derived strategy assets transfer beyond code repair and improve Public Goods cooperation in a controlled repeated-games domain, while matching persona prompting in saturated IPD settings.
 
 To regenerate the paper assets:
 

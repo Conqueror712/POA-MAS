@@ -13,13 +13,13 @@
 <text x="106.0" y="134.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#5f6f73">3</text>
 <line x1="116.0" y1="130.0" x2="116.0" y2="316.0" stroke="#111827" stroke-width="0.8"/>
 <line x1="116.0" y1="316.0" x2="446.0" y2="316.0" stroke="#111827" stroke-width="0.8"/>
-<rect x="145.0" y="254.0" width="25.0" height="62.0" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
+<rect x="145.0" y="139.0" width="25.0" height="177.0" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
 <rect x="174.0" y="130.0" width="25.0" height="186.0" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
 <text x="172.0" y="335.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#1f2933">No persona</text>
-<rect x="249.0" y="195.9" width="25.0" height="120.1" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
-<rect x="278.0" y="148.6" width="25.0" height="167.4" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
+<rect x="249.0" y="130.0" width="25.0" height="186.0" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
+<rect x="278.0" y="130.0" width="25.0" height="186.0" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
 <text x="276.0" y="335.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#1f2933">Persona</text>
-<rect x="353.0" y="130.0" width="25.0" height="186.0" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
+<rect x="353.0" y="131.3" width="25.0" height="184.7" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
 <rect x="382.0" y="130.0" width="25.0" height="186.0" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
 <text x="380.0" y="335.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#1f2933">Reuse assets</text>
 <rect x="508.0" y="82.0" width="398.0" height="278.0" rx="14.0" ry="14.0" fill="#fffdf8" stroke="#eadfce" stroke-width="1.0"/>
@@ -32,14 +32,14 @@
 <text x="542.0" y="134.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#5f6f73">16</text>
 <line x1="552.0" y1="130.0" x2="552.0" y2="316.0" stroke="#111827" stroke-width="0.8"/>
 <line x1="552.0" y1="316.0" x2="882.0" y2="316.0" stroke="#111827" stroke-width="0.8"/>
-<rect x="581.0" y="188.1" width="25.0" height="127.9" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
-<rect x="610.0" y="196.6" width="25.0" height="119.4" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
+<rect x="581.0" y="157.1" width="25.0" height="158.9" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
+<rect x="610.0" y="197.2" width="25.0" height="118.8" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
 <text x="608.0" y="335.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#1f2933">No persona</text>
-<rect x="685.0" y="156.2" width="25.0" height="159.8" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
+<rect x="685.0" y="147.4" width="25.0" height="168.6" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
 <rect x="714.0" y="164.1" width="25.0" height="151.9" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
 <text x="712.0" y="335.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#1f2933">Persona</text>
-<rect x="789.0" y="132.9" width="25.0" height="183.1" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
-<rect x="818.0" y="153.2" width="25.0" height="162.8" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
+<rect x="789.0" y="131.0" width="25.0" height="185.0" rx="5.0" ry="5.0" fill="#4a86a8" stroke="none" stroke-width="0"/>
+<rect x="818.0" y="161.0" width="25.0" height="155.0" rx="5.0" ry="5.0" fill="#df6f5d" stroke="none" stroke-width="0"/>
 <text x="816.0" y="335.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="400" fill="#1f2933">Reuse assets</text>
 <rect x="360.0" y="409.0" width="20.0" height="11.0" fill="#4a86a8"/>
 <text x="388.0" y="420.0" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#1f2933">test</text>

@@ -18,6 +18,7 @@ results/*
 !results/figures/*.svg
 assets/role_assets/*.json
 assets/organization_assets/*.json
+assets/game_assets/*.json
 configs/.deepseek_api_key
 configs/*.key
 .env

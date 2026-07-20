@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from src.agents.team import build_team
+from src.assets.store import AssetStore
 from src.controller.task_pool import load_tasks
 from src.games.evaluator import parse_action, score_round, summarize_game_results
 from src.utils.config import ensure_dir, load_json
@@ -23,14 +24,6 @@ PERSONA_POOL = [
     "conditional cooperator",
     "fairness-oriented contributor",
 ]
-GAME_ASSETS = {
-    "strategy_assets": [
-        "Start cooperatively when repeated interaction is expected.",
-        "Use reciprocity: maintain cooperation after cooperative behavior and punish persistent defection.",
-        "In public-goods games, preserve social welfare by contributing unless the group repeatedly defects.",
-        "Return exactly one legal action token so the evaluator can score the round.",
-    ]
-}
 
 
 def compact_history(history: list[dict[str, Any]], limit: int = 3) -> str:
@@ -43,17 +36,33 @@ def compact_history(history: list[dict[str, Any]], limit: int = 3) -> str:
     return "; ".join(lines)
 
 
-def assigned_persona(setting: str, player_index: int) -> str:
+def assigned_persona(setting: str, player_index: int, seed: int) -> str:
     if setting == "no_persona":
         return "unspecified"
-    return PERSONA_POOL[player_index % len(PERSONA_POOL)]
+    offset = seed % len(PERSONA_POOL)
+    return PERSONA_POOL[(player_index + offset) % len(PERSONA_POOL)]
 
 
-def run_task(task: dict[str, Any], setting: str, config: dict[str, Any], run_name: str) -> dict[str, Any]:
+def run_task(
+    task: dict[str, Any],
+    setting: str,
+    config: dict[str, Any],
+    run_name: str,
+    *,
+    seed: int,
+    game_assets: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     llm_client = build_llm_client(config)
     agents = build_team(int(task["num_players"]), llm_client)
     logger = TrajectoryLogger(config["output_root"], run_name)
     history: list[dict[str, Any]] = []
+    loaded_game_assets = game_assets or {}
+    task_game_assets = filter_game_assets(loaded_game_assets, str(task["game_type"]))
+    if setting == "reuse_assets" and not task_game_assets.get("strategy_assets"):
+        raise RuntimeError(
+            "reuse_assets requires trajectory-derived game assets. "
+            "Run src.runners.run_extract_game_assets first or pass --game-asset-file."
+        )
 
     for round_index in range(1, int(task["rounds"]) + 1):
         actions: dict[str, str] = {}
@@ -62,10 +71,10 @@ def run_task(task: dict[str, Any], setting: str, config: dict[str, Any], run_nam
         for player_index, agent in enumerate(agents):
             context = {
                 "setting": setting,
-                "persona": assigned_persona(setting, player_index),
+                "persona": assigned_persona(setting, player_index, seed),
                 "history": history,
                 "history_text": compact_history(history),
-                "game_assets": GAME_ASSETS if setting == "reuse_assets" else {},
+                "game_assets": task_game_assets if setting == "reuse_assets" else {},
             }
             response = agent.run_subtask("decide", task, context)
             action, is_valid = parse_action(str(task["game_type"]), response.text)
@@ -88,6 +97,7 @@ def run_task(task: dict[str, Any], setting: str, config: dict[str, Any], run_nam
                 "action_valid": is_valid,
                 "raw_output": response.text,
                 "used_strategy_assets": bool(context["game_assets"]),
+                "strategy_asset_count": len(context["game_assets"].get("strategy_assets", [])),
                 "llm_metadata": response.metadata,
             })
 
@@ -126,12 +136,38 @@ def run_task(task: dict[str, Any], setting: str, config: dict[str, Any], run_nam
         "game_type": task["game_type"],
         "num_players": task["num_players"],
         "rounds": task["rounds"],
+        "seed": seed,
+        "strategy_asset_count": len(task_game_assets.get("strategy_assets", [])) if setting == "reuse_assets" else 0,
         "result": result,
         "metrics": result["metrics"],
     }
     logger.write_summary(summary)
     logger.mark_latest(config["output_root"])
     return result
+
+
+def load_game_assets(config: dict[str, Any], game_asset_file: str | None) -> dict[str, Any]:
+    if game_asset_file:
+        path = Path(game_asset_file)
+        if not path.exists():
+            raise FileNotFoundError(f"Missing game asset file: {path}")
+        loaded = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(loaded, list):
+            return {"strategy_assets": loaded}
+        if isinstance(loaded, dict):
+            if "strategy_assets" in loaded:
+                return loaded
+            return {"strategy_assets": [loaded]}
+        raise ValueError(f"Unsupported game asset file format: {path}")
+    return AssetStore(config["asset_root"]).load_game_assets()
+
+
+def filter_game_assets(game_assets: dict[str, Any], game_type: str) -> dict[str, Any]:
+    strategy_assets = [
+        asset for asset in game_assets.get("strategy_assets", [])
+        if asset.get("game_type") in {game_type, "all", "*"}
+    ]
+    return {"strategy_assets": strategy_assets} if strategy_assets else {}
 
 
 def aggregate(results: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -185,19 +221,26 @@ def main() -> None:
     parser.add_argument("--splits", nargs="+", default=["test", "shifted_test"], choices=["train", "test", "shifted_test"])
     parser.add_argument("--settings", nargs="+", default=list(SETTINGS), choices=list(SETTINGS))
     parser.add_argument("--run-prefix", default=None)
+    parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--game-asset-file", default=None)
+    parser.add_argument("--limit", type=int, default=0)
     args = parser.parse_args()
 
     config = load_json(args.config)
+    seed = int(args.seed if args.seed is not None else config.get("random_seed", 0))
+    game_assets = load_game_assets(config, args.game_asset_file) if "reuse_assets" in args.settings else {}
     tasks = [
         task for task in load_tasks(config["task_file"])
         if task.get("split") in set(args.splits)
     ]
+    if args.limit > 0:
+        tasks = tasks[:args.limit]
     prefix = args.run_prefix or f"game_domain_{datetime.now():%Y%m%d_%H%M%S}"
     results = []
     for task in tasks:
         for setting in args.settings:
             run_name = f"{prefix}_{task['task_id']}_{setting}"
-            result = run_task(task, setting, config, run_name)
+            result = run_task(task, setting, config, run_name, seed=seed, game_assets=game_assets)
             results.append(result)
             print(json.dumps({
                 "event": "game_task_completed",

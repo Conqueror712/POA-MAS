@@ -68,7 +68,7 @@ python -m src.runners.run_reuse --config configs/experiments_mock.json --asset-m
 
 ### 资产消融
 
-`run_reuse` 支持三种可比较策略：`prompt`（仅注入资产）、`routing`（仅按角色资产路由）和
+`run_reuse` 支持三种可比较策略：`prompt`（通过 prompt channel 注入已抽取资产，路由保持自由）、`routing`（仅按角色资产路由）和
 `full`（两者同时启用）。summary 会记录 `reuse_strategy`、`asset_routing_rate`、LLM 调用和 token
 统计，以及墙钟时间。
 
@@ -230,7 +230,7 @@ python scripts/analyze_apps_failures.py
 - `results/analysis/apps_failure_items.csv`：逐 task-attempt 明细，适合继续人工审阅。
 
 当前 APPS 结果总体支持论文 story，但需要采用更稳妥的表述：组织资产复用不是越多越好，当前最清晰有效的是
-prompt-level procedural assets；`reuse_full` 的不稳定结果说明 full reuse 可能过约束或干扰 patch handoff，
+prompt-channel asset reuse；`reuse_full` 的不稳定结果说明 full reuse 可能过约束或干扰 patch handoff，
 因此论文应强调“资产分解、选择性复用和消融评估”，而不是宣称所有组织资产都会带来稳定收益。
 
 机制图和论文图表可复现生成：
@@ -245,28 +245,57 @@ python scripts/generate_game_paper_assets.py
 ## Domain 2：博弈论 / Persona 最小实验
 
 Domain 2 当前采用程序化经典博弈作为最小可控环境：Iterated Prisoner's Dilemma 和 Public Goods Game。
-它用于验证 persona 与 reusable strategy assets 是否会改变 cooperation rate、average payoff、social welfare
-和 Nash-deviation rate。
+它用于验证 persona 与 trajectory-derived strategy assets 是否会改变 cooperation rate、average payoff、
+social welfare 和 Nash-deviation rate。注意：`reuse_assets` 现在必须读取从 train trajectories
+启发式抽取出的资产文件，不再使用代码中硬编码的策略提示词。
 
-Mock 自检命令：
+### 一键闭环：训练轨迹 -> 抽取资产 -> held-out 复用
 
 ```powershell
-python -m src.runners.run_game_domain --config configs/experiments_game_mock.json
+powershell -ExecutionPolicy Bypass -File scripts/run_game_asset_protocol.ps1 -Config configs/experiments_game_mock.json -Seeds 712 -Prefix game_asset_protocol_mock_smoke
 ```
 
-真实 API 小规模 smoke 命令：
+这条 mock 命令不需要 API key，会完成：
+
+1. 在 `train` split 上运行 persona source trajectories；
+2. 从 source trajectories 抽取 `assets/game_assets/latest_strategy_assets.json`；
+3. 在 `test` 与 `shifted_test` 上运行 `no_persona / persona / reuse_assets`；
+4. 聚合结果到 `results/tables/game_domain_aggregate.md`；
+5. 重新生成 Domain 2 表格和图：`results/tables/paper_game_*.md`、`results/figures/game_domain_*.svg`。
+
+真实 API 运行前，先设置环境变量，或在 `configs/.deepseek_api_key` 中写入一行 DeepSeek API Key：
 
 ```powershell
-python -m src.runners.run_game_domain --config configs/experiments_game.json --splits test --settings no_persona persona reuse_assets --run-prefix game_domain_api_smoke_retry
+$env:DEEPSEEK_API_KEY="你的 DeepSeek API Key"
+```
+
+真实 API 一键命令：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_game_asset_protocol.ps1 -Config configs/experiments_game.json -Seeds 712 -Prefix game_asset_protocol_api_20260720
+```
+
+如果想跑 3 个 seed：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_game_asset_protocol.ps1 -Config configs/experiments_game.json -Seeds 712,713,714 -Prefix game_asset_protocol_api_20260720
 ```
 
 如果 summary 中 `invalid_action_rate` 较高，说明模型没有稳定返回合法动作 token，应先调整 prompt / `max_tokens`，不要把该轮作为论文结果。
 
-正式小实验命令：
+当前正式 Domain 2 结果使用前缀 `game_asset_protocol_api_20260720`，只保留 `s712 / s713 / s714` 三个 seed；
+误跑的 `s713714`、mock 检查和早期固定策略版本已归档到 `archive/process_20260720/domain2_superseded/`。
+正式聚合口径是 36 个 held-out runs：3 seeds × 2 splits × 2 games × 3 settings，所有 runs 的
+`invalid_action_rate=0`。Public Goods 是最清晰的正向信号：`test` 上 `reuse_assets` 0.986 >
+`persona` 0.750，`shifted_test` 上 `reuse_assets` 0.833 > `persona` 0.767；IPD 基本饱和，不应强讲。
+
+### 单步命令
 
 ```powershell
-python -m src.runners.run_game_domain --config configs/experiments_game.json --splits test shifted_test --settings no_persona persona reuse_assets --run-prefix game_domain_api_formal
-python scripts/aggregate_game_results.py --prefix game_domain_api_formal
+python -m src.runners.run_game_domain --config configs/experiments_game.json --splits train --settings persona --seed 712 --run-prefix game_asset_source_s712
+python -m src.runners.run_extract_game_assets --config configs/experiments_game.json --run-prefix game_asset_source_s712
+python -m src.runners.run_game_domain --config configs/experiments_game.json --splits test shifted_test --settings no_persona persona reuse_assets --seed 712 --run-prefix game_asset_eval_s712 --game-asset-file assets/game_assets/latest_strategy_assets.json
+python scripts/aggregate_game_results.py --prefix game_asset_eval_s712 --splits test shifted_test
 ```
 
 当前 Domain 2 说明见：

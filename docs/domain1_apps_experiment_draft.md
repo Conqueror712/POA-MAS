@@ -1,6 +1,6 @@
 # Domain 1 Experiment Draft: APPS Code Repair
 
-This draft is written as a paper-ready experiment section. The empirical claim is intentionally calibrated: the evidence supports selective reuse of organizational assets, especially prompt-level procedural assets, rather than a blanket claim that all extracted assets are universally beneficial.
+This draft is written as a paper-ready experiment section. The empirical claim is intentionally calibrated: the evidence supports selective reuse of organizational assets, especially prompt-channel asset reuse, rather than a blanket claim that all extracted assets are universally beneficial.
 
 ## Experiment 1: Coordination Assets for Code Repair
 
@@ -10,7 +10,7 @@ We first study whether organizational patterns that emerge during multi-agent pr
 
 > Can reusable organizational assets improve the reliability of a multi-agent code-repair workflow under held-out and shifted APPS repair tasks?
 
-The key hypothesis is that successful trajectories contain reusable procedural information, such as how to localize a bug, how to hand off a candidate patch, and how to route subtasks to agents that have previously specialized in those subtasks. We therefore evaluate full asset reuse together with two ablations, prompt-level reuse and routing-only reuse, to test whether the effect depends on the type of organizational asset being reused.
+The key hypothesis is that successful trajectories contain reusable procedural information, such as how to localize a bug, how to hand off a candidate patch, and how to route subtasks to agents that have previously specialized in those subtasks. We therefore evaluate full asset reuse together with two ablations, prompt-channel reuse and routing-only reuse, to test whether the effect depends on how organizational assets are reused.
 
 ![POA extraction and selective reuse](../results/figures/poa_mechanism_selective_reuse.svg)
 
@@ -43,7 +43,7 @@ We compare six settings:
 | free | Agents self-organize using their observed subtask success history. |
 | manual | Fixed human-designed assignment: localize, patch, and review are assigned to fixed agents. |
 | random | Each subtask is assigned to a random agent. |
-| reuse_prompt | Reuse extracted organizational assets only as prompt context; routing remains free. |
+| reuse_prompt | Reuse extracted assets through the prompt channel; routing remains free. |
 | reuse_routing | Reuse extracted role assets only for routing; prompts do not include asset content. |
 | reuse_full | Reuse both prompt assets and asset-based routing. |
 
@@ -84,7 +84,7 @@ Generated table files: [Markdown](../results/tables/paper_apps_main_results.md),
 | test | reuse_routing | 0.833 | 0.024 | 0.800 | 0.850 |
 | test | reuse_full | 0.850 | 0.041 | 0.800 | 0.900 |
 
-The strongest evidence appears on `shifted_test`, where prompt-level reuse achieves the highest average success rate, improving over `free` by 13.3 percentage points and over `random` by 6.6 percentage points. Routing-only reuse is also positive on this split, improving over `free` by 8.9 percentage points. In contrast, full reuse underperforms `free`, suggesting that applying all extracted assets simultaneously can over-constrain the workflow rather than monotonically improving it.
+The strongest evidence appears on `shifted_test`, where prompt-channel reuse achieves the highest average success rate, improving over `free` by 13.3 percentage points and over `random` by 6.6 percentage points. Routing-only reuse is also positive on this split, improving over `free` by 8.9 percentage points. In contrast, full reuse underperforms `free`, suggesting that applying all extracted assets simultaneously can over-constrain the workflow rather than monotonically improving it.
 
 The `test` split is less informative because the baseline is already close to saturation: `free` reaches 0.900 average success, and `manual` reaches 0.933. We therefore treat `test` as a sanity split and use `shifted_test` as the primary evidence for transfer under distribution shift.
 
@@ -105,7 +105,7 @@ Generated table files: [Markdown](../results/tables/paper_apps_reuse_contrast.md
 | test | reuse_routing | 2 | 6 | 48 | 4 | -4 |
 | test | reuse_full | 2 | 5 | 49 | 4 | -3 |
 
-This analysis sharpens the main result. On `shifted_test`, prompt-level reuse rescues eight task-attempts that `free` fails, while hurting only two. Routing-only reuse also has positive net rescue. Full reuse, however, hurts more task-attempts than it rescues. The result suggests that organizational assets should be decomposed and selectively reused rather than treated as a monolithic memory to inject into every future run.
+This analysis sharpens the main result. On `shifted_test`, prompt-channel reuse rescues eight task-attempts that `free` fails, while hurting only two. Routing-only reuse also has positive net rescue. Full reuse, however, hurts more task-attempts than it rescues. The result suggests that organizational assets should be decomposed and selectively reused rather than treated as a monolithic memory to inject into every future run.
 
 ### Failure Mode Analysis
 
@@ -124,7 +124,7 @@ Generated table files: [Markdown](../results/tables/paper_apps_failure_modes_shi
 | shifted_test | reuse_routing | 8 | 0 | 2 | 10 |
 | shifted_test | reuse_full | 14 | 1 | 1 | 16 |
 
-Prompt-level reuse reduces empty or missing patches from 13/45 attempts under `free` to 4/45 attempts on `shifted_test`. This suggests a mechanism: the benefit of persistent organizational assets is not simply that the model becomes a stronger programmer. Instead, the assets stabilize the multi-agent workflow, especially the handoff from bug localization to executable patch generation.
+Prompt-channel reuse reduces empty or missing patches from 13/45 attempts under `free` to 4/45 attempts on `shifted_test`. This suggests a mechanism: the benefit of persistent organizational assets is not simply that the model becomes a stronger programmer. Instead, the assets stabilize the multi-agent workflow, especially the handoff from bug localization to executable patch generation.
 
 ### Qualitative Case Analysis
 
@@ -142,7 +142,7 @@ Generated case table files: [Markdown](../results/tables/paper_apps_case_notes.m
 
 The APPS experiment supports a calibrated version of the persistent organizational assets hypothesis. The positive result is not that every asset type improves every held-out condition. Instead, the evidence suggests:
 
-1. Prompt-level procedural assets improve shifted-task robustness.
+1. Prompt-channel asset reuse improves shifted-task robustness.
 2. Routing-only assets can help, but the effect is smaller and less stable.
 3. Full reuse can hurt, likely because multiple asset constraints over-specify the collaboration pattern.
 4. The main mechanism appears to be improved workflow reliability, especially reducing empty or missing patch outputs.
@@ -159,7 +159,7 @@ The experiment also uses a single model family. This controls cost and keeps the
 
 A concise claim supported by the current Domain 1 evidence is:
 
-> Persistent organizational assets can improve the robustness of multi-agent code repair under shifted tasks, but the benefit depends on the type of asset reused. Prompt-level procedural assets reduce collaboration failures such as missing patch handoffs, while full asset reuse can over-constrain the team and hurt performance.
+> Persistent organizational assets can improve the robustness of multi-agent code repair under shifted tasks, but the benefit depends on the reuse channel and asset type. Prompt-channel asset reuse reduces collaboration failures such as missing patch handoffs, while full asset reuse can over-constrain the team and hurt performance.
 
 This claim is narrower than a blanket performance claim, but it is also more defensible: it is supported by the main success-rate table, the reuse/free contrast, and the failure-mode analysis.
 

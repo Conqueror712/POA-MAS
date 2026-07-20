@@ -1,14 +1,14 @@
 | Split | Game | Setting | Coop. | Avg. payoff | Welfare | Invalid |
 | --- | --- | --- | ---: | ---: | ---: | ---: |
-| test | IPD | No persona | 0.000 | 1.000 | 16.000 | 0.000 |
-| test | IPD | Persona | 0.312 | 1.938 | 31.000 | 0.000 |
-| test | IPD | **Reuse assets** | 1.000 | 3.000 | 48.000 | 0.000 |
-| test | Public Goods | No persona | 0.167 | 11.000 | 264.000 | 0.000 |
-| test | Public Goods | Persona | 0.625 | 13.750 | 330.000 | 0.000 |
-| test | Public Goods | **Reuse assets** | 0.958 | 15.750 | 378.000 | 0.000 |
-| shifted | IPD | No persona | 1.000 | 3.000 | 60.000 | 0.000 |
-| shifted | IPD | Persona | 0.800 | 2.700 | 54.000 | 0.000 |
-| shifted | IPD | **Reuse assets** | 1.000 | 3.000 | 60.000 | 0.000 |
-| shifted | Public Goods | No persona | 0.067 | 10.267 | 308.000 | 0.000 |
-| shifted | Public Goods | Persona | 0.767 | 13.067 | 392.000 | 0.000 |
-| shifted | Public Goods | **Reuse assets** | 1.000 | 14.000 | 420.000 | 0.000 |
+| test | IPD | No persona | 0.854 | 2.854 | 137.000 | 0.000 |
+| test | IPD | Persona | 1.000 | 3.000 | 144.000 | 0.000 |
+| test | IPD | **Reuse assets** | 0.979 | 2.979 | 143.000 | 0.000 |
+| test | Public Goods | No persona | 0.611 | 13.667 | 984.000 | 0.000 |
+| test | Public Goods | Persona | 0.750 | 14.500 | 1044.000 | 0.000 |
+| test | Public Goods | **Reuse assets** | 0.986 | 15.917 | 1146.000 | 0.000 |
+| shifted | IPD | No persona | 1.000 | 3.000 | 180.000 | 0.000 |
+| shifted | IPD | Persona | 1.000 | 3.000 | 180.000 | 0.000 |
+| shifted | IPD | **Reuse assets** | 1.000 | 3.000 | 180.000 | 0.000 |
+| shifted | Public Goods | No persona | 0.056 | 10.222 | 920.000 | 0.000 |
+| shifted | Public Goods | Persona | 0.767 | 13.067 | 1176.000 | 0.000 |
+| shifted | Public Goods | **Reuse assets** | 0.833 | 13.333 | 1200.000 | 0.000 |
