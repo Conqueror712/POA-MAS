@@ -1,0 +1,348 @@
+split,seed,task_id,setting,delta_vs_free,free_failure_type,reuse_failure_type,free_error,reuse_error
+shifted_test,712,apps_shifted_test_test_0000,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0000,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0000,reuse_full,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0001,reuse_prompt,hurt_by_reuse,passed,wrong_output,,Case 54 produced different output.
+shifted_test,712,apps_shifted_test_test_0001,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0001,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0002,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0002,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0002,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0003,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0003,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0003,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0004,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0004,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0004,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0005,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0005,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0005,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0006,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0006,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0006,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0007,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0007,reuse_routing,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0007,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0008,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0008,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0008,reuse_full,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0009,reuse_prompt,both_failed,empty_or_missing_patch,syntax_error,Case 1 produced different output.,"File ""<string>"", line 54
+    top = bisect.bisect_left(min_y
+                            ^
+SyntaxError: '(' was never closed"
+shifted_test,712,apps_shifted_test_test_0009,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0009,reuse_full,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,712,apps_shifted_test_test_0010,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0010,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0010,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0011,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0011,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0011,reuse_full,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0012,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0012,reuse_routing,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0012,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0014,reuse_prompt,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0014,reuse_routing,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0014,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,712,apps_shifted_test_test_0015,reuse_prompt,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0015,reuse_routing,both_passed,passed,passed,,
+shifted_test,712,apps_shifted_test_test_0015,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0000,reuse_prompt,both_failed,empty_or_missing_patch,syntax_error,Case 1 produced different output.,"File ""<string>"", line 31
+    ```
+    ^
+SyntaxError: invalid syntax"
+shifted_test,713,apps_shifted_test_test_0000,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,713,apps_shifted_test_test_0000,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0001,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,713,apps_shifted_test_test_0001,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,713,apps_shifted_test_test_0001,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0002,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0002,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0002,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0003,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,713,apps_shifted_test_test_0003,reuse_routing,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0003,reuse_full,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,713,apps_shifted_test_test_0004,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0004,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0004,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0005,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0005,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0005,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0006,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0006,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0006,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0007,reuse_prompt,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0007,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0007,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0008,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0008,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0008,reuse_full,hurt_by_reuse,passed,syntax_error,,"File ""<string>"", line 1
+    ```
+    ^
+SyntaxError: invalid syntax"
+shifted_test,713,apps_shifted_test_test_0009,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,713,apps_shifted_test_test_0009,reuse_routing,both_failed,empty_or_missing_patch,wrong_output,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0009,reuse_full,both_failed,empty_or_missing_patch,wrong_output,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0010,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0010,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0010,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0011,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0011,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0011,reuse_full,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0012,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0012,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0012,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0014,reuse_prompt,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0014,reuse_routing,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0014,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,713,apps_shifted_test_test_0015,reuse_prompt,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0015,reuse_routing,both_passed,passed,passed,,
+shifted_test,713,apps_shifted_test_test_0015,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0000,reuse_prompt,rescued_by_reuse,syntax_error,passed,"File ""<string>"", line 16
+    else:
+         ^
+IndentationError: expected an indented block after 'else' statement on line 16",
+shifted_test,714,apps_shifted_test_test_0000,reuse_routing,rescued_by_reuse,syntax_error,passed,"File ""<string>"", line 16
+    else:
+         ^
+IndentationError: expected an indented block after 'else' statement on line 16",
+shifted_test,714,apps_shifted_test_test_0000,reuse_full,both_failed,syntax_error,empty_or_missing_patch,"File ""<string>"", line 16
+    else:
+         ^
+IndentationError: expected an indented block after 'else' statement on line 16",Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0001,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0001,reuse_routing,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0001,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0002,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0002,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0002,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0003,reuse_prompt,both_failed,empty_or_missing_patch,wrong_output,Case 1 produced different output.,Case 13 produced different output.
+shifted_test,714,apps_shifted_test_test_0003,reuse_routing,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,714,apps_shifted_test_test_0003,reuse_full,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+shifted_test,714,apps_shifted_test_test_0004,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0004,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0004,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0005,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0005,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0005,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0006,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0006,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0006,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0007,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0007,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0007,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0008,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0008,reuse_routing,hurt_by_reuse,passed,wrong_output,,Case 10 produced different output.
+shifted_test,714,apps_shifted_test_test_0008,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0009,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0009,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0009,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0010,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0010,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0010,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0011,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0011,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0011,reuse_full,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0012,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0012,reuse_routing,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0012,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0014,reuse_prompt,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0014,reuse_routing,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0014,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+shifted_test,714,apps_shifted_test_test_0015,reuse_prompt,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0015,reuse_routing,both_passed,passed,passed,,
+shifted_test,714,apps_shifted_test_test_0015,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4001,reuse_prompt,rescued_by_reuse,wrong_output,passed,Case 2 produced different output.,
+test,712,apps_test_test_4001,reuse_routing,rescued_by_reuse,wrong_output,passed,Case 2 produced different output.,
+test,712,apps_test_test_4001,reuse_full,rescued_by_reuse,wrong_output,passed,Case 2 produced different output.,
+test,712,apps_test_test_4002,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4002,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4002,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4003,reuse_prompt,rescued_by_reuse,wrong_output,passed,Case 5 produced different output.,
+test,712,apps_test_test_4003,reuse_routing,both_failed,wrong_output,empty_or_missing_patch,Case 5 produced different output.,Case 1 produced different output.
+test,712,apps_test_test_4003,reuse_full,both_failed,wrong_output,wrong_output,Case 5 produced different output.,Case 2 produced different output.
+test,712,apps_test_test_4004,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4004,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4004,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4005,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4005,reuse_routing,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,712,apps_test_test_4005,reuse_full,hurt_by_reuse,passed,runtime_error,,"Traceback (most recent call last):
+  File ""<string>"", line 13, in <module>
+TypeError: intersect_area() missing 4 required positional arguments: 'x3', 'y3', 'x4', and 'y4'"
+test,712,apps_test_test_4006,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4006,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4006,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4008,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4008,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4008,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4009,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4009,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4009,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4010,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4010,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4010,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4011,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4011,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4011,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4012,reuse_prompt,rescued_by_reuse,wrong_output,passed,Case 1 produced different output.,
+test,712,apps_test_test_4012,reuse_routing,both_failed,wrong_output,wrong_output,Case 1 produced different output.,Case 1 produced different output.
+test,712,apps_test_test_4012,reuse_full,both_failed,wrong_output,wrong_output,Case 1 produced different output.,Case 1 produced different output.
+test,712,apps_test_test_4013,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4013,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4013,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4014,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4014,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4014,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4015,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4015,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4015,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4016,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4016,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4016,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4017,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4017,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4017,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4018,reuse_prompt,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,712,apps_test_test_4018,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4018,reuse_full,hurt_by_reuse,passed,syntax_error,,"File ""<string>"", line 1
+    def count_distinct_subseq(a
+                             ^
+SyntaxError: '(' was never closed"
+test,712,apps_test_test_4020,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4020,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4020,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4021,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4021,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4021,reuse_full,both_passed,passed,passed,,
+test,712,apps_test_test_4022,reuse_prompt,both_passed,passed,passed,,
+test,712,apps_test_test_4022,reuse_routing,both_passed,passed,passed,,
+test,712,apps_test_test_4022,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4001,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4001,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4001,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4002,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4002,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4002,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4003,reuse_prompt,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,713,apps_test_test_4003,reuse_routing,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,713,apps_test_test_4003,reuse_full,hurt_by_reuse,passed,wrong_output,,Case 5 produced different output.
+test,713,apps_test_test_4004,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4004,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4004,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4005,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4005,reuse_routing,hurt_by_reuse,passed,syntax_error,,"File ""<string>"", line 2
+    x3, y3, x4, y4 = map(int, input().
+                        ^
+SyntaxError: '(' was never closed"
+test,713,apps_test_test_4005,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4006,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4006,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4006,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4008,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4008,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4008,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4009,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4009,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4009,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4010,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4010,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4010,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4011,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4011,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4011,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4012,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4012,reuse_routing,hurt_by_reuse,passed,wrong_output,,Case 1 produced different output.
+test,713,apps_test_test_4012,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4013,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4013,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4013,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4014,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4014,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4014,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4015,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4015,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4015,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4016,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4016,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4016,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4017,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4017,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4017,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4018,reuse_prompt,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,713,apps_test_test_4018,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4018,reuse_full,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,713,apps_test_test_4020,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4020,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4020,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4021,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4021,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4021,reuse_full,both_passed,passed,passed,,
+test,713,apps_test_test_4022,reuse_prompt,both_passed,passed,passed,,
+test,713,apps_test_test_4022,reuse_routing,both_passed,passed,passed,,
+test,713,apps_test_test_4022,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4001,reuse_prompt,rescued_by_reuse,wrong_output,passed,Case 6 produced different output.,
+test,714,apps_test_test_4001,reuse_routing,rescued_by_reuse,wrong_output,passed,Case 6 produced different output.,
+test,714,apps_test_test_4001,reuse_full,rescued_by_reuse,wrong_output,passed,Case 6 produced different output.,
+test,714,apps_test_test_4002,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4002,reuse_routing,hurt_by_reuse,passed,syntax_error,,"File ""<string>"", line 19
+    for v in lst
+                ^
+SyntaxError: expected ':'"
+test,714,apps_test_test_4002,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4003,reuse_prompt,hurt_by_reuse,passed,wrong_output,,Case 2 produced different output.
+test,714,apps_test_test_4003,reuse_routing,hurt_by_reuse,passed,empty_or_missing_patch,,Case 1 produced different output.
+test,714,apps_test_test_4003,reuse_full,hurt_by_reuse,passed,wrong_output,,Case 2 produced different output.
+test,714,apps_test_test_4004,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4004,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4004,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4005,reuse_prompt,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+test,714,apps_test_test_4005,reuse_routing,both_failed,empty_or_missing_patch,wrong_output,Case 1 produced different output.,Case 1 produced different output.
+test,714,apps_test_test_4005,reuse_full,both_failed,empty_or_missing_patch,syntax_error,Case 1 produced different output.,"File ""<string>"", line 22
+    kx1 = max(x3
+             ^
+SyntaxError: '(' was never closed"
+test,714,apps_test_test_4006,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4006,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4006,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4008,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4008,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4008,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4009,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4009,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4009,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4010,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4010,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4010,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4011,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4011,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4011,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4012,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4012,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4012,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4013,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4013,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4013,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4014,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4014,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4014,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4015,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4015,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4015,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4016,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4016,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4016,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4017,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4017,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4017,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4018,reuse_prompt,rescued_by_reuse,empty_or_missing_patch,passed,Case 1 produced different output.,
+test,714,apps_test_test_4018,reuse_routing,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+test,714,apps_test_test_4018,reuse_full,both_failed,empty_or_missing_patch,empty_or_missing_patch,Case 1 produced different output.,Case 1 produced different output.
+test,714,apps_test_test_4020,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4020,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4020,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4021,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4021,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4021,reuse_full,both_passed,passed,passed,,
+test,714,apps_test_test_4022,reuse_prompt,both_passed,passed,passed,,
+test,714,apps_test_test_4022,reuse_routing,both_passed,passed,passed,,
+test,714,apps_test_test_4022,reuse_full,both_passed,passed,passed,,

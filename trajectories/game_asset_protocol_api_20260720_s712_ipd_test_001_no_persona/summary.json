@@ -1,0 +1,242 @@
+{
+  "run_name": "game_asset_protocol_api_20260720_s712_ipd_test_001_no_persona",
+  "domain": "game_theory",
+  "setting": "no_persona",
+  "task_id": "ipd_test_001",
+  "task_split": "test",
+  "game_type": "iterated_prisoners_dilemma",
+  "num_players": 2,
+  "rounds": 8,
+  "seed": 712,
+  "strategy_asset_count": 0,
+  "result": {
+    "task_id": "ipd_test_001",
+    "split": "test",
+    "game_type": "iterated_prisoners_dilemma",
+    "setting": "no_persona",
+    "rounds": [
+      {
+        "round": 1,
+        "actions": {
+          "A1": "D",
+          "A2": "C"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "D",
+          "A2": "C"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 5.0,
+            "A2": 0.0
+          },
+          "cooperative_actions": 1,
+          "total_actions": 2,
+          "social_welfare": 5.0,
+          "nash_deviation_actions": 1
+        }
+      },
+      {
+        "round": 2,
+        "actions": {
+          "A1": "C",
+          "A2": "D"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "C",
+          "A2": "D"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 0.0,
+            "A2": 5.0
+          },
+          "cooperative_actions": 1,
+          "total_actions": 2,
+          "social_welfare": 5.0,
+          "nash_deviation_actions": 1
+        }
+      },
+      {
+        "round": 3,
+        "actions": {
+          "A1": "D",
+          "A2": "C"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "D",
+          "A2": "C"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 5.0,
+            "A2": 0.0
+          },
+          "cooperative_actions": 1,
+          "total_actions": 2,
+          "social_welfare": 5.0,
+          "nash_deviation_actions": 1
+        }
+      },
+      {
+        "round": 4,
+        "actions": {
+          "A1": "C",
+          "A2": "D"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "C",
+          "A2": "D"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 0.0,
+            "A2": 5.0
+          },
+          "cooperative_actions": 1,
+          "total_actions": 2,
+          "social_welfare": 5.0,
+          "nash_deviation_actions": 1
+        }
+      },
+      {
+        "round": 5,
+        "actions": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 3.0,
+            "A2": 3.0
+          },
+          "cooperative_actions": 2,
+          "total_actions": 2,
+          "social_welfare": 6.0,
+          "nash_deviation_actions": 2
+        }
+      },
+      {
+        "round": 6,
+        "actions": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 3.0,
+            "A2": 3.0
+          },
+          "cooperative_actions": 2,
+          "total_actions": 2,
+          "social_welfare": 6.0,
+          "nash_deviation_actions": 2
+        }
+      },
+      {
+        "round": 7,
+        "actions": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 3.0,
+            "A2": 3.0
+          },
+          "cooperative_actions": 2,
+          "total_actions": 2,
+          "social_welfare": 6.0,
+          "nash_deviation_actions": 2
+        }
+      },
+      {
+        "round": 8,
+        "actions": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true
+        },
+        "raw_outputs": {
+          "A1": "C",
+          "A2": "C"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 3.0,
+            "A2": 3.0
+          },
+          "cooperative_actions": 2,
+          "total_actions": 2,
+          "social_welfare": 6.0,
+          "nash_deviation_actions": 2
+        }
+      }
+    ],
+    "metrics": {
+      "cooperation_rate": 0.75,
+      "nash_deviation_rate": 0.75,
+      "invalid_action_rate": 0.0,
+      "average_payoff": 2.75,
+      "social_welfare": 44.0,
+      "action_counts": {
+        "C": 12,
+        "D": 4
+      }
+    }
+  },
+  "metrics": {
+    "cooperation_rate": 0.75,
+    "nash_deviation_rate": 0.75,
+    "invalid_action_rate": 0.0,
+    "average_payoff": 2.75,
+    "social_welfare": 44.0,
+    "action_counts": {
+      "C": 12,
+      "D": 4
+    }
+  }
+}

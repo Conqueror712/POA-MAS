@@ -1,0 +1,264 @@
+{
+  "run_name": "game_asset_protocol_api_20260720_s712_pg_shifted_001_reuse_assets",
+  "domain": "game_theory",
+  "setting": "reuse_assets",
+  "task_id": "pg_shifted_001",
+  "task_split": "shifted_test",
+  "game_type": "public_goods",
+  "num_players": 5,
+  "rounds": 6,
+  "seed": 712,
+  "strategy_asset_count": 4,
+  "result": {
+    "task_id": "pg_shifted_001",
+    "split": "shifted_test",
+    "game_type": "public_goods",
+    "setting": "reuse_assets",
+    "rounds": [
+      {
+        "round": 1,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "CONTRIBUTE"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true,
+          "A5": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "CONTRIBUTE"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 14.0,
+            "A2": 14.0,
+            "A3": 14.0,
+            "A4": 14.0,
+            "A5": 14.0
+          },
+          "cooperative_actions": 5,
+          "total_actions": 5,
+          "social_welfare": 70.0,
+          "nash_deviation_actions": 5
+        }
+      },
+      {
+        "round": 2,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "CONTRIBUTE"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true,
+          "A5": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "CONTRIBUTE"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 14.0,
+            "A2": 14.0,
+            "A3": 14.0,
+            "A4": 14.0,
+            "A5": 14.0
+          },
+          "cooperative_actions": 5,
+          "total_actions": 5,
+          "social_welfare": 70.0,
+          "nash_deviation_actions": 5
+        }
+      },
+      {
+        "round": 3,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "CONTRIBUTE"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true,
+          "A5": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "CONTRIBUTE"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 14.0,
+            "A2": 14.0,
+            "A3": 14.0,
+            "A4": 14.0,
+            "A5": 14.0
+          },
+          "cooperative_actions": 5,
+          "total_actions": 5,
+          "social_welfare": 70.0,
+          "nash_deviation_actions": 5
+        }
+      },
+      {
+        "round": 4,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true,
+          "A5": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 11.2,
+            "A2": 11.2,
+            "A3": 11.2,
+            "A4": 11.2,
+            "A5": 21.2
+          },
+          "cooperative_actions": 4,
+          "total_actions": 5,
+          "social_welfare": 66.0,
+          "nash_deviation_actions": 4
+        }
+      },
+      {
+        "round": 5,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "KEEP",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true,
+          "A5": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "KEEP",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 8.4,
+            "A2": 18.4,
+            "A3": 8.4,
+            "A4": 8.4,
+            "A5": 18.4
+          },
+          "cooperative_actions": 3,
+          "total_actions": 5,
+          "social_welfare": 62.0,
+          "nash_deviation_actions": 3
+        }
+      },
+      {
+        "round": 6,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true,
+          "A5": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "CONTRIBUTE",
+          "A3": "CONTRIBUTE",
+          "A4": "CONTRIBUTE",
+          "A5": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 11.2,
+            "A2": 11.2,
+            "A3": 11.2,
+            "A4": 11.2,
+            "A5": 21.2
+          },
+          "cooperative_actions": 4,
+          "total_actions": 5,
+          "social_welfare": 66.0,
+          "nash_deviation_actions": 4
+        }
+      }
+    ],
+    "metrics": {
+      "cooperation_rate": 0.8666666666666667,
+      "nash_deviation_rate": 0.8666666666666667,
+      "invalid_action_rate": 0.0,
+      "average_payoff": 13.46666666666666,
+      "social_welfare": 404.0,
+      "action_counts": {
+        "CONTRIBUTE": 26,
+        "KEEP": 4
+      }
+    }
+  },
+  "metrics": {
+    "cooperation_rate": 0.8666666666666667,
+    "nash_deviation_rate": 0.8666666666666667,
+    "invalid_action_rate": 0.0,
+    "average_payoff": 13.46666666666666,
+    "social_welfare": 404.0,
+    "action_counts": {
+      "CONTRIBUTE": 26,
+      "KEEP": 4
+    }
+  }
+}

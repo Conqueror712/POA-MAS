@@ -1,0 +1,131 @@
+[
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "iterated_prisoners_dilemma",
+    "name": "legal_action_protocol",
+    "trigger_condition": "When playing iterated_prisoners_dilemma, return exactly one legal action token.",
+    "recommended_actions": [
+      "Use only these legal actions: C or D."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_ipd_train_001_persona:ipd_train_001"
+    ],
+    "confidence": 1.0,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "avg_invalid_action_rate": 0.0
+    }
+  },
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "iterated_prisoners_dilemma",
+    "name": "cooperative_opening",
+    "trigger_condition": "When a repeated iterated_prisoners_dilemma starts and no history is available.",
+    "recommended_actions": [
+      "Start with C when repeated interaction is expected."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_ipd_train_001_persona:ipd_train_001"
+    ],
+    "confidence": 1.0,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "first_round_cooperation_rate": 1.0
+    }
+  },
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "iterated_prisoners_dilemma",
+    "name": "reciprocal_cooperation",
+    "trigger_condition": "When most peers cooperated in the previous round.",
+    "recommended_actions": [
+      "Continue cooperation after cooperative peer behavior.",
+      "Avoid switching to defection unless the recent group behavior collapses."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_ipd_train_001_persona:ipd_train_001"
+    ],
+    "confidence": 1.0,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "conditional_cooperation_rate": 1.0
+    }
+  },
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "name": "legal_action_protocol",
+    "trigger_condition": "When playing public_goods, return exactly one legal action token.",
+    "recommended_actions": [
+      "Use only these legal actions: CONTRIBUTE or KEEP."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_pg_train_001_persona:pg_train_001"
+    ],
+    "confidence": 1.0,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "avg_invalid_action_rate": 0.0
+    }
+  },
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "name": "cooperative_opening",
+    "trigger_condition": "When a repeated public_goods starts and no history is available.",
+    "recommended_actions": [
+      "Start with CONTRIBUTE when repeated interaction is expected."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_pg_train_001_persona:pg_train_001"
+    ],
+    "confidence": 0.75,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "first_round_cooperation_rate": 0.75
+    }
+  },
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "name": "reciprocal_cooperation",
+    "trigger_condition": "When most peers cooperated in the previous round.",
+    "recommended_actions": [
+      "Continue cooperation after cooperative peer behavior.",
+      "Avoid switching to defection unless the recent group behavior collapses."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_pg_train_001_persona:pg_train_001"
+    ],
+    "confidence": 0.6429,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "conditional_cooperation_rate": 0.6429
+    }
+  },
+  {
+    "asset_type": "strategy",
+    "task_family": "game_theory",
+    "game_type": "public_goods",
+    "name": "public_goods_welfare_preservation",
+    "trigger_condition": "When repeated public-goods interaction rewards group contribution.",
+    "recommended_actions": [
+      "Contribute early to maintain group welfare.",
+      "Keep contributing while at least half of the group contributed recently."
+    ],
+    "evidence": [
+      "game_asset_protocol_api_20260720_s714_train_pg_train_001_persona:pg_train_001"
+    ],
+    "confidence": 0.7,
+    "metadata": {
+      "source": "trajectory-derived game extractor",
+      "avg_cooperation_rate": 0.7
+    }
+  }
+]

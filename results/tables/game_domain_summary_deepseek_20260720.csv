@@ -1,0 +1,13 @@
+split,game_type,setting,runs,tasks,avg_cooperation_rate,avg_nash_deviation_rate,avg_invalid_action_rate,avg_payoff,total_social_welfare
+shifted_test,iterated_prisoners_dilemma,no_persona,3,ipd_shifted_001,1.0,1.0,0.0,3.0,180.0
+shifted_test,iterated_prisoners_dilemma,persona,3,ipd_shifted_001,1.0,1.0,0.0,3.0,180.0
+shifted_test,iterated_prisoners_dilemma,reuse_assets,3,ipd_shifted_001,1.0,1.0,0.0,3.0,180.0
+shifted_test,public_goods,no_persona,3,pg_shifted_001,0.05555555555555555,0.05555555555555555,0.0,10.222222222222223,920.0
+shifted_test,public_goods,persona,3,pg_shifted_001,0.7666666666666666,0.7666666666666666,0.0,13.066666666666661,1176.0
+shifted_test,public_goods,reuse_assets,3,pg_shifted_001,0.8333333333333334,0.8333333333333334,0.0,13.333333333333327,1200.0
+test,iterated_prisoners_dilemma,no_persona,3,ipd_test_001,0.8541666666666666,0.8541666666666666,0.0,2.8541666666666665,137.0
+test,iterated_prisoners_dilemma,persona,3,ipd_test_001,1.0,1.0,0.0,3.0,144.0
+test,iterated_prisoners_dilemma,reuse_assets,3,ipd_test_001,0.9791666666666666,0.9791666666666666,0.0,2.9791666666666665,143.0
+test,public_goods,no_persona,3,pg_test_001,0.611111111111111,0.611111111111111,0.0,13.666666666666666,984.0
+test,public_goods,persona,3,pg_test_001,0.75,0.75,0.0,14.5,1044.0
+test,public_goods,reuse_assets,3,pg_test_001,0.9861111111111112,0.9861111111111112,0.0,15.916666666666666,1146.0

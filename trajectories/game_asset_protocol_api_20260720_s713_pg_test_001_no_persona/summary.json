@@ -1,0 +1,240 @@
+{
+  "run_name": "game_asset_protocol_api_20260720_s713_pg_test_001_no_persona",
+  "domain": "game_theory",
+  "setting": "no_persona",
+  "task_id": "pg_test_001",
+  "task_split": "test",
+  "game_type": "public_goods",
+  "num_players": 4,
+  "rounds": 6,
+  "seed": 713,
+  "strategy_asset_count": 0,
+  "result": {
+    "task_id": "pg_test_001",
+    "split": "test",
+    "game_type": "public_goods",
+    "setting": "no_persona",
+    "rounds": [
+      {
+        "round": 1,
+        "actions": {
+          "A1": "CONTRIBUTE",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true
+        },
+        "raw_outputs": {
+          "A1": "CONTRIBUTE",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 4.0,
+            "A2": 14.0,
+            "A3": 14.0,
+            "A4": 14.0
+          },
+          "cooperative_actions": 1,
+          "total_actions": 4,
+          "social_welfare": 46.0,
+          "nash_deviation_actions": 1
+        }
+      },
+      {
+        "round": 2,
+        "actions": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true
+        },
+        "raw_outputs": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 10.0,
+            "A2": 10.0,
+            "A3": 10.0,
+            "A4": 10.0
+          },
+          "cooperative_actions": 0,
+          "total_actions": 4,
+          "social_welfare": 40.0,
+          "nash_deviation_actions": 0
+        }
+      },
+      {
+        "round": 3,
+        "actions": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true
+        },
+        "raw_outputs": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 10.0,
+            "A2": 10.0,
+            "A3": 10.0,
+            "A4": 10.0
+          },
+          "cooperative_actions": 0,
+          "total_actions": 4,
+          "social_welfare": 40.0,
+          "nash_deviation_actions": 0
+        }
+      },
+      {
+        "round": 4,
+        "actions": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true
+        },
+        "raw_outputs": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 10.0,
+            "A2": 10.0,
+            "A3": 10.0,
+            "A4": 10.0
+          },
+          "cooperative_actions": 0,
+          "total_actions": 4,
+          "social_welfare": 40.0,
+          "nash_deviation_actions": 0
+        }
+      },
+      {
+        "round": 5,
+        "actions": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true
+        },
+        "raw_outputs": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 10.0,
+            "A2": 10.0,
+            "A3": 10.0,
+            "A4": 10.0
+          },
+          "cooperative_actions": 0,
+          "total_actions": 4,
+          "social_welfare": 40.0,
+          "nash_deviation_actions": 0
+        }
+      },
+      {
+        "round": 6,
+        "actions": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "action_valid": {
+          "A1": true,
+          "A2": true,
+          "A3": true,
+          "A4": true
+        },
+        "raw_outputs": {
+          "A1": "KEEP",
+          "A2": "KEEP",
+          "A3": "KEEP",
+          "A4": "KEEP"
+        },
+        "scores": {
+          "payoffs": {
+            "A1": 10.0,
+            "A2": 10.0,
+            "A3": 10.0,
+            "A4": 10.0
+          },
+          "cooperative_actions": 0,
+          "total_actions": 4,
+          "social_welfare": 40.0,
+          "nash_deviation_actions": 0
+        }
+      }
+    ],
+    "metrics": {
+      "cooperation_rate": 0.041666666666666664,
+      "nash_deviation_rate": 0.041666666666666664,
+      "invalid_action_rate": 0.0,
+      "average_payoff": 10.25,
+      "social_welfare": 246.0,
+      "action_counts": {
+        "CONTRIBUTE": 1,
+        "KEEP": 23
+      }
+    }
+  },
+  "metrics": {
+    "cooperation_rate": 0.041666666666666664,
+    "nash_deviation_rate": 0.041666666666666664,
+    "invalid_action_rate": 0.0,
+    "average_payoff": 10.25,
+    "social_welfare": 246.0,
+    "action_counts": {
+      "CONTRIBUTE": 1,
+      "KEEP": 23
+    }
+  }
+}

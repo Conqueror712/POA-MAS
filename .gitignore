@@ -7,18 +7,17 @@ __pycache__/
 .coverage
 htmlcov/
 
-# --- Experiment outputs (regenerable, large, non-versioned) ---
-trajectories/
+# --- Experiment outputs ---
 logs/
 *.log
 *.tmp
 .tmp_tests/
 archive/process_*/
 
-# --- Assets: all extracted asset JSONs are regenerable from trajectories ---
-# Covers assets/role_assets/, assets/organization_assets/, assets/game_assets/,
-# and any per-backbone subdirectory (assets/qwen27b/role_assets/, etc.).
+# --- Assets: keep game-domain assets, ignore other latest pointers ---
 assets/**/latest_*.json
+!assets/game_assets/
+!assets/game_assets/*.json
 
 # --- Results: keep only the paper-facing final tables/analysis/figures ---
 results/*

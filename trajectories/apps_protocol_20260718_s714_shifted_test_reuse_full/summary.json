@@ -1,0 +1,236 @@
+{
+  "run_name": "apps_protocol_20260718_s714_shifted_test_reuse_full",
+  "mode": "free",
+  "num_tasks": 15,
+  "task_offset": 0,
+  "task_split": "shifted_test",
+  "task_ids": [
+    "apps_shifted_test_test_0000",
+    "apps_shifted_test_test_0001",
+    "apps_shifted_test_test_0002",
+    "apps_shifted_test_test_0003",
+    "apps_shifted_test_test_0004",
+    "apps_shifted_test_test_0005",
+    "apps_shifted_test_test_0006",
+    "apps_shifted_test_test_0007",
+    "apps_shifted_test_test_0008",
+    "apps_shifted_test_test_0009",
+    "apps_shifted_test_test_0010",
+    "apps_shifted_test_test_0011",
+    "apps_shifted_test_test_0012",
+    "apps_shifted_test_test_0014",
+    "apps_shifted_test_test_0015"
+  ],
+  "num_agents": 4,
+  "seed": 714,
+  "success_rate": 0.6,
+  "specialization_index": 1.0,
+  "task_overlap_rate": 0.0,
+  "results": [
+    {
+      "task_id": "apps_shifted_test_test_0000",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "",
+        "patch": "",
+        "review": "FAIL Candidate code is empty; no implementation provided."
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0001",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- **Line 4 (condition reversed):** `if num[i] != 0:` causes the loop to skip non‑zero digits and only act on zero digits. It should be `if num[i] == 0:` to skip zeros and only decrement non‑zero digits.\n- **Line 6 (decrement on zero):** Because the condition is reversed, `num[i] -= 1` is applied to a zero digit, producing a negative digit and invalid sum calculations.\n- **Overall logic:** The intended algorithm is to find a digit to decrement (non‑zero) and set all digits to its right to 9, then compare sums. The reversed condition makes the code instead attempt to modify zero digits, leading to wrong candidates (e.g., for input `100` it creates `[1, -1, 9]`).",
+        "patch": "",
+        "review": "FAIL No code provided"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0002",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The primary bug is on line 4: `t = int(str(int(s[0]) - 1) + '0' * (n - 1))`. It incorrectly subtracts 1 from the first digit instead of adding 1, leading to a smaller `t` and a negative difference.\n- This mistake causes all outputs to be off by a factor of subtracting the current year from a smaller number, e.g., for input `201`, the code computes `t=100` (since `2-1=1`) instead of the correct `300`, resulting in `-101` instead of `99`.\n- No other logical errors are present; the rest of the algorithm correctly determines the next lucky year by taking the first digit, incrementing it, and appending zeros.",
+        "patch": "def main():\n    s = input().strip()\n    n = len(s)\n    first_digit = int(s[0])\n    next_lucky = (first_digit + 1) * (10 ** (n - 1))\n    print(next_lucky - int(s))\n\nmain()",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0003",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The initialization of `total` is incorrect: `total = -1` and then counting zeros leads to `total` being the number of unpainted sections minus 1, not the number of painted sections. This inverts the subsequent subtraction logic.\n- The variables `st1, end1, st2, end2` are defined using `min`/`max` of starts and ends, which does not correctly represent the union or intersection of the two removed intervals. The case analysis (`end1 < st2`, etc.) is therefore flawed and cannot compute the correct loss of coverage.\n- The formula for `curtotal` subtracts ranges of `singles` and `doubles` based on these wrong boundaries, leading to an incorrect count of painted sections after removing the two painters.",
+        "patch": "```python\nimport sys\n\ndef solve() -> None:\n    it = iter(sys.stdin.read().split())\n    n = int(next(it))\n    q = int(next(it))\n\n    intervals = []\n    for _ in range(q):\n        l = int(next(it))\n        r = int(next(it))\n        intervals.append((l, r))\n\n    # difference array to compute coverage\n    diff = [0] * (n + 3)          # 1‑based, guard at n+2\n    for l, r in intervals:\n        diff[l] += 1\n        diff[r + 1] -= 1\n\n    coverage = [0] * (n + 2)\n    cur = 0\n    for i in range(1, n + 1):\n        cur += diff[i]\n        coverage[i] = cur\n\n    # total painted sections\n    total_painted = 0\n    for i in range(1, n + 1):\n        if coverage[i] > 0:\n            total_painted += 1\n\n    # prefix sums for sections with coverage == 1 and coverage == 2\n    pref1 = [0] * (n + 1)    # number of 1's up to i\n    pref2 = [0] * (n + 1)    # number of 2's up to i\n    cnt1 = 0\n    cnt2 = 0\n    for i in range(1, n + 1):\n        if coverage[i] == 1:\n            cnt1 += 1\n        if coverage[i] == 2:\n            cnt2 += 1\n        pref1[i] = cnt1\n        pref2[i] = cnt2\n\n    max_painted = 0\n    m = len(intervals)\n    for i in range(m):\n        l1, r1 = intervals[i]\n        for j in range(i + 1, m):\n            l2, r2 = intervals[j]\n\n            # intersection\n            L = max(l1, l2)\n            R = min(r1, r2)\n\n            singles_i = pref1[r1] - pref1[l1 - 1]\n            singles_j = pref1[r2] - pref1[l2 - 1]\n\n            if L > R:      # disjoint\n                loss = singles_i + singles_j\n            else:\n                doubles_int = pref2[R] - pref2[L - 1]\n                loss = singles_i + singles_j + doubles_int\n\n            cur = total_painted - loss\n            if cur > max_painted:\n                max_painted = cur\n\n    print(max_painted)\n\n\nif __name__ == \"__main__\":\n    solve()\n```",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0004",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The `lucky(x)` function (line 1) incorrectly returns `True` when the last digit is **not** 7, i.e., it checks for *non‑lucky* instead of *lucky*. It also only checks the last digit, but the problem requires any digit '7'.\n\n- The condition `if lucky(hh) or lucky(mm):` (line 9) therefore only processes times where at least one component does **not** end with 7, effectively skipping most truly lucky times and including many non‑lucky ones. This can lead to an incorrect (potentially smaller) answer.\n\n- The logic for computing the time difference (`r = t - s` with the `while` loop) is correct, but the selection of candidate times is fundamentally flawed. Fixing the lucky check and its usage is required.",
+        "patch": "```python\ndef lucky(x):\n    return '7' in str(x)\n\nx = int(input())\nh, m = map(int, input().split())\nt = 60 * h + m\nans = float('inf')\nfor hh in range(24):\n    for mm in range(60):\n        if not (lucky(hh) or lucky(mm)):\n            continue\n        s = 60 * hh + mm\n        while t < s:\n            s -= 24 * 60\n        r = t - s\n        if r % x != 0:\n            continue\n        ans = min(ans, r // x)\nprint(ans)\n```",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0005",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Duplicate and incorrect branch for `l == 1 and r < n`**: The first condition `if l <= 1 and r < n` (line 3) incorrectly covers the case `l == 1, r < n` and uses flawed formulas (e.g., adding `r - l + 1` unnecessarily). The later `elif l == 1 and r < n` (line 12) is dead code. For this case, the correct minimal seconds should be `abs(pos - r) + 1` if `pos <= r`, or `pos - r + 1` if `pos > r`, but the code gives inflated values.\n\n- **Missing case when both sides need closing** (`l > 1` **and** `r < n`): This scenario falls into the final `else` (line 15) and prints `0`, which is wrong. The correct answer should involve moving to one end, closing, then moving to the other end and closing (or similar sequence), not zero.\n\n- **Incorrect condition `l <= 1`**: The condition on line 3 is too broad (includes `l = 0` which never occurs) and overlaps with the intended separate branch for `l == 1` and `r < n`, causing the logic to never reach the correct simple single‑side formula. This structural error leads to wrong outputs for multiple test cases.",
+        "patch": "n, pos, l, r = map(int, input().split())\nif l == 1 and r == n:\n    print(0)\nelif l == 1:\n    print(abs(pos - r) + 1)\nelif r == n:\n    print(abs(pos - l) + 1)\nelse:\n    # both sides need closing\n    left_first = abs(pos - l) + 1 + abs(l - r) + 1\n    right_first = abs(pos - r) + 1 + abs(r - l) + 1\n    print(min(left_first, right_first))",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0006",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug in one-hit-kill condition (lines 7-8):** The code prints `1` if the maximum damage `A[0][0]` is **less than** `x`. The correct condition should be if any blow has `d >= x` (i.e., `max(d) >= x`), then one blow suffices. The current logic gives wrong output for the first example (e.g., `x=10`, max `d=8` triggers `print(1)` but answer is `2`).\n\n- **Incorrect state update after first blow (line 10):** `x -= A[0][0]` subtracts only the damage, ignoring the regrown heads `h`. After a non‑finishing blow, the new head count is `x - d + h` (net reduction `d - h`). This miscalculation propagates to the subsequent formula, making the count of extra blows unreliable.\n\n- **Oversimplified strategy for remaining blows:** The code always assumes the first blow is the one with the largest `d` and then uses only the maximum net reduction `d - h` for all later blows. It does not consider:\n  - Using a different blow first that might yield a better net reduction.\n  - The possibility of finishing with a blow whose `d` exceeds the current head count (which ends the fight immediately, regardless of `h`).\n  - The case where the best `d - h` is zero or negative, leading to an incorrect `-1` even when a finishing blow is available.",
+        "patch": "for _ in range(int(input())):\n    n, x = map(int, input().split())\n    d = []\n    h = []\n    max_d = 0\n    max_net = -10**18\n    for _1 in range(n):\n        di, hi = map(int, input().split())\n        d.append(di)\n        h.append(hi)\n        max_d = max(max_d, di)\n        max_net = max(max_net, di - hi)\n    if max_d >= x:\n        print(1)\n    elif max_net <= 0:\n        print(-1)\n    else:\n        red = (x - max_d + max_net - 1) // max_net\n        print(red + 1)",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0007",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- **Line 2-3 (`if m < n: print(n)`)**: This condition incorrectly assumes that when daily grain addition is less than capacity, the barn empties on day `n`. The examples (n=5,m=2 and n=8,m=1) show the correct answer is 4 and 5, not 5 and 8. The logic is flawed for all `m < n` cases.\n\n- **Line 5 (`c = n - m`)**: Computing `c` as the capacity minus daily addition is not a valid representation of the grain dynamics. When `m >= n`, this value becomes non-positive, causing the subsequent binary search to misbehave. The binary search on line 10 expect a positive threshold to compare the cumulative sparrow consumption, but `c` can be zero or negative, leading to incorrect results (e.g., it would output `m` instead of the true answer).\n\n- **Overall algorithm** (lines 5-14): The approach of using a binary search based on `(1+md)*md//2 < c` and then outputting `r + m` does not correctly model the described process of daily grain addition (capped at capacity) and sparrow consumption. The problem requires handling the case when the barn becomes full again after adding `m`, but the code ignores the capacity cap entirely in the else branch. This is a fundamental modeling error.",
+        "patch": "",
+        "review": "FAIL: candidate code is empty."
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0008",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The parsing logic (lines 5–11) is inverted for the 'm' suit: any tile whose suit is not 'm' is incorrectly added to `lm` instead of its proper array. This breaks all suit counts except possibly manzu.\n- The `seq_checker` function (line 20) uses the global `lm` list instead of the passed argument `li`, so it always checks the manzu suit regardless of which suit is passed for sequence detection.\n- The final fallback (lines 33–35) uses `sum(lm[i:i+3])` to decide if a sequence exists; this counts repeated tiles (e.g., a pair) as contributing to the sum, incorrectly reporting 0 draws for hands like `1m 2m 2m` which actually require 1 more tile to form a mentsu.",
+        "patch": "cards = list(input().split())\nlm = [0]*9\nlp = [0]*9\nls = [0]*9\nfor item in cards:\n    if item[1] == 'm':\n        lm[int(item[0])-1] += 1\n    elif item[1] == 'p':\n        lp[int(item[0])-1] += 1\n    else:\n        ls[int(item[0])-1] += 1\n\n# check for triplet (any count >=3)\nif max(lm) >= 3 or max(lp) >= 3 or max(ls) >= 3:\n    print(0)\nelse:\n    # check for existing sequence\n    def has_sequence(arr):\n        for i in range(7):\n            if arr[i] >= 1 and arr[i+1] >= 1 and arr[i+2] >= 1:\n                return True\n        return False\n    if has_sequence(lm) or has_sequence(lp) or has_sequence(ls):\n        print(0)\n    # check for 1 draw: triplet with pair or sequence missing one tile\n    elif max(lm) >= 2 or max(lp) >= 2 or max(ls) >= 2:\n        print(1)\n    else:\n        def one_draw_seq(arr):\n            # check if two distinct numbers can complete a run with one draw\n            for i in range(7):\n                # count distinct positions with tile in window\n                cnt = 0\n                for j in range(3):\n                    if arr[i+j] > 0:\n                        cnt += 1\n                if cnt == 2:\n                    # need each of the two positions has exactly 1 tile (no pair)\n                    # also ensure total sum is 2, meaning no duplicates\n                    if sum(arr[i:i+3]) == 2:\n                        # the two tiles are different numbers, missing one tile\n                        return True\n            return False\n        if one_draw_seq(lm) or one_draw_seq(lp) or one_draw_seq(ls):\n            print(1)\n        else:\n            print(2)",
+        "review": ""
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0009",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- The algorithm incorrectly interprets the left/right/top/bottom counts: it tries to derive them from the index position in a sorted list by `(x0, x2)` or `(y1, y3)`, but the actual condition is based on `min_x < max_x(S)` (for left) etc., which is not equivalent to the rank in such a sorted list.  \n- Relevant lines include the sorting steps: `left.sort(key=lambda x: (x[0], x[2]))` and `down.sort(key=lambda x: (x[1], x[3]))`, and the subsequent loops that select challengers based on `cntl`, `cntr`, `cntd`, `cntu` using indices into these sorted lists.  \n- Additionally, the normalization of coordinates does not ensure that the first coordinate always represents the minimum x (or y), so the ordering `(x0, x2)` may be inconsistent (e.g., for horizontal sofas `x0` could be larger than `x2`), further corrupting the rank calculation.",
+        "patch": "",
+        "review": "FAIL No code provided."
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0010",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- The first output expression uses `2 // d` (integer division) instead of `2 * d` for the full‑week days‑off contribution, producing a wrong value (and a division‑by‑zero error when `d == 0`, i.e., `n < 7`).\n- The correct minimum days off should be `2 * d + max(0, r - 5)`; the buggy code replaces the multiplication with division, so even for `d > 0` the result is incorrect (e.g., `d=2` gives `2//2=1` instead of `4`).\n- The second expression for maximum days off (`2 * d + min(r, 2)`) appears correct, but the overall output is wrong because the first value (minimum) is miscalculated.",
+        "patch": "n = int(input())\nr = n % 7\nd = n // 7\nmin_days_off = 2 * d + max(0, r - 5)\nmax_days_off = 2 * d + min(r, 2)\nprint(min_days_off, max_days_off)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0011",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug in gcd function (line 3)**: The while loop condition uses `while b == 0:` which should be `while b != 0:` (or `while b:`). This causes the loop to never execute for nonzero `b`, returning the initial `a` as the GCD, leading to an incorrect LCM calculation.\n\n- **Impact**: The erroneous GCD results in a wrong value for `n // (a * b // gcd(a,b))`, so the subtraction term is off, yielding an incorrect maximum chocolate count.",
+        "patch": "def gcd(a, b):\n    while b != 0:\n        a, b = (b, a % b)\n    return a\nn, a, b, p, q = list(map(int, input().split()))\ns = n // a * p + n // b * q\ns -= n // (a * b // gcd(a, b)) * min(p, q)\nprint(s)",
+        "review": "PASS"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0012",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug location**: Lines within the loop that handle the initial segment (flag == 0). The condition `if A[i] != 'G' and flag == 0:` increments `num_1` for **non‑G** characters (i.e., `'S'`), which contradicts the intended purpose of `num_1` (to count consecutive golden trophies).  \n- **Missing case**: There is no branch to count `'G'` characters when `flag == 0`. This means the first block of golden trophies is never accumulated, making all subsequent calculations invalid.  \n- **State machine logic**: The transitions and resets (`num_1 = num_2; num_2 = 0`) are based on incorrect counters, so the algorithm cannot correctly compute the maximum possible subsegment length after at most one swap.",
+        "patch": "",
+        "review": "FAIL Empty code provided"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0014",
+      "success": false,
+      "eval": {
+        "success": false,
+        "error": "Case 1 produced different output."
+      },
+      "subtask_outputs": {
+        "localize": "- The while loop condition `while ai >= k and ...` is almost always false initially (`ai=0`, `k>0`), so the necessary push operations for prefix elements are never performed. This causes the subsequent failure check (`if len(st)==0 or st[-1]!=p`) to trigger for the first element in `aset`, incorrectly returning -1 for valid inputs (e.g., input `3 2 1`).\n\n- The code modifies `a` inside the loop by doing `a += app[::-1]`, which corrupts the original prefix array. The final output `a + app[::-1]` then does not represent a proper permutation, and the algorithm does not correctly simulate the stack-sorting process needed to verify stack-sortability.\n\n- The logic for constructing the tail (the `app` list) does not ensure that the resulting permutation is stack-sortable or lexicographically maximal; it simply collects missing numbers in increasing order and appends them reversed, which is not guaranteed to work. The entire stack-sorting simulation is fundamentally flawed.",
+        "patch": "",
+        "review": "FAIL empty code"
+      }
+    },
+    {
+      "task_id": "apps_shifted_test_test_0015",
+      "success": true,
+      "eval": {
+        "success": true,
+        "error": null
+      },
+      "subtask_outputs": {
+        "localize": "- **Bug 1 (c != 0 logic)**: The `elif b == a:` branch is too restrictive; it only outputs YES when b equals a, but for any non-zero c, b can appear if `(b - a) % c == 0` and `(b - a) // c >= 0`. This causes incorrect NO for valid cases like input `1 7 3`.\n\n- **Bug 2 (c == 0 division by zero)**: Inside `if c == 0:`, the expression `(b - a) % c` attempts modulo by zero, which raises a `ZeroDivisionError` at runtime. The entire branch should be restructured to handle c == 0 without arithmetic on c.\n\n- **Relevant lines**: Lines 3–7 (the entire conditional logic). The fix requires replacing the current conditions with a correct arithmetic progression check: if c == 0, check b == a; else check `(b - a) % c == 0` and `(b - a) // c >= 0`.",
+        "patch": "a, b, c = list(map(int, input().split()))\nif c == 0:\n    if a == b:\n        print('YES')\n    else:\n        print('NO')\nelse:\n    diff = b - a\n    if diff % c == 0 and diff // c >= 0:\n        print('YES')\n    else:\n        print('NO')",
+        "review": "PASS"
+      }
+    }
+  ],
+  "used_assets": true,
+  "reuse_strategy": "full",
+  "asset_routing_rate": 1.0,
+  "usage": {
+    "llm_calls": 45,
+    "prompt_tokens": 151347,
+    "completion_tokens": 98405,
+    "total_tokens": 249752
+  },
+  "wall_time_sec": 949.7153
+}
