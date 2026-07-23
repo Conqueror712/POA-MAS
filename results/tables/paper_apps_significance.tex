@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrr}
+\toprule
+Backbone & Contrast & Mean [95\% CI] & $p$ \\
+\midrule
+A (closed-API) & prompt $-$ free    & $+$0.167 [$-$0.001, $+$0.367] & 0.10 \\
+               & routing $-$ free   & $+$0.167 [$+$0.000, $+$0.333] & 0.06 \\
+               & full $-$ free      & $+$0.033 [$-$0.133, $+$0.200] & 0.71 \\
+\midrule
+B (Qwen-27B)   & prompt $-$ free    & $+$0.022 [$-$0.067, $+$0.111] & 0.65 \\
+               & routing $-$ free   & $-$0.111 [$-$0.222, $+$0.000] & 0.06 \\
+               & full $-$ free      & $+$0.000 [$-$0.067, $+$0.067] & 1.00 \\
+\midrule
+C (Qwen-9B)    & prompt $-$ free    & $-$0.156 [$-$0.333, $+$0.022] & 0.09 \\
+               & routing $-$ free   & $-$0.156 [$-$0.289, $-$0.022] & 0.03 \\
+               & full $-$ free      & $-$0.133 [$-$0.289, $+$0.022] & 0.11 \\
+\bottomrule
+\end{tabular}
+\caption{Matched-pair significance tests on APPS \texttt{shifted\_test} success. Pairs are indexed by (seed, task\_id); $n=30$ for Backbone A (seeds 712/713; 714 to be added) and $n=45$ for Backbones B and C. Mean diff and 95\% CI computed by 10k-resample bootstrap on paired differences; $p$-values are two-sided Wilcoxon signed-rank (zeros dropped). Contrasts against Random and results on the saturated \texttt{test} split are omitted for space.}
+\label{tab:apps-significance}
+\end{table}

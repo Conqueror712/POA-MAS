@@ -1,3 +1,4 @@
+# --- Python / Test caches ---
 __pycache__/
 *.py[cod]
 .pytest_cache/
@@ -5,7 +6,21 @@ __pycache__/
 .ruff_cache/
 .coverage
 htmlcov/
+
+# --- Experiment outputs (regenerable, large, non-versioned) ---
 trajectories/
+logs/
+*.log
+*.tmp
+.tmp_tests/
+archive/process_*/
+
+# --- Assets: all extracted asset JSONs are regenerable from trajectories ---
+# Covers assets/role_assets/, assets/organization_assets/, assets/game_assets/,
+# and any per-backbone subdirectory (assets/qwen27b/role_assets/, etc.).
+assets/**/latest_*.json
+
+# --- Results: keep only the paper-facing final tables/analysis/figures ---
 results/*
 !results/tables/
 !results/tables/*.csv
@@ -16,17 +31,16 @@ results/*
 !results/analysis/*.md
 !results/figures/
 !results/figures/*.svg
-assets/role_assets/*.json
-assets/organization_assets/*.json
-assets/game_assets/*.json
+
+# --- Secrets and env ---
 configs/.deepseek_api_key
 configs/*.key
 .env
 .env.*
+
+# --- Third-party downloaded datasets (redistribution-free re-download) ---
 data/public/
-.tmp_tests/
-archive/process_*/
-*.log
-*.tmp
+
+# --- OS/editor cruft ---
 .DS_Store
 Thumbs.db

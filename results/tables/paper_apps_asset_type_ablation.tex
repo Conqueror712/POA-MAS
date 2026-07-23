@@ -1,0 +1,20 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{llrrr}
+\toprule
+Split & Asset set & Mean & $\Delta$ vs.\ Free & $\Delta$ vs.\ Full \\
+\midrule
+shifted\_test & Role only & 0.733 & $-$0.044 & $-$0.067 \\
+ & Organization only & 0.733 & $-$0.044 & $-$0.067 \\
+test & Role only & 0.750 & $-$0.033 & $-$0.100 \\
+ & Organization only & 0.783 & $-$0.000 & $-$0.067 \\
+shifted\_test & \textbf{Full (role + org)} & 0.800 & $+$0.022 & (ref) \\
+shifted\_test & \emph{Free (no assets)} & 0.778 & (ref) & \textendash \\
+test & \textbf{Full (role + org)} & 0.850 & $+$0.067 & (ref) \\
+test & \emph{Free (no assets)} & 0.783 & (ref) & \textendash \\
+\bottomrule
+\end{tabular}
+\caption{Asset-type ablation on Backbone B (Qwen3.6-27B), prompt-channel reuse only, 3 seeds. Restricting Prompt to a single asset type does not improve over Free and is worse than the full-asset Prompt condition; the role and organization assets appear complementary rather than independently sufficient.}
+\label{tab:apps-asset-type-ablation}
+\end{table*}

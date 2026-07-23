@@ -1,0 +1,902 @@
+[
+  {
+    "task_id": "mbpp_train_MBPP_435",
+    "description": "Write a python function to find the last digit of a given number.",
+    "entry_point": "",
+    "tests": [
+      "assert last_Digit(123) == 3",
+      "assert last_Digit(25) == 5",
+      "assert last_Digit(30) == 0"
+    ],
+    "reference_solution": "def last_Digit(n) :\n    return (n % 10) ",
+    "buggy_code": "def last_Digit(n):\n    return n % 11\n",
+    "mutation": "integer",
+    "complexity": 10,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/435",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/435",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_89",
+    "description": "Write a function to find the closest smaller number than n.",
+    "entry_point": "",
+    "tests": [
+      "assert closest_num(11) == 10",
+      "assert closest_num(7) == 6",
+      "assert closest_num(12) == 11"
+    ],
+    "reference_solution": "def closest_num(N):\n  return (N - 1)",
+    "buggy_code": "def closest_num(N):\n    return N + 1\n",
+    "mutation": "binary",
+    "complexity": 10,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/89",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/89",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_77",
+    "description": "Write a python function to find whether a number is divisible by 11.",
+    "entry_point": "",
+    "tests": [
+      "assert is_Diff (12345) == False",
+      "assert is_Diff(1212112) == True",
+      "assert is_Diff(1212) == False"
+    ],
+    "reference_solution": "def is_Diff(n): \n    return (n % 11 == 0) ",
+    "buggy_code": "def is_Diff(n):\n    return n % 11 != 0\n",
+    "mutation": "compare",
+    "complexity": 13,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/77",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/77",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_17",
+    "description": "Write a function that returns the perimeter of a square given its side length as input.",
+    "entry_point": "",
+    "tests": [
+      "assert square_perimeter(10)==40",
+      "assert square_perimeter(5)==20",
+      "assert square_perimeter(4)==16"
+    ],
+    "reference_solution": "def square_perimeter(a):\n  perimeter=4*a\n  return perimeter",
+    "buggy_code": "def square_perimeter(a):\n    perimeter = 4 // a\n    return perimeter\n",
+    "mutation": "binary",
+    "complexity": 15,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/17",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/17",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_274",
+    "description": "Write a python function that takes in a positive integer n and finds the sum of even index binomial coefficients.",
+    "entry_point": "",
+    "tests": [
+      "assert even_binomial_Coeff_Sum(4) == 8",
+      "assert even_binomial_Coeff_Sum(6) == 32",
+      "assert even_binomial_Coeff_Sum(2) == 2"
+    ],
+    "reference_solution": "import math  \ndef even_binomial_Coeff_Sum( n): \n    return (1 << (n - 1)) ",
+    "buggy_code": "import math\n\ndef even_binomial_Coeff_Sum(n):\n    return 1 << n + 1\n",
+    "mutation": "binary",
+    "complexity": 15,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/274",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/274",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_58",
+    "description": "Write a python function to check whether the given two integers have opposite sign or not.",
+    "entry_point": "",
+    "tests": [
+      "assert opposite_Signs(1,-2) == True",
+      "assert opposite_Signs(3,2) == False",
+      "assert opposite_Signs(-10,-10) == False"
+    ],
+    "reference_solution": "def opposite_Signs(x,y): \n    return ((x ^ y) < 0); ",
+    "buggy_code": "def opposite_Signs(x, y):\n    return x ^ y >= 0\n",
+    "mutation": "compare",
+    "complexity": 15,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/58",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/58",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_460",
+    "description": "Write a python function to get the first element of each sublist.",
+    "entry_point": "",
+    "tests": [
+      "assert Extract([[1, 2], [3, 4, 5], [6, 7, 8, 9]]) == [1, 3, 6]",
+      "assert Extract([[1,2,3],[4, 5]]) == [1,4]",
+      "assert Extract([[9,8,1],[1,2]]) == [9,1]"
+    ],
+    "reference_solution": "def Extract(lst): \n    return [item[0] for item in lst] ",
+    "buggy_code": "def Extract(lst):\n    return [item[1] for item in lst]\n",
+    "mutation": "integer",
+    "complexity": 16,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/460",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/460",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_637",
+    "description": "Write a function to check whether the given amount has no profit and no loss",
+    "entry_point": "",
+    "tests": [
+      "assert noprofit_noloss(1500,1200)==False",
+      "assert noprofit_noloss(100,100)==True",
+      "assert noprofit_noloss(2000,5000)==False"
+    ],
+    "reference_solution": "def noprofit_noloss(actual_cost,sale_amount): \n  if(sale_amount == actual_cost):\n    return True\n  else:\n    return False",
+    "buggy_code": "def noprofit_noloss(actual_cost, sale_amount):\n    if sale_amount != actual_cost:\n        return True\n    else:\n        return False\n",
+    "mutation": "compare",
+    "complexity": 16,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/637",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/637",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_135",
+    "description": "Write a function to find the nth hexagonal number.",
+    "entry_point": "",
+    "tests": [
+      "assert hexagonal_num(10) == 190",
+      "assert hexagonal_num(5) == 45",
+      "assert hexagonal_num(7) == 91"
+    ],
+    "reference_solution": "def hexagonal_num(n): \n\treturn n*(2*n - 1) ",
+    "buggy_code": "def hexagonal_num(n):\n    return n * (2 // n - 1)\n",
+    "mutation": "binary",
+    "complexity": 17,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/135",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/135",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_138",
+    "description": "Write a python function to check whether the given number can be represented as sum of non-zero powers of 2 or not.",
+    "entry_point": "",
+    "tests": [
+      "assert is_Sum_Of_Powers_Of_Two(10) == True",
+      "assert is_Sum_Of_Powers_Of_Two(7) == False",
+      "assert is_Sum_Of_Powers_Of_Two(14) == True"
+    ],
+    "reference_solution": "def is_Sum_Of_Powers_Of_Two(n): \n    if (n % 2 == 1): \n        return False\n    else: \n        return True",
+    "buggy_code": "def is_Sum_Of_Powers_Of_Two(n):\n    if n % 2 != 1:\n        return False\n    else:\n        return True\n",
+    "mutation": "compare",
+    "complexity": 17,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/138",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/138",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_171",
+    "description": "Write a function to find the perimeter of a regular pentagon from the length of its sides.",
+    "entry_point": "",
+    "tests": [
+      "assert perimeter_pentagon(5) == 25",
+      "assert perimeter_pentagon(10) == 50",
+      "assert perimeter_pentagon(15) == 75"
+    ],
+    "reference_solution": "import math\ndef perimeter_pentagon(a):\n  perimeter=(5*a)\n  return perimeter",
+    "buggy_code": "import math\n\ndef perimeter_pentagon(a):\n    perimeter = 5 // a\n    return perimeter\n",
+    "mutation": "binary",
+    "complexity": 17,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/171",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/171",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_458",
+    "description": "Write a function to find the area of a rectangle.",
+    "entry_point": "",
+    "tests": [
+      "assert rectangle_area(10,20)==200",
+      "assert rectangle_area(10,5)==50",
+      "assert rectangle_area(4,2)==8"
+    ],
+    "reference_solution": "def rectangle_area(l,b):\n  area=l*b\n  return area",
+    "buggy_code": "def rectangle_area(l, b):\n    area = l // b\n    return area\n",
+    "mutation": "binary",
+    "complexity": 17,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/458",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/458",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_72",
+    "description": "Write a python function to check whether the given number can be represented as the difference of two squares or not.",
+    "entry_point": "",
+    "tests": [
+      "assert dif_Square(5) == True",
+      "assert dif_Square(10) == False",
+      "assert dif_Square(15) == True"
+    ],
+    "reference_solution": "def dif_Square(n): \n    if (n % 4 != 2): \n        return True\n    return False",
+    "buggy_code": "def dif_Square(n):\n    if n % 4 == 2:\n        return True\n    return False\n",
+    "mutation": "compare",
+    "complexity": 17,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/72",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/72",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_788",
+    "description": "Write a function to create a new tuple from the given string and list.",
+    "entry_point": "",
+    "tests": [
+      "assert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')",
+      "assert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')",
+      "assert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')"
+    ],
+    "reference_solution": "def new_tuple(test_list, test_str):\n  return tuple(test_list + [test_str])",
+    "buggy_code": "def new_tuple(test_list, test_str):\n    return tuple(test_list - [test_str])\n",
+    "mutation": "binary",
+    "complexity": 17,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/788",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/788",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_train_MBPP_309",
+    "description": "Write a python function to find the maximum of two numbers.",
+    "entry_point": "",
+    "tests": [
+      "assert maximum(5,10) == 10",
+      "assert maximum(-1,-2) == -1",
+      "assert maximum(9,7) == 9"
+    ],
+    "reference_solution": "def maximum(a,b):   \n    if a >= b: \n        return a \n    else: \n        return b ",
+    "buggy_code": "def maximum(a, b):\n    if a < b:\n        return a\n    else:\n        return b\n",
+    "mutation": "compare",
+    "complexity": 18,
+    "split": "train",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/309",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/309",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_404",
+    "description": "Write a python function to find the minimum of two numbers.",
+    "entry_point": "",
+    "tests": [
+      "assert minimum(1,2) == 1",
+      "assert minimum(-5,-4) == -5",
+      "assert minimum(0,0) == 0"
+    ],
+    "reference_solution": "def minimum(a,b):   \n    if a <= b: \n        return a \n    else: \n        return b ",
+    "buggy_code": "def minimum(a, b):\n    if a > b:\n        return a\n    else:\n        return b\n",
+    "mutation": "compare",
+    "complexity": 18,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/404",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/404",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_266",
+    "description": "Write a function to find the lateral surface area of a cube given its side length.",
+    "entry_point": "",
+    "tests": [
+      "assert lateralsurface_cube(5)==100",
+      "assert lateralsurface_cube(9)==324",
+      "assert lateralsurface_cube(10)==400"
+    ],
+    "reference_solution": "def lateralsurface_cube(l):\n  LSA = 4 * (l * l)\n  return LSA",
+    "buggy_code": "def lateralsurface_cube(l):\n    LSA = 4 * (l // l)\n    return LSA\n",
+    "mutation": "binary",
+    "complexity": 19,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/266",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/266",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_441",
+    "description": "Write a function to find the surface area of a cube of a given size.",
+    "entry_point": "",
+    "tests": [
+      "assert surfacearea_cube(5)==150",
+      "assert surfacearea_cube(3)==54",
+      "assert surfacearea_cube(10)==600"
+    ],
+    "reference_solution": "def surfacearea_cube(l):\n  surfacearea= 6*l*l\n  return surfacearea",
+    "buggy_code": "def surfacearea_cube(l):\n    surfacearea = 6 // l * l\n    return surfacearea\n",
+    "mutation": "binary",
+    "complexity": 19,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/441",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/441",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_626",
+    "description": "Write a python function to find the area of the largest triangle that can be inscribed in a semicircle with a given radius.",
+    "entry_point": "",
+    "tests": [
+      "assert triangle_area(-1) == None",
+      "assert triangle_area(0) == 0",
+      "assert triangle_area(2) == 4"
+    ],
+    "reference_solution": "def triangle_area(r) :  \n    if r < 0 : \n        return None\n    return r * r ",
+    "buggy_code": "def triangle_area(r):\n    if r >= 0:\n        return None\n    return r * r\n",
+    "mutation": "compare",
+    "complexity": 19,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/626",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/626",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_14",
+    "description": "Write a python function to find the volume of a triangular prism.",
+    "entry_point": "",
+    "tests": [
+      "assert find_Volume(10,8,6) == 240",
+      "assert find_Volume(3,2,2) == 6",
+      "assert find_Volume(1,2,1) == 1"
+    ],
+    "reference_solution": "def find_Volume(l,b,h) : \n    return ((l * b * h) / 2) ",
+    "buggy_code": "def find_Volume(l, b, h):\n    return l // b * h / 2\n",
+    "mutation": "binary",
+    "complexity": 20,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/14",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/14",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_143",
+    "description": "Write a function to find number of lists present in the given tuple.",
+    "entry_point": "",
+    "tests": [
+      "assert find_lists(([1, 2, 3, 4], [5, 6, 7, 8])) == 2",
+      "assert find_lists(([1, 2], [3, 4], [5, 6]))  == 3",
+      "assert find_lists(([9, 8, 7, 6, 5, 4, 3, 2, 1])) == 1"
+    ],
+    "reference_solution": "def find_lists(Input): \n\tif isinstance(Input, list): \n\t\treturn 1\n\telse: \n\t\treturn len(Input) ",
+    "buggy_code": "def find_lists(Input):\n    if isinstance(Input, list):\n        return 2\n    else:\n        return len(Input)\n",
+    "mutation": "integer",
+    "complexity": 20,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/143",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/143",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_234",
+    "description": "Write a function to find the volume of a cube given its side length.",
+    "entry_point": "",
+    "tests": [
+      "assert volume_cube(3)==27",
+      "assert volume_cube(2)==8",
+      "assert volume_cube(5)==125"
+    ],
+    "reference_solution": "def volume_cube(l):\n  volume = l * l * l\n  return volume",
+    "buggy_code": "def volume_cube(l):\n    volume = l // l * l\n    return volume\n",
+    "mutation": "binary",
+    "complexity": 20,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/234",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/234",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_268",
+    "description": "Write a function to find the n'th star number.",
+    "entry_point": "",
+    "tests": [
+      "assert find_star_num(3) == 37",
+      "assert find_star_num(4) == 73",
+      "assert find_star_num(5) == 121"
+    ],
+    "reference_solution": "def find_star_num(n): \n\treturn (6 * n * (n - 1) + 1) ",
+    "buggy_code": "def find_star_num(n):\n    return 6 // n * (n - 1) + 1\n",
+    "mutation": "binary",
+    "complexity": 20,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/268",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/268",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_86",
+    "description": "Write a function to find nth centered hexagonal number.",
+    "entry_point": "",
+    "tests": [
+      "assert centered_hexagonal_number(10) == 271",
+      "assert centered_hexagonal_number(2) == 7",
+      "assert centered_hexagonal_number(9) == 217"
+    ],
+    "reference_solution": "def centered_hexagonal_number(n):\n  return 3 * n * (n - 1) + 1",
+    "buggy_code": "def centered_hexagonal_number(n):\n    return 3 // n * (n - 1) + 1\n",
+    "mutation": "binary",
+    "complexity": 20,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/86",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/86",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_279",
+    "description": "Write a function to find the nth decagonal number.",
+    "entry_point": "",
+    "tests": [
+      "assert is_num_decagonal(3) == 27",
+      "assert is_num_decagonal(7) == 175",
+      "assert is_num_decagonal(10) == 370"
+    ],
+    "reference_solution": "def is_num_decagonal(n): \n\treturn 4 * n * n - 3 * n ",
+    "buggy_code": "def is_num_decagonal(n):\n    return 4 // n * n - 3 * n\n",
+    "mutation": "binary",
+    "complexity": 21,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/279",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/279",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_432",
+    "description": "Write a function to find the median length of a trapezium.",
+    "entry_point": "",
+    "tests": [
+      "assert median_trapezium(15,25,35)==20",
+      "assert median_trapezium(10,20,30)==15",
+      "assert median_trapezium(6,9,4)==7.5"
+    ],
+    "reference_solution": "def median_trapezium(base1,base2,height):\n median = 0.5 * (base1+ base2)\n return median",
+    "buggy_code": "def median_trapezium(base1, base2, height):\n    median = 0.5 * (base1 - base2)\n    return median\n",
+    "mutation": "binary",
+    "complexity": 21,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/432",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/432",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_59",
+    "description": "Write a function to find the nth octagonal number.",
+    "entry_point": "",
+    "tests": [
+      "assert is_octagonal(5) == 65",
+      "assert is_octagonal(10) == 280",
+      "assert is_octagonal(15) == 645"
+    ],
+    "reference_solution": "def is_octagonal(n): \n\treturn 3 * n * n - 2 * n ",
+    "buggy_code": "def is_octagonal(n):\n    return 3 // n * n - 2 * n\n",
+    "mutation": "binary",
+    "complexity": 21,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/59",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/59",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_600",
+    "description": "Write a python function to check whether the given number is even or not.",
+    "entry_point": "",
+    "tests": [
+      "assert is_Even(1) == False",
+      "assert is_Even(2) == True",
+      "assert is_Even(3) == False"
+    ],
+    "reference_solution": "def is_Even(n) : \n    if (n^1 == n+1) :\n        return True; \n    else :\n        return False; ",
+    "buggy_code": "def is_Even(n):\n    if n ^ 1 != n + 1:\n        return True\n    else:\n        return False\n",
+    "mutation": "compare",
+    "complexity": 21,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/600",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/600",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_629",
+    "description": "Write a python function to find even numbers from a list of numbers.",
+    "entry_point": "",
+    "tests": [
+      "assert Split([1,2,3,4,5]) == [2,4]",
+      "assert Split([4,5,6,7,8,0,1]) == [4,6,8,0]",
+      "assert Split ([8,12,15,19]) == [8,12]"
+    ],
+    "reference_solution": "def Split(list): \n    return [num for num in list if num % 2 == 0]",
+    "buggy_code": "def Split(list):\n    return [num for num in list if num % 2 != 0]\n",
+    "mutation": "compare",
+    "complexity": 21,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/629",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/629",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_test_MBPP_760",
+    "description": "Write a python function to check whether a list of numbers contains only one distinct element or not.",
+    "entry_point": "",
+    "tests": [
+      "assert unique_Element([1,1,1]) == True",
+      "assert unique_Element([1,2,1,2]) == False",
+      "assert unique_Element([1,2,3,4,5]) == False"
+    ],
+    "reference_solution": "def unique_Element(arr):\n    s = set(arr)\n    return len(s) == 1",
+    "buggy_code": "def unique_Element(arr):\n    s = set(arr)\n    return len(s) != 1\n",
+    "mutation": "compare",
+    "complexity": 21,
+    "split": "test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/760",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/760",
+    "difficulty": "standard"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_622",
+    "description": "Write a function to find the median of two sorted lists of same size.",
+    "entry_point": "",
+    "tests": [
+      "assert get_median([1, 12, 15, 26, 38], [2, 13, 17, 30, 45], 5) == 16.0",
+      "assert get_median([2, 4, 8, 9], [7, 13, 19, 28], 4) == 8.5",
+      "assert get_median([3, 6, 14, 23, 36, 42], [2, 18, 27, 39, 49, 55], 6) == 25.0"
+    ],
+    "reference_solution": "def get_median(arr1, arr2, n):\n  i = 0\n  j = 0\n  m1 = -1\n  m2 = -1\n  count = 0\n  while count < n + 1:\n    count += 1\n    if i == n:\n      m1 = m2\n      m2 = arr2[0]\n      break\n    elif j == n:\n      m1 = m2\n      m2 = arr1[0]\n      break\n    if arr1[i] <= arr2[j]:\n      m1 = m2\n      m2 = arr1[i]\n      i += 1\n    else:\n      m1 = m2\n      m2 = arr2[j]\n      j += 1\n  return (m1 + m2)/2",
+    "buggy_code": "def get_median(arr1, arr2, n):\n    i = 0\n    j = 0\n    m1 = -1\n    m2 = -1\n    count = 0\n    while count >= n + 1:\n        count += 1\n        if i == n:\n            m1 = m2\n            m2 = arr2[0]\n            break\n        elif j == n:\n            m1 = m2\n            m2 = arr1[0]\n            break\n        if arr1[i] <= arr2[j]:\n            m1 = m2\n            m2 = arr1[i]\n            i += 1\n        else:\n            m1 = m2\n            m2 = arr2[j]\n            j += 1\n    return (m1 + m2) / 2\n",
+    "mutation": "compare",
+    "complexity": 150,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/622",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/622",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_408",
+    "description": "Write a function to find k number of smallest pairs which consist of one element from the first array and one element from the second array.",
+    "entry_point": "",
+    "tests": [
+      "assert k_smallest_pairs([1,3,7],[2,4,6],2)==[[1, 2], [1, 4]]",
+      "assert k_smallest_pairs([1,3,7],[2,4,6],1)==[[1, 2]]",
+      "assert k_smallest_pairs([1,3,7],[2,4,6],7)==[[1, 2], [1, 4], [3, 2], [1, 6], [3, 4], [3, 6], [7, 2]]"
+    ],
+    "reference_solution": "import heapq\ndef k_smallest_pairs(nums1, nums2, k):\n   queue = []\n   def push(i, j):\n       if i < len(nums1) and j < len(nums2):\n           heapq.heappush(queue, [nums1[i] + nums2[j], i, j])\n   push(0, 0)\n   pairs = []\n   while queue and len(pairs) < k:\n       _, i, j = heapq.heappop(queue)\n       pairs.append([nums1[i], nums2[j]])\n       push(i, j + 1)\n       if j == 0:\n           push(i + 1, 0)\n   return pairs",
+    "buggy_code": "import heapq\n\ndef k_smallest_pairs(nums1, nums2, k):\n    queue = []\n\n    def push(i, j):\n        if i >= len(nums1) and j < len(nums2):\n            heapq.heappush(queue, [nums1[i] + nums2[j], i, j])\n    push(0, 0)\n    pairs = []\n    while queue and len(pairs) < k:\n        _, i, j = heapq.heappop(queue)\n        pairs.append([nums1[i], nums2[j]])\n        push(i, j + 1)\n        if j == 0:\n            push(i + 1, 0)\n    return pairs\n",
+    "mutation": "compare",
+    "complexity": 157,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/408",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/408",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_129",
+    "description": "Write a function to calculate whether the matrix is a magic square.",
+    "entry_point": "",
+    "tests": [
+      "assert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]])==True",
+      "assert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 8]])==True",
+      "assert magic_square_test([[2, 7, 6], [9, 5, 1], [4, 3, 7]])==False"
+    ],
+    "reference_solution": "def magic_square_test(my_matrix):\n    iSize = len(my_matrix[0])\n    sum_list = []\n    sum_list.extend([sum (lines) for lines in my_matrix])   \n    for col in range(iSize):\n        sum_list.append(sum(row[col] for row in my_matrix))\n    result1 = 0\n    for i in range(0,iSize):\n        result1 +=my_matrix[i][i]\n    sum_list.append(result1)      \n    result2 = 0\n    for i in range(iSize-1,-1,-1):\n        result2 +=my_matrix[i][i]\n    sum_list.append(result2)\n    if len(set(sum_list))>1:\n        return False\n    return True",
+    "buggy_code": "def magic_square_test(my_matrix):\n    iSize = len(my_matrix[0])\n    sum_list = []\n    sum_list.extend([sum(lines) for lines in my_matrix])\n    for col in range(iSize):\n        sum_list.append(sum((row[col] for row in my_matrix)))\n    result1 = 0\n    for i in range(0, iSize):\n        result1 += my_matrix[i][i]\n    sum_list.append(result1)\n    result2 = 0\n    for i in range(iSize - 1, -1, -1):\n        result2 += my_matrix[i][i]\n    sum_list.append(result2)\n    if len(set(sum_list)) <= 1:\n        return False\n    return True\n",
+    "mutation": "compare",
+    "complexity": 160,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/129",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/129",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_463",
+    "description": "Write a function to find the maximum product subarray of the given array.",
+    "entry_point": "",
+    "tests": [
+      "assert max_subarray_product([1, -2, -3, 0, 7, -8, -2]) == 112",
+      "assert max_subarray_product([6, -3, -10, 0, 2]) == 180",
+      "assert max_subarray_product([-2, -40, 0, -2, -3]) == 80"
+    ],
+    "reference_solution": "def max_subarray_product(arr):\n\tn = len(arr)\n\tmax_ending_here = 1\n\tmin_ending_here = 1\n\tmax_so_far = 0\n\tflag = 0\n\tfor i in range(0, n):\n\t\tif arr[i] > 0:\n\t\t\tmax_ending_here = max_ending_here * arr[i]\n\t\t\tmin_ending_here = min (min_ending_here * arr[i], 1)\n\t\t\tflag = 1\n\t\telif arr[i] == 0:\n\t\t\tmax_ending_here = 1\n\t\t\tmin_ending_here = 1\n\t\telse:\n\t\t\ttemp = max_ending_here\n\t\t\tmax_ending_here = max (min_ending_here * arr[i], 1)\n\t\t\tmin_ending_here = temp * arr[i]\n\t\tif (max_so_far < max_ending_here):\n\t\t\tmax_so_far = max_ending_here\n\tif flag == 0 and max_so_far == 0:\n\t\treturn 0\n\treturn max_so_far",
+    "buggy_code": "def max_subarray_product(arr):\n    n = len(arr)\n    max_ending_here = 1\n    min_ending_here = 1\n    max_so_far = 0\n    flag = 0\n    for i in range(0, n):\n        if arr[i] <= 0:\n            max_ending_here = max_ending_here * arr[i]\n            min_ending_here = min(min_ending_here * arr[i], 1)\n            flag = 1\n        elif arr[i] == 0:\n            max_ending_here = 1\n            min_ending_here = 1\n        else:\n            temp = max_ending_here\n            max_ending_here = max(min_ending_here * arr[i], 1)\n            min_ending_here = temp * arr[i]\n        if max_so_far < max_ending_here:\n            max_so_far = max_ending_here\n    if flag == 0 and max_so_far == 0:\n        return 0\n    return max_so_far\n",
+    "mutation": "compare",
+    "complexity": 164,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/463",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/463",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_18",
+    "description": "Write a function to remove characters from the first string which are present in the second string.",
+    "entry_point": "",
+    "tests": [
+      "assert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'",
+      "assert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'",
+      "assert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'"
+    ],
+    "reference_solution": "NO_OF_CHARS = 256\ndef str_to_list(string): \n\ttemp = [] \n\tfor x in string: \n\t\ttemp.append(x) \n\treturn temp \ndef lst_to_string(List): \n\treturn ''.join(List) \ndef get_char_count_array(string): \n\tcount = [0] * NO_OF_CHARS \n\tfor i in string: \n\t\tcount[ord(i)] += 1\n\treturn count \ndef remove_dirty_chars(string, second_string): \n\tcount = get_char_count_array(second_string) \n\tip_ind = 0\n\tres_ind = 0\n\ttemp = '' \n\tstr_list = str_to_list(string) \n\twhile ip_ind != len(str_list): \n\t\ttemp = str_list[ip_ind] \n\t\tif count[ord(temp)] == 0: \n\t\t\tstr_list[res_ind] = str_list[ip_ind] \n\t\t\tres_ind += 1\n\t\tip_ind+=1\n\treturn lst_to_string(str_list[0:res_ind]) ",
+    "buggy_code": "NO_OF_CHARS = 256\n\ndef str_to_list(string):\n    temp = []\n    for x in string:\n        temp.append(x)\n    return temp\n\ndef lst_to_string(List):\n    return ''.join(List)\n\ndef get_char_count_array(string):\n    count = [0] * NO_OF_CHARS\n    for i in string:\n        count[ord(i)] += 1\n    return count\n\ndef remove_dirty_chars(string, second_string):\n    count = get_char_count_array(second_string)\n    ip_ind = 0\n    res_ind = 0\n    temp = ''\n    str_list = str_to_list(string)\n    while ip_ind == len(str_list):\n        temp = str_list[ip_ind]\n        if count[ord(temp)] == 0:\n            str_list[res_ind] = str_list[ip_ind]\n            res_ind += 1\n        ip_ind += 1\n    return lst_to_string(str_list[0:res_ind])\n",
+    "mutation": "compare",
+    "complexity": 171,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/18",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/18",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_239",
+    "description": "Write a function that takes in positive integers m and n and finds the number of possible sequences of length n, such that each element is a positive integer and is greater than or equal to twice the previous element but less than or equal to m.",
+    "entry_point": "",
+    "tests": [
+      "assert get_total_number_of_sequences(10, 4) == 4",
+      "assert get_total_number_of_sequences(5, 2) == 6",
+      "assert get_total_number_of_sequences(16, 3) == 84"
+    ],
+    "reference_solution": "def get_total_number_of_sequences(m,n): \n\tT=[[0 for i in range(n+1)] for i in range(m+1)] \n\tfor i in range(m+1): \n\t\tfor j in range(n+1): \n\t\t\tif i==0 or j==0: \n\t\t\t\tT[i][j]=0\n\t\t\telif i<j: \n\t\t\t\tT[i][j]=0\n\t\t\telif j==1: \n\t\t\t\tT[i][j]=i \n\t\t\telse: \n\t\t\t\tT[i][j]=T[i-1][j]+T[i//2][j-1] \n\treturn T[m][n]",
+    "buggy_code": "def get_total_number_of_sequences(m, n):\n    T = [[0 for i in range(n + 1)] for i in range(m + 1)]\n    for i in range(m + 1):\n        for j in range(n + 1):\n            if i != 0 or j == 0:\n                T[i][j] = 0\n            elif i < j:\n                T[i][j] = 0\n            elif j == 1:\n                T[i][j] = i\n            else:\n                T[i][j] = T[i - 1][j] + T[i // 2][j - 1]\n    return T[m][n]\n",
+    "mutation": "compare",
+    "complexity": 171,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/239",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/239",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_223",
+    "description": "Write a function that takes in a sorted array, its length (n), and an element and returns whether the element is the majority element in the given sorted array. (The majority element is the element that occurs more than n/2 times.)",
+    "entry_point": "",
+    "tests": [
+      "assert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True",
+      "assert is_majority([1, 1, 2, 4, 4, 4, 6, 6], 8, 4) == False",
+      "assert is_majority([1, 1, 1, 2, 2], 5, 1) == True"
+    ],
+    "reference_solution": "def is_majority(arr, n, x):\n\ti = binary_search(arr, 0, n-1, x)\n\tif i == -1:\n\t\treturn False\n\tif ((i + n//2) <= (n -1)) and arr[i + n//2] == x:\n\t\treturn True\n\telse:\n\t\treturn False\ndef binary_search(arr, low, high, x):\n\tif high >= low:\n\t\tmid = (low + high)//2 \n\t\tif (mid == 0 or x > arr[mid-1]) and (arr[mid] == x):\n\t\t\treturn mid\n\t\telif x > arr[mid]:\n\t\t\treturn binary_search(arr, (mid + 1), high, x)\n\t\telse:\n\t\t\treturn binary_search(arr, low, (mid -1), x)\n\treturn -1",
+    "buggy_code": "def is_majority(arr, n, x):\n    i = binary_search(arr, 0, n - 1, x)\n    if i != -1:\n        return False\n    if i + n // 2 <= n - 1 and arr[i + n // 2] == x:\n        return True\n    else:\n        return False\n\ndef binary_search(arr, low, high, x):\n    if high >= low:\n        mid = (low + high) // 2\n        if (mid == 0 or x > arr[mid - 1]) and arr[mid] == x:\n            return mid\n        elif x > arr[mid]:\n            return binary_search(arr, mid + 1, high, x)\n        else:\n            return binary_search(arr, low, mid - 1, x)\n    return -1\n",
+    "mutation": "compare",
+    "complexity": 178,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/223",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/223",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_597",
+    "description": "Write a function to find kth element from the given two sorted arrays.",
+    "entry_point": "",
+    "tests": [
+      "assert find_kth([2, 3, 6, 7, 9], [1, 4, 8, 10], 5) == 6",
+      "assert find_kth([100, 112, 256, 349, 770], [72, 86, 113, 119, 265, 445, 892], 7) == 256",
+      "assert find_kth([3, 4, 7, 8, 10], [2, 5, 9, 11], 6) == 8"
+    ],
+    "reference_solution": "def find_kth(arr1, arr2, k):\n\tm = len(arr1)\n\tn = len(arr2)\n\tsorted1 = [0] * (m + n)\n\ti = 0\n\tj = 0\n\td = 0\n\twhile (i < m and j < n):\n\t\tif (arr1[i] < arr2[j]):\n\t\t\tsorted1[d] = arr1[i]\n\t\t\ti += 1\n\t\telse:\n\t\t\tsorted1[d] = arr2[j]\n\t\t\tj += 1\n\t\td += 1\n\twhile (i < m):\n\t\tsorted1[d] = arr1[i]\n\t\td += 1\n\t\ti += 1\n\twhile (j < n):\n\t\tsorted1[d] = arr2[j]\n\t\td += 1\n\t\tj += 1\n\treturn sorted1[k - 1]",
+    "buggy_code": "def find_kth(arr1, arr2, k):\n    m = len(arr1)\n    n = len(arr2)\n    sorted1 = [0] * (m + n)\n    i = 0\n    j = 0\n    d = 0\n    while i >= m and j < n:\n        if arr1[i] < arr2[j]:\n            sorted1[d] = arr1[i]\n            i += 1\n        else:\n            sorted1[d] = arr2[j]\n            j += 1\n        d += 1\n    while i < m:\n        sorted1[d] = arr1[i]\n        d += 1\n        i += 1\n    while j < n:\n        sorted1[d] = arr2[j]\n        d += 1\n        j += 1\n    return sorted1[k - 1]\n",
+    "mutation": "compare",
+    "complexity": 189,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/597",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/597",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_74",
+    "description": "Write a function to check whether it follows the sequence given in the patterns array.",
+    "entry_point": "",
+    "tests": [
+      "assert is_samepatterns([\"red\",\"green\",\"green\"], [\"a\", \"b\", \"b\"])==True",
+      "assert is_samepatterns([\"red\",\"green\",\"greenn\"], [\"a\",\"b\",\"b\"])==False",
+      "assert is_samepatterns([\"red\",\"green\",\"greenn\"], [\"a\",\"b\"])==False"
+    ],
+    "reference_solution": "def is_samepatterns(colors, patterns):    \n    if len(colors) != len(patterns):\n        return False    \n    sdict = {}\n    pset = set()\n    sset = set()    \n    for i in range(len(patterns)):\n        pset.add(patterns[i])\n        sset.add(colors[i])\n        if patterns[i] not in sdict.keys():\n            sdict[patterns[i]] = []\n\n        keys = sdict[patterns[i]]\n        keys.append(colors[i])\n        sdict[patterns[i]] = keys\n\n    if len(pset) != len(sset):\n        return False   \n\n    for values in sdict.values():\n\n        for i in range(len(values) - 1):\n            if values[i] != values[i+1]:\n                return False\n\n    return True",
+    "buggy_code": "def is_samepatterns(colors, patterns):\n    if len(colors) == len(patterns):\n        return False\n    sdict = {}\n    pset = set()\n    sset = set()\n    for i in range(len(patterns)):\n        pset.add(patterns[i])\n        sset.add(colors[i])\n        if patterns[i] not in sdict.keys():\n            sdict[patterns[i]] = []\n        keys = sdict[patterns[i]]\n        keys.append(colors[i])\n        sdict[patterns[i]] = keys\n    if len(pset) != len(sset):\n        return False\n    for values in sdict.values():\n        for i in range(len(values) - 1):\n            if values[i] != values[i + 1]:\n                return False\n    return True\n",
+    "mutation": "compare",
+    "complexity": 195,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/74",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/74",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_783",
+    "description": "Write a function to convert rgb color to hsv color. https://www.geeksforgeeks.org/program-change-rgb-color-model-hsv-color-model/",
+    "entry_point": "",
+    "tests": [
+      "assert rgb_to_hsv(255, 255, 255)==(0, 0.0, 100.0)",
+      "assert rgb_to_hsv(0, 215, 0)==(120.0, 100.0, 84.31372549019608)",
+      "assert rgb_to_hsv(10, 215, 110)==(149.26829268292684, 95.34883720930233, 84.31372549019608)"
+    ],
+    "reference_solution": "def rgb_to_hsv(r, g, b):\n    r, g, b = r/255.0, g/255.0, b/255.0\n    mx = max(r, g, b)\n    mn = min(r, g, b)\n    df = mx-mn\n    if mx == mn:\n        h = 0\n    elif mx == r:\n        h = (60 * ((g-b)/df) + 360) % 360\n    elif mx == g:\n        h = (60 * ((b-r)/df) + 120) % 360\n    elif mx == b:\n        h = (60 * ((r-g)/df) + 240) % 360\n    if mx == 0:\n        s = 0\n    else:\n        s = (df/mx)*100\n    v = mx*100\n    return h, s, v",
+    "buggy_code": "def rgb_to_hsv(r, g, b):\n    r, g, b = (r / 255.0, g / 255.0, b / 255.0)\n    mx = max(r, g, b)\n    mn = min(r, g, b)\n    df = mx - mn\n    if mx != mn:\n        h = 0\n    elif mx == r:\n        h = (60 * ((g - b) / df) + 360) % 360\n    elif mx == g:\n        h = (60 * ((b - r) / df) + 120) % 360\n    elif mx == b:\n        h = (60 * ((r - g) / df) + 240) % 360\n    if mx == 0:\n        s = 0\n    else:\n        s = df / mx * 100\n    v = mx * 100\n    return (h, s, v)\n",
+    "mutation": "compare",
+    "complexity": 202,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/783",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/783",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_247",
+    "description": "Write a function to find the length of the longest palindromic subsequence in the given string.",
+    "entry_point": "",
+    "tests": [
+      "assert lps(\"TENS FOR TENS\") == 5",
+      "assert lps(\"CARDIO FOR CARDS\") == 7",
+      "assert lps(\"PART OF THE JOURNEY IS PART\") == 9"
+    ],
+    "reference_solution": "def lps(str): \n\tn = len(str) \n\tL = [[0 for x in range(n)] for x in range(n)] \n\tfor i in range(n): \n\t\tL[i][i] = 1\n\tfor cl in range(2, n+1): \n\t\tfor i in range(n-cl+1): \n\t\t\tj = i+cl-1\n\t\t\tif str[i] == str[j] and cl == 2: \n\t\t\t\tL[i][j] = 2\n\t\t\telif str[i] == str[j]: \n\t\t\t\tL[i][j] = L[i+1][j-1] + 2\n\t\t\telse: \n\t\t\t\tL[i][j] = max(L[i][j-1], L[i+1][j]); \n\treturn L[0][n-1]",
+    "buggy_code": "def lps(str):\n    n = len(str)\n    L = [[0 for x in range(n)] for x in range(n)]\n    for i in range(n):\n        L[i][i] = 1\n    for cl in range(2, n + 1):\n        for i in range(n - cl + 1):\n            j = i + cl - 1\n            if str[i] != str[j] and cl == 2:\n                L[i][j] = 2\n            elif str[i] == str[j]:\n                L[i][j] = L[i + 1][j - 1] + 2\n            else:\n                L[i][j] = max(L[i][j - 1], L[i + 1][j])\n    return L[0][n - 1]\n",
+    "mutation": "compare",
+    "complexity": 225,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/247",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/247",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_721",
+    "description": "Given a square matrix of size N*N given as a list of lists, where each cell is associated with a specific cost. A path is defined as a specific sequence of cells that starts from the top-left cell move only right or down and ends on bottom right cell. We want to find a path with the maximum average over all existing paths. Average is computed as total cost divided by the number of cells visited in the path.",
+    "entry_point": "",
+    "tests": [
+      "assert maxAverageOfPath([[1, 2, 3], [6, 5, 4], [7, 3, 9]]) == 5.2",
+      "assert maxAverageOfPath([[2, 3, 4], [7, 6, 5], [8, 4, 10]]) == 6.2",
+      "assert maxAverageOfPath([[3, 4, 5], [8, 7, 6], [9, 5, 11]]) == 7.2"
+    ],
+    "reference_solution": "def maxAverageOfPath(cost):\n  N = len(cost)\n  dp = [[0 for i in range(N + 1)] for j in range(N + 1)]\n  dp[0][0] = cost[0][0]\n  for i in range(1, N):\n    dp[i][0] = dp[i - 1][0] + cost[i][0]\n  for j in range(1, N):\n    dp[0][j] = dp[0][j - 1] + cost[0][j]\n  for i in range(1, N):\n    for j in range(1, N):\n      dp[i][j] = max(dp[i - 1][j],\n                     dp[i][j - 1]) + cost[i][j]\n  return dp[N - 1][N - 1] / (2 * N - 1)",
+    "buggy_code": "def maxAverageOfPath(cost):\n    N = len(cost)\n    dp = [[0 for i in range(N - 1)] for j in range(N + 1)]\n    dp[0][0] = cost[0][0]\n    for i in range(1, N):\n        dp[i][0] = dp[i - 1][0] + cost[i][0]\n    for j in range(1, N):\n        dp[0][j] = dp[0][j - 1] + cost[0][j]\n    for i in range(1, N):\n        for j in range(1, N):\n            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + cost[i][j]\n    return dp[N - 1][N - 1] / (2 * N - 1)\n",
+    "mutation": "binary",
+    "complexity": 238,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/721",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/721",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_245",
+    "description": "Write a function that takes an array and finds the maximum sum of a bitonic subsequence for the given array, where a sequence is bitonic if it is first increasing and then decreasing.",
+    "entry_point": "",
+    "tests": [
+      "assert max_sum([1, 15, 51, 45, 33, 100, 12, 18, 9]) == 194",
+      "assert max_sum([80, 60, 30, 40, 20, 10]) == 210",
+      "assert max_sum([2, 3 ,14, 16, 21, 23, 29, 30]) == 138"
+    ],
+    "reference_solution": "def max_sum(arr): \n\tMSIBS = arr[:] \n\tfor i in range(len(arr)): \n\t\tfor j in range(0, i): \n\t\t\tif arr[i] > arr[j] and MSIBS[i] < MSIBS[j] + arr[i]: \n\t\t\t\tMSIBS[i] = MSIBS[j] + arr[i] \n\tMSDBS = arr[:] \n\tfor i in range(1, len(arr) + 1): \n\t\tfor j in range(1, i): \n\t\t\tif arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]: \n\t\t\t\tMSDBS[-i] = MSDBS[-j] + arr[-i] \n\tmax_sum = float(\"-Inf\") \n\tfor i, j, k in zip(MSIBS, MSDBS, arr): \n\t\tmax_sum = max(max_sum, i + j - k) \n\treturn max_sum",
+    "buggy_code": "def max_sum(arr):\n    MSIBS = arr[:]\n    for i in range(len(arr)):\n        for j in range(0, i):\n            if arr[i] <= arr[j] and MSIBS[i] < MSIBS[j] + arr[i]:\n                MSIBS[i] = MSIBS[j] + arr[i]\n    MSDBS = arr[:]\n    for i in range(1, len(arr) + 1):\n        for j in range(1, i):\n            if arr[-i] > arr[-j] and MSDBS[-i] < MSDBS[-j] + arr[-i]:\n                MSDBS[-i] = MSDBS[-j] + arr[-i]\n    max_sum = float('-Inf')\n    for i, j, k in zip(MSIBS, MSDBS, arr):\n        max_sum = max(max_sum, i + j - k)\n    return max_sum\n",
+    "mutation": "compare",
+    "complexity": 246,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/245",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/245",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_306",
+    "description": "Write a function to find the maximum sum of increasing subsequence from prefix until ith index and also including a given kth element which is after i, i.e., k > i .",
+    "entry_point": "",
+    "tests": [
+      "assert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 4, 6) == 11",
+      "assert max_sum_increasing_subseq([1, 101, 2, 3, 100, 4, 5 ], 7, 2, 5) == 7",
+      "assert max_sum_increasing_subseq([11, 15, 19, 21, 26, 28, 31], 7, 2, 4) == 71"
+    ],
+    "reference_solution": "def max_sum_increasing_subseq(a, n, index, k):\n\tdp = [[0 for i in range(n)] \n\t\t\tfor i in range(n)]\n\tfor i in range(n):\n\t\tif a[i] > a[0]:\n\t\t\tdp[0][i] = a[i] + a[0]\n\t\telse:\n\t\t\tdp[0][i] = a[i]\n\tfor i in range(1, n):\n\t\tfor j in range(n):\n\t\t\tif a[j] > a[i] and j > i:\n\t\t\t\tif dp[i - 1][i] + a[j] > dp[i - 1][j]:\n\t\t\t\t\tdp[i][j] = dp[i - 1][i] + a[j]\n\t\t\t\telse:\n\t\t\t\t\tdp[i][j] = dp[i - 1][j]\n\t\t\telse:\n\t\t\t\tdp[i][j] = dp[i - 1][j]\n\treturn dp[index][k]",
+    "buggy_code": "def max_sum_increasing_subseq(a, n, index, k):\n    dp = [[0 for i in range(n)] for i in range(n)]\n    for i in range(n):\n        if a[i] <= a[0]:\n            dp[0][i] = a[i] + a[0]\n        else:\n            dp[0][i] = a[i]\n    for i in range(1, n):\n        for j in range(n):\n            if a[j] > a[i] and j > i:\n                if dp[i - 1][i] + a[j] > dp[i - 1][j]:\n                    dp[i][j] = dp[i - 1][i] + a[j]\n                else:\n                    dp[i][j] = dp[i - 1][j]\n            else:\n                dp[i][j] = dp[i - 1][j]\n    return dp[index][k]\n",
+    "mutation": "compare",
+    "complexity": 258,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/306",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/306",
+    "difficulty": "shifted"
+  },
+  {
+    "task_id": "mbpp_shifted_test_MBPP_747",
+    "description": "Write a function to find the longest common subsequence for the given three string sequence. https://www.geeksforgeeks.org/lcs-longest-common-subsequence-three-strings/",
+    "entry_point": "",
+    "tests": [
+      "assert lcs_of_three('AGGT12', '12TXAYB', '12XBA') == 2",
+      "assert lcs_of_three('Reels', 'Reelsfor', 'ReelsforReels') == 5",
+      "assert lcs_of_three('abcd1e2', 'bc12ea', 'bd1ea') == 3"
+    ],
+    "reference_solution": "def lcs_of_three(X, Y, Z): \n  m = len(X)\n  n = len(Y)\n  o = len(Z)\n  L = [[[0 for i in range(o+1)] for j in range(n+1)] for k in range(m+1)]\n  for i in range(m+1): \n\t  for j in range(n+1): \n\t\t  for k in range(o+1): \n\t\t\t  if (i == 0 or j == 0 or k == 0): \n\t\t\t\t  L[i][j][k] = 0\n\t\t\t  elif (X[i-1] == Y[j-1] and X[i-1] == Z[k-1]): \n\t\t\t\t  L[i][j][k] = L[i-1][j-1][k-1] + 1\n\t\t\t  else: \n\t\t\t\t  L[i][j][k] = max(max(L[i-1][j][k], L[i][j-1][k]), L[i][j][k-1]) \n  return L[m][n][o]",
+    "buggy_code": "def lcs_of_three(X, Y, Z):\n    m = len(X)\n    n = len(Y)\n    o = len(Z)\n    L = [[[0 for i in range(o + 1)] for j in range(n + 1)] for k in range(m + 1)]\n    for i in range(m + 1):\n        for j in range(n + 1):\n            for k in range(o + 1):\n                if i != 0 or j == 0 or k == 0:\n                    L[i][j][k] = 0\n                elif X[i - 1] == Y[j - 1] and X[i - 1] == Z[k - 1]:\n                    L[i][j][k] = L[i - 1][j - 1][k - 1] + 1\n                else:\n                    L[i][j][k] = max(max(L[i - 1][j][k], L[i][j - 1][k]), L[i][j][k - 1])\n    return L[m][n][o]\n",
+    "mutation": "compare",
+    "complexity": 308,
+    "split": "shifted_test",
+    "task_family": "mbpp_repair",
+    "repair_family": "MBPP/747",
+    "public_source": "google-research/mbpp (sanitized)",
+    "source_task_id": "MBPP/747",
+    "difficulty": "shifted"
+  }
+]

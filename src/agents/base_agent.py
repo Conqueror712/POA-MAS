@@ -3,13 +3,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
-from src.utils.llm_client import DeepSeekClient, LLMResponse, MockLLMClient
+from src.utils.llm_client import LLMClient, LLMResponse
 
 
 @dataclass
 class Agent:
     agent_id: str
-    llm_client: MockLLMClient | DeepSeekClient
+    llm_client: LLMClient
     history: dict[str, list[bool]] = field(default_factory=dict)
 
     def success_rate(self, subtask_type: str) -> float:

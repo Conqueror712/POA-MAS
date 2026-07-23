@@ -272,10 +272,139 @@ class DeepSeekClient:
             raise RuntimeError(f"HTTP {exc.code}: {detail}") from exc
 
 
-def build_llm_client(config: dict[str, Any]) -> MockLLMClient | DeepSeekClient:
+class VLLMClient:
+    """OpenAI-compatible HTTP client for a local vLLM server.
+
+    This client talks to a vLLM instance started via
+    ``vllm serve <model_path>`` (or the ``scripts/start_vllm_server.sh``
+    helper). It reuses the same request-shape as :class:`DeepSeekClient`
+    so downstream code (agents, controller, runners) can stay unchanged.
+
+    Configuration expected under ``config["llm"]``::
+
+        {
+          "provider": "vllm",
+          "model": "Qwen3.5-9B",              # served-model-name at vLLM start
+          "base_url": "http://127.0.0.1:8000/v1",
+          "api_key_env": "VLLM_API_KEY",       # optional; vLLM defaults to "EMPTY"
+          "temperature": 0.2,
+          "max_tokens": 1200,
+          "timeout_sec": 120,
+          "max_retries": 2,
+          "extra_body": {}                    # e.g. {"top_p": 0.9}
+        }
+
+    Notes:
+        * ``base_url`` should include the ``/v1`` suffix that vLLM exposes
+          for the OpenAI-compatible route.
+        * ``api_key_env`` is optional; if the env var is unset the client
+          falls back to the literal ``"EMPTY"`` that vLLM accepts by default.
+    """
+
+    def __init__(self, config: dict[str, Any]):
+        llm_config = config.get("llm", {})
+        self.model = llm_config.get("model", "")
+        if not self.model:
+            raise ValueError("VLLMClient requires llm.model to match the served-model-name")
+        self.base_url = llm_config.get("base_url", "http://127.0.0.1:8000/v1").rstrip("/")
+        self.api_key_env = llm_config.get("api_key_env", "VLLM_API_KEY")
+        self.api_key_file = llm_config.get("api_key_file")
+        self.temperature = float(llm_config.get("temperature", 0.2))
+        self.max_tokens = int(llm_config.get("max_tokens", 1200))
+        self.timeout_sec = int(llm_config.get("timeout_sec", 120))
+        self.max_retries = int(llm_config.get("max_retries", 2))
+        self.extra_body = llm_config.get("extra_body", {})
+
+    def complete(self, *, agent_id: str, subtask_type: str, task: dict[str, Any], context: dict[str, Any]) -> LLMResponse:
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "messages": (
+                build_game_messages(agent_id=agent_id, task=task, context=context)
+                if task.get("task_family") == "game_theory" and subtask_type == "decide"
+                else build_code_repair_messages(
+                    agent_id=agent_id,
+                    subtask_type=subtask_type,
+                    task=task,
+                    context=context,
+                )
+            ),
+            "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
+            "stream": False,
+        }
+        payload.update(self.extra_body)
+
+        api_key = self._resolve_api_key()
+        last_error: str | None = None
+        for attempt in range(self.max_retries + 1):
+            try:
+                raw = self._post_chat_completion(payload, api_key)
+                choice = raw["choices"][0]["message"]
+                return LLMResponse(
+                    text=choice.get("content", ""),
+                    metadata={
+                        "provider": "vllm",
+                        "model": self.model,
+                        "base_url": self.base_url,
+                        "agent_id": agent_id,
+                        "subtask_type": subtask_type,
+                        "usage": raw.get("usage", {}),
+                        "finish_reason": raw["choices"][0].get("finish_reason"),
+                    },
+                )
+            except Exception as exc:  # noqa: BLE001 - retry then surface API details.
+                last_error = repr(exc)
+                if attempt < self.max_retries:
+                    time.sleep(1.5 * (attempt + 1))
+
+        raise RuntimeError(f"vLLM request failed after retries: {last_error}")
+
+    def _resolve_api_key(self) -> str:
+        api_key = os.environ.get(self.api_key_env)
+        if api_key:
+            return api_key
+        if self.api_key_file:
+            key_path = Path(self.api_key_file).expanduser()
+            try:
+                content = key_path.read_text(encoding="utf-8-sig").strip()
+                if content:
+                    return content
+            except OSError:
+                pass
+        # vLLM accepts "EMPTY" when the server is started without --api-key.
+        return "EMPTY"
+
+    def _post_chat_completion(self, payload: dict[str, Any], api_key: str) -> dict[str, Any]:
+        body = json.dumps(payload).encode("utf-8")
+        req = request.Request(
+            f"{self.base_url}/chat/completions",
+            data=body,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            },
+            method="POST",
+        )
+        try:
+            with request.urlopen(req, timeout=self.timeout_sec) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"HTTP {exc.code}: {detail}") from exc
+
+
+# Any LLM client used by agents/team/controller.
+# We keep this deliberately loose so new backends (vLLM, TGI, HF pipeline, ...)
+# can be added later without touching the agent layer.
+LLMClient = MockLLMClient | DeepSeekClient | VLLMClient
+
+
+def build_llm_client(config: dict[str, Any]) -> LLMClient:
     provider = config.get("llm", {}).get("provider", "mock")
     if provider == "mock":
         return MockLLMClient()
     if provider == "deepseek":
         return DeepSeekClient(config)
+    if provider == "vllm":
+        return VLLMClient(config)
     raise ValueError(f"Unsupported provider: {provider}")

@@ -1,0 +1,24 @@
+{
+  "project_name": "ORCA-APPS-Qwen9B",
+  "domain": "code",
+  "task_file": "data/tasks_code/apps_repair.json",
+  "output_root": "trajectories",
+  "asset_root": "assets/qwen9b",
+  "num_agents": 4,
+  "max_rounds": 3,
+  "random_seed": 712,
+  "evaluation_timeout_sec": 2,
+  "llm": {
+    "provider": "vllm",
+    "model": "Qwen3.5-9B",
+    "base_url": "http://127.0.0.1:8000/v1",
+    "api_key_env": "VLLM_API_KEY",
+    "temperature": 0.2,
+    "max_tokens": 4096,
+    "timeout_sec": 300,
+    "max_retries": 2,
+    "extra_body": {
+      "chat_template_kwargs": {"enable_thinking": false}
+    }
+  }
+}

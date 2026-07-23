@@ -1,0 +1,18 @@
+{
+  "source": "google-research-datasets/mbpp (sanitized, via hf-mirror)",
+  "url_base": "https://hf-mirror.com/datasets/google-research-datasets/mbpp/resolve/main/sanitized",
+  "split_shards": [
+    "prompt",
+    "test",
+    "validation",
+    "train"
+  ],
+  "sha256_concat": "92cbeadba62ab1f0922c1d6a2133396621194420493016aaccd54408a2f6850e",
+  "records": 427,
+  "valid_mutations": 291,
+  "split_counts": {
+    "train": 15,
+    "test": 15,
+    "shifted_test": 15
+  }
+}

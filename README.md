@@ -214,6 +214,41 @@ python -m src.runners.run_emergence --config configs/experiments.json --mode fre
 
 ---
 
+## 运行方式三：本地 vLLM 后端（open-weights 模型）
+
+除了 DeepSeek API，仓库现在支持通过 [vLLM](https://github.com/vllm-project/vllm)
+OpenAI-compatible HTTP server 调用本地权重模型（e.g. Qwen3.5-9B、Qwen3.6-27B），
+用于跨模型稳健性对照实验。核心实现是 `src/utils/llm_client.py::VLLMClient`，
+现有 `MockLLMClient` / `DeepSeekClient` 完全不受影响。
+
+启动服务并跑一个 smoke test：
+
+```bash
+# 1) 启一个 vLLM server（GPU 4，端口 8000）
+bash scripts/start_vllm_server.sh Qwen3.5-9B 8000 4
+
+# 2) 等日志出现 "Application startup complete"（首次加载 ~3 分钟）
+curl -s http://127.0.0.1:8000/v1/models | python3 -m json.tool
+
+# 3) 跑 2 题 smoke test
+python3 -m src.runners.run_emergence \
+    --config configs/experiments_humaneval_qwen9b.json \
+    --split train --mode free --limit 2 \
+    --run-name humaneval_qwen9b_smoke
+```
+
+四份新配置对应 APPS / HumanEval × Qwen3.5-9B / Qwen3.6-27B。所有 runner
+（`run_emergence`、`run_extract_assets`、`run_reuse`、`run_apps_protocol`、
+`run_game_domain` 等）都无需修改即可切换后端。
+
+**注意**：Qwen3.5 / Qwen3.6 默认启用 thinking，会先输出大段推理过程再输出答案，
+容易把 `max_tokens` 预算耗光。新配置已经通过
+`extra_body.chat_template_kwargs.enable_thinking=false` 关掉；如需重开思考请显式改配置。
+
+完整说明见：`docs/vllm_setup.md`。
+
+---
+
 ## 结果分析
 
 已有 APPS protocol 结果可以离线聚合与分析，不需要 API key：

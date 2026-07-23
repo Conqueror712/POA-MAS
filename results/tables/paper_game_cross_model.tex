@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{llrrr}
+\toprule
+Split & Setting & Backbone A & Backbone B & $\Delta$ \\
+\midrule
+test & no\_persona & 0.611 & 1.000 & $+$0.389 \\
+test & persona & 0.750 & 0.833 & $+$0.083 \\
+test & reuse\_assets & 0.986 & 0.833 & $-$0.153 \\
+shifted\_test & no\_persona & 0.056 & 0.000 & $-$0.056 \\
+shifted\_test & persona & 0.767 & 0.800 & $+$0.033 \\
+shifted\_test & reuse\_assets & 0.833 & 0.800 & $-$0.033 \\
+\bottomrule
+\end{tabular}
+\caption{Domain 2 cooperation rate on \emph{Public Goods} under two backbones (3 seeds each). Backbone A is the closed-API family; Backbone B is the open-weights 27B backbone from the APPS Cross-Model Robustness subsection. The persona-vs-no-persona gap reproduces on Backbone B; the additional reuse-vs-persona increment observed on Backbone A does not, because the no-persona baseline is saturated on Backbone B's \texttt{test} split. IPD is omitted as it is saturated at $1.000$ on both backbones across all conditions.}
+\label{tab:games-cross-model}
+\end{table}

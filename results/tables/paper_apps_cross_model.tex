@@ -1,0 +1,26 @@
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrr}
+\toprule
+Setting & Backbone A & Backbone B & Backbone C \\
+\midrule
+\multicolumn{4}{l}{\emph{shifted\_test}} \\
+Free            & 0.689 & 0.778 & 0.533 \\
+Manual          & 0.622 & 0.711 & 0.444 \\
+Random          & 0.756 & 0.756 & 0.444 \\
+Prompt          & \textbf{0.822} & \textbf{0.800} & 0.378 \\
+Routing         & 0.778 & 0.667 & 0.378 \\
+Full            & 0.644 & 0.778 & 0.400 \\
+$\Delta$ Prompt$-$Free & \textbf{+0.133} & \textbf{+0.022} & $-$0.156 \\
+\midrule
+\multicolumn{4}{l}{\emph{test} (near-saturation)} \\
+Free            & 0.900 & 0.783 & 0.517 \\
+Prompt          & 0.917 & \textbf{0.850} & 0.383 \\
+$\Delta$ Prompt$-$Free & +0.017 & +0.067 & $-$0.133 \\
+\bottomrule
+\end{tabular}
+\caption{{APPS} code-repair success rate under three {LLM} backbones (3 seeds each, matched task set). Backbone A is the closed-API production {LLM} used in Sections 3.2--3.4; Backbones B and C are two open-weights models of the same family at $27$B and $9$B parameters, served through a local OpenAI-compatible endpoint with identical prompts, splits, and seeds. On \texttt{shifted\_test}, prompt-channel reuse is the best or tied-best setting on both production-scale backbones (A and~B). On the near-saturation \texttt{test} split we report Free and Prompt only; the four other settings (Manual/Random/Routing/Full) sit within $\pm 0.05$ of Free on both A and B. Backbone C reverses the pattern; see Limitations.}
+\label{tab:apps-cross-model}
+\end{table}
